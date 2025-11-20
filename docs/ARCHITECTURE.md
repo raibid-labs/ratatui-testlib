@@ -15,10 +15,22 @@
 
 1. **Ease of Use**: Simple, ergonomic API for common testing patterns
 2. **Completeness**: Support for testing all terminal features, including graphics protocols
-3. **Cross-Platform**: Work consistently across Linux, macOS, and Windows
+3. **Cross-Platform**: Work consistently across Linux, macOS, and Windows (MVP: Linux focus)
 4. **Snapshot-Friendly**: Natural integration with snapshot testing frameworks
-5. **Async-First**: Support for async Ratatui applications
-6. **Minimal Dependencies**: Reuse well-maintained components from the ecosystem
+5. **Async-First**: Support for async Ratatui applications (Tokio for MVP)
+6. **Bevy-Ready**: First-class integration with Bevy ECS and bevy_ratatui
+7. **Minimal Dependencies**: Reuse well-maintained components from the ecosystem
+
+## MVP Focus
+
+**Primary Use Case**: Enable comprehensive integration testing for the [dgx-pixels](https://github.com/raibid-labs/dgx-pixels) project, a Bevy-based TUI application with Sixel graphics support.
+
+**Key Requirements**:
+- Sixel graphics position verification and bounds checking
+- Bevy ECS integration (query entities, control update cycles)
+- bevy_ratatui plugin support
+- Tokio async runtime
+- Headless CI/CD compatibility
 
 ## Architecture Layers
 
@@ -147,6 +159,7 @@ impl Snapshot {
 - Widget-specific assertions
 - Layout verification
 - Event simulation
+- High-level assertions (text_at, cursor_in_area, etc.)
 
 **Key Types**:
 ```rust
@@ -155,9 +168,84 @@ pub struct RatatuiTestHelper {
 }
 
 impl RatatuiTestHelper {
+    // Widget assertions
     pub fn assert_widget_at(&self, x: u16, y: u16, expected: &str) -> Result<()>;
     pub fn assert_layout(&self, expected_layout: &Layout) -> Result<()>;
+
+    // Text assertions (MVP)
+    pub fn assert_text_at(&self, x: u16, y: u16, text: &str) -> Result<()>;
+    pub fn assert_text_contains(&self, text: &str) -> Result<()>;
+    pub fn assert_area_contains_text(&self, area: Rect, text: &str) -> Result<()>;
+
+    // Cursor assertions (MVP)
+    pub fn assert_cursor_position(&self, x: u16, y: u16) -> Result<()>;
+    pub fn assert_cursor_in_area(&self, area: Rect) -> Result<()>;
+    pub fn get_cursor_position(&self) -> (u16, u16);
+
+    // Event simulation
     pub fn send_event(&mut self, event: crossterm::event::Event) -> Result<()>;
+}
+```
+
+### Layer 6: Bevy ECS Integration (MVP Requirement)
+
+**Purpose**: Support testing of Bevy-based TUI applications using bevy_ratatui
+
+**Implementation**: Wrapper around TuiTestHarness + Bevy App
+
+**Responsibilities**:
+- Initialize headless Bevy app for testing
+- Control Bevy update cycles frame-by-frame
+- Query entities and components
+- Access resources
+- Send Bevy events
+- Coordinate terminal rendering with Bevy systems
+
+**Key Types**:
+```rust
+#[cfg(feature = "bevy")]
+pub struct BevyTuiTestHarness {
+    harness: TuiTestHarness,
+    app: bevy::app::App,
+}
+
+#[cfg(feature = "bevy")]
+impl BevyTuiTestHarness {
+    // Initialization
+    pub fn new() -> Result<Self>;
+    pub fn with_plugins(plugins: impl Plugins) -> Result<Self>;
+    pub fn with_bevy_ratatui() -> Result<Self>;  // Convenience for bevy_ratatui
+
+    // Bevy update control (MVP requirement)
+    pub fn update(&mut self) -> Result<()>;  // Run one Bevy frame
+    pub fn update_n(&mut self, count: usize) -> Result<()>;  // Run N frames
+    pub fn render_frame(&mut self) -> Result<()>;  // Update + render to terminal
+
+    // ECS querying (MVP requirement)
+    pub fn query<T: Component>(&self) -> Vec<&T>;
+    pub fn query_mut<T: Component>(&mut self) -> Vec<&mut T>;
+    pub fn get_resource<T: Resource>(&self) -> Option<&T>;
+    pub fn get_resource_mut<T: Resource>(&mut self) -> Option<&mut T>;
+    pub fn world(&self) -> &World;  // Direct World access for complex queries
+
+    // Event integration
+    pub fn send_bevy_event<T: Event>(&mut self, event: T);
+    pub fn read_bevy_events<T: Event>(&self) -> Vec<&T>;
+
+    // Terminal operations (delegates to inner harness)
+    pub fn press_key(&mut self, key: KeyCode) -> Result<()>;
+    pub fn type_text(&mut self, text: &str) -> Result<()>;
+    pub fn wait_for(&mut self, condition: impl Fn(&ScreenState) -> bool) -> Result<()>;
+    pub fn snapshot(&self) -> Snapshot;
+
+    // Sixel assertions (MVP requirement)
+    pub fn has_sixel_graphics(&self) -> bool;
+    pub fn capture_sixel_state(&self) -> SixelCapture;
+    pub fn assert_sixel_within(&self, area: Rect) -> Result<()>;
+    pub fn assert_no_sixel_outside(&self, area: Rect) -> Result<()>;
+
+    // High-level assertions (dgx-pixels use case)
+    pub fn assert_on_screen(&self, screen: impl ScreenMarker) -> Result<()>;
 }
 ```
 
@@ -167,16 +255,25 @@ impl RatatuiTestHelper {
 
 Sixel rendering produces complex escape sequences that represent images. Testing requires:
 1. Verifying the escape sequence structure is correct
-2. Optionally verifying the rendered image looks correct
+2. **Verifying position (cursor location when rendered)** - MVP requirement
+3. **Verifying bounds (stays within designated area)** - MVP requirement
+4. Optionally verifying the rendered image looks correct
 
 ### Solution
 
-**Level 1: Sequence Verification**
+**Level 1: Sequence Verification with Position Tracking** (MVP)
 - Capture raw Sixel escape sequences from PTY
+- **Track cursor position when each Sixel is rendered** (critical!)
 - Parse and validate structure
-- Compare against known-good sequences
+- Calculate bounds (position + dimensions)
+- Support area-bounded queries (in/outside area)
 
-**Level 2: Visual Verification** (Future)
+**Level 2: Clearing Detection** (MVP)
+- Capture Sixel state before/after screen transitions
+- Detect when Sixel graphics are cleared
+- Compare snapshots to verify clearing
+
+**Level 3: Visual Verification** (Post-MVP)
 - Decode Sixel to image data
 - Compare against expected image (pixel-by-pixel or perceptual hash)
 - Integration with image testing libraries
@@ -189,6 +286,8 @@ pub struct SixelCapture {
 
 pub struct SixelSequence {
     raw: Vec<u8>,
+    position: (u16, u16),  // MVP: Cursor position when rendered
+    bounds: Rect,          // MVP: Calculated from position + dimensions
     width: u32,
     height: u32,
     colors: Vec<Color>,
@@ -198,6 +297,13 @@ impl SixelCapture {
     pub fn from_screen(state: &ScreenState) -> Self;
     pub fn validate(&self) -> Result<()>;
     pub fn compare(&self, expected: &SixelCapture) -> Result<()>;
+
+    // MVP: Position-based queries
+    pub fn is_empty(&self) -> bool;
+    pub fn sequences_in_area(&self, area: Rect) -> Vec<&SixelSequence>;
+    pub fn sequences_outside_area(&self, area: Rect) -> Vec<&SixelSequence>;
+    pub fn assert_all_within(&self, area: Rect) -> Result<()>;
+    pub fn differs_from(&self, other: &SixelCapture) -> bool;
 }
 ```
 
@@ -257,8 +363,9 @@ term-test/
 │   ├── harness.rs          # Test harness (Layer 3)
 │   ├── snapshot.rs         # Snapshot testing (Layer 4)
 │   ├── ratatui.rs          # Ratatui helpers (Layer 5)
-│   ├── sixel.rs            # Sixel support
-│   ├── async_support.rs    # Async helpers
+│   ├── bevy.rs             # Bevy ECS integration (Layer 6) - MVP
+│   ├── sixel.rs            # Sixel support with position tracking - MVP
+│   ├── async_support.rs    # Async helpers (Tokio for MVP)
 │   └── util.rs             # Utilities
 ├── tests/
 │   ├── integration/        # Integration tests
@@ -386,6 +493,97 @@ async fn test_async_tui() -> Result<()> {
 }
 ```
 
+### Bevy TUI Test (dgx-pixels MVP Use Case)
+
+```rust
+use term_test::BevyTuiTestHarness;
+use dgx_pixels::{Job, JobStatus, Screen};
+
+#[tokio::test]
+async fn test_sixel_renders_in_preview_area() -> Result<()> {
+    // Create Bevy TUI test harness
+    let mut test = BevyTuiTestHarness::with_bevy_ratatui()?;
+
+    // Setup: Load test image
+    test.load_test_image("tests/fixtures/test-sprite.png")?;
+
+    // Navigate to Gallery screen (Tab or '2')
+    test.press_key(KeyCode::Char('2'))?;
+    test.update()?;  // Process navigation event
+    test.render_frame()?;
+
+    // Get preview area from component
+    let preview_panel = test.query::<PreviewPanel>().first().unwrap();
+    let preview_area = preview_panel.area;
+
+    // Assert: Sixel graphics are within preview area
+    test.assert_sixel_within(preview_area)?;
+    test.assert_no_sixel_outside(preview_area)?;
+
+    // Assert: On correct screen
+    test.assert_on_screen(Screen::Gallery)?;
+
+    Ok(())
+}
+
+#[tokio::test]
+async fn test_sixel_clears_on_screen_change() -> Result<()> {
+    let mut test = BevyTuiTestHarness::with_bevy_ratatui()?;
+
+    // Setup: Render image on Gallery screen
+    test.load_test_image("tests/fixtures/test-sprite.png")?;
+    test.press_key(KeyCode::Char('2'))?;  // Gallery
+    test.update()?;
+    test.render_frame()?;
+
+    // Verify image is rendered
+    assert!(test.has_sixel_graphics());
+    let sixel_before = test.capture_sixel_state()?;
+
+    // Navigate to different screen
+    test.press_key(KeyCode::Char('1'))?;  // Generation screen
+    test.update()?;
+    test.render_frame()?;
+
+    // Assert: Sixel graphics are cleared
+    assert!(!test.has_sixel_graphics());
+    test.assert_on_screen(Screen::Generation)?;
+
+    // Verify state changed
+    let sixel_after = test.capture_sixel_state()?;
+    assert!(sixel_after.differs_from(&sixel_before));
+
+    Ok(())
+}
+
+#[tokio::test]
+async fn test_job_submission_creates_entity() -> Result<()> {
+    let mut test = BevyTuiTestHarness::with_bevy_ratatui()?;
+
+    // Navigate to Generation screen
+    test.press_key(KeyCode::Char('1'))?;
+    test.update()?;
+
+    // Type a prompt
+    test.type_text("pixel art sword")?;
+    test.update()?;
+
+    // Submit job
+    test.press_key(KeyCode::Enter)?;
+    test.update_n(2)?;  // Process input + event handler systems
+
+    // Query Bevy World for Job entity
+    let jobs = test.query::<Job>();
+    assert_eq!(jobs.len(), 1);
+
+    let job = jobs.first().unwrap();
+    assert_eq!(job.prompt, "pixel art sword");
+    assert_eq!(job.status, JobStatus::Pending);
+
+    Ok(())
+}
+```
+
 ## Dependencies
 
 ### Core Dependencies
@@ -394,13 +592,20 @@ async fn test_async_tui() -> Result<()> {
 - `thiserror` - Error handling
 - `serde` - Serialization (optional, for JSON snapshots)
 
-### Optional Dependencies
-- `expect-test` - Snapshot testing (feature: "expect-test")
-- `insta` - Snapshot testing (feature: "insta")
-- `tokio` - Async runtime support (feature: "tokio")
-- `async-std` - Async runtime support (feature: "async-std")
-- `ratatui` - Ratatui-specific helpers (feature: "ratatui")
-- `crossterm` - Event types (feature: "crossterm")
+### MVP Dependencies
+- `tokio` - Async runtime support (feature: "async-tokio") **MVP**
+- `bevy` - Bevy ECS integration (feature: "bevy") **MVP**
+- `bevy_ecs` - Bevy ECS (feature: "bevy") **MVP**
+- `bevy_ratatui` - bevy_ratatui plugin support (feature: "bevy-ratatui") **MVP**
+- `ratatui` - Ratatui helpers (feature: "ratatui-helpers") **MVP**
+- `crossterm` - Event types (feature: "ratatui-helpers") **MVP**
+- `insta` - Snapshot testing (feature: "snapshot-insta") **MVP**
+- `serde` - Serialization for snapshots (feature: "snapshot-insta") **MVP**
+- `serde_json` - JSON serialization (feature: "snapshot-insta") **MVP**
+
+### Post-MVP Dependencies
+- `async-std` - Async runtime support (feature: "async-async-std")
+- `expect-test` - Snapshot testing (feature: "snapshot-expect")
 - `image` - Sixel image comparison (feature: "sixel-image")
 
 ## Feature Flags
@@ -408,17 +613,35 @@ async fn test_async_tui() -> Result<()> {
 ```toml
 [features]
 default = []
-snapshot-expect = ["expect-test"]
-snapshot-insta = ["insta"]
+
+# MVP features
 async-tokio = ["tokio"]
-async-async-std = ["async-std"]
+bevy = ["dep:bevy", "bevy_ecs"]
+bevy-ratatui = ["bevy", "dep:bevy_ratatui"]
 ratatui-helpers = ["ratatui", "crossterm"]
-sixel-image = ["image"]
-full = [
-    "snapshot-expect",
-    "snapshot-insta",
+sixel = []  # Core Sixel support with position tracking
+snapshot-insta = ["insta", "serde", "serde_json"]
+
+# MVP bundle
+mvp = [
     "async-tokio",
+    "bevy",
+    "bevy-ratatui",
     "ratatui-helpers",
+    "sixel",
+    "snapshot-insta",
+]
+
+# Post-MVP features
+async-async-std = ["async-std"]
+snapshot-expect = ["expect-test"]
+sixel-image = ["image"]  # Advanced Sixel decoding
+
+# Full bundle (all features)
+full = [
+    "mvp",
+    "async-async-std",
+    "snapshot-expect",
     "sixel-image",
 ]
 ```

@@ -1,10 +1,14 @@
 # term-test
 
-> A Rust library for integration testing of terminal user interface (TUI) applications with first-class support for Ratatui and graphics protocols like Sixel.
+> A Rust library for integration testing of terminal user interface (TUI) applications with first-class support for Ratatui, Bevy ECS integration, and Sixel graphics protocols.
 
 ## Overview
 
-`term-test` bridges the gap between unit testing with Ratatui's `TestBackend` and real-world integration testing of TUI applications. It provides a PTY-based test harness that enables testing of features requiring actual terminal escape sequence processing, including Sixel image rendering, mouse events, terminal resize handling, and complex user interaction flows.
+`term-test` bridges the gap between unit testing with Ratatui's `TestBackend` and real-world integration testing of TUI applications. It provides a PTY-based test harness that enables testing of features requiring actual terminal escape sequence processing, including **Sixel graphics position verification**, **Bevy ECS integration**, **bevy_ratatui support**, and complex user interaction flows.
+
+### MVP Goal
+
+Built to enable comprehensive integration testing for the [**dgx-pixels**](https://github.com/raibid-labs/dgx-pixels) project - a Bevy-based TUI application with Sixel graphics support.
 
 ### Why term-test?
 
@@ -19,18 +23,33 @@
 
 ### Key Features
 
-- **PTY-Based Testing**: Real terminal environment using `portable-pty`
-- **Graphics Support**: First-class Sixel testing with validation and comparison
-- **Event Simulation**: Keyboard, mouse, and terminal resize events
-- **Smart Waiting**: Condition-based waiting with timeouts
-- **Snapshot Testing**: Integration with `insta` and `expect-test`
-- **Async Support**: Test async Ratatui apps with Tokio or async-std
-- **Ratatui Helpers**: Widget-specific assertions and layout verification
-- **Cross-Platform**: Linux, macOS, and Windows support
+**MVP (v0.1.0)**:
+- ✅ **PTY-Based Testing**: Real terminal environment using `portable-pty`
+- ✅ **Sixel Position Tracking**: Verify graphics render at correct coordinates and within bounds
+- ✅ **Bevy ECS Integration**: Query entities, control update cycles, test Bevy systems
+- ✅ **bevy_ratatui Support**: First-class integration with bevy_ratatui plugin
+- ✅ **Event Simulation**: Keyboard events for navigation and input
+- ✅ **Smart Waiting**: Condition-based waiting with timeouts
+- ✅ **Snapshot Testing**: Integration with `insta`
+- ✅ **Tokio Async Support**: Test async TUI apps
+- ✅ **High-Level Assertions**: Ergonomic API (text_at, cursor_position, sixel_within, etc.)
+- ✅ **CI/CD Ready**: Headless testing without X11/Wayland
+
+**Post-MVP**:
+- Mouse and resize events
+- expect-test integration
+- async-std support
+- Cross-platform (macOS, Windows)
+- Visual Sixel comparison
 
 ## Status
 
-**🚧 This project is in the research and design phase. See [ROADMAP.md](./docs/ROADMAP.md) for implementation plan.**
+**🚧 Research & Design Phase Complete → Implementation Starting**
+
+**MVP Target**: v0.1.0 in 3-4 months (Phases 1-6)
+**Primary Use Case**: dgx-pixels integration testing
+
+See [ROADMAP.md](./docs/ROADMAP.md) for detailed implementation plan and [DGX_PIXELS_REQUIREMENTS.md](./docs/DGX_PIXELS_REQUIREMENTS.md) for MVP requirements analysis.
 
 ## Quick Example
 
@@ -63,25 +82,51 @@ fn test_navigation() -> Result<()> {
 }
 ```
 
-## Testing Sixel Graphics
+## Testing Sixel Graphics (MVP Use Case)
 
 ```rust
-use term_test::{TuiTestHarness, SixelCapture};
+use term_test::BevyTuiTestHarness;
 
-#[test]
-fn test_image_rendering() -> Result<()> {
-    let mut harness = TuiTestHarness::new(80, 40)?;
-    harness.spawn(Command::new("./image-viewer"))?;
+#[tokio::test]
+async fn test_sixel_renders_in_preview_area() -> Result<()> {
+    let mut test = BevyTuiTestHarness::with_bevy_ratatui()?;
 
-    harness.send_text("open test.png\n")?;
+    // Load test image and navigate to Gallery
+    test.load_test_image("tests/fixtures/test-sprite.png")?;
+    test.press_key(KeyCode::Char('2'))?;  // Gallery screen
+    test.update()?;
+    test.render_frame()?;
 
-    // Capture and validate Sixel output
-    let sixel = SixelCapture::from_screen(&harness.state)?;
-    sixel.validate()?;
+    // Get preview area from Bevy component
+    let preview_panel = test.query::<PreviewPanel>().first().unwrap();
+    let preview_area = preview_panel.area;
 
-    // Compare with reference
-    let expected = SixelCapture::from_file("tests/fixtures/expected.six")?;
-    sixel.compare(&expected)?;
+    // Assert: Sixel graphics within bounds
+    test.assert_sixel_within(preview_area)?;
+    test.assert_no_sixel_outside(preview_area)?;
+
+    Ok(())
+}
+
+#[tokio::test]
+async fn test_sixel_clears_on_screen_change() -> Result<()> {
+    let mut test = BevyTuiTestHarness::with_bevy_ratatui()?;
+
+    // Render image on Gallery screen
+    test.load_test_image("tests/fixtures/test-sprite.png")?;
+    test.press_key(KeyCode::Char('2'))?;
+    test.update()?;
+    test.render_frame()?;
+
+    assert!(test.has_sixel_graphics());
+
+    // Navigate away
+    test.press_key(KeyCode::Char('1'))?;  // Generation screen
+    test.update()?;
+    test.render_frame()?;
+
+    // Assert: Sixel cleared
+    assert!(!test.has_sixel_graphics());
 
     Ok(())
 }
@@ -118,23 +163,32 @@ fn test_image_rendering() -> Result<()> {
   - Property-based testing for TUIs
   - Testing strategy recommendations for different application types
 
-- **[ROADMAP.md](./docs/ROADMAP.md)** - Detailed implementation roadmap from MVP to 1.0:
-  - 8 development phases with clear milestones
-  - Version planning (v0.1.0 through v1.0.0)
-  - Dependency specifications
-  - Risk mitigation strategies
-  - Success metrics
-  - Future enhancements (record/replay, visual regression, fuzzing)
+- **[ROADMAP.md](./docs/ROADMAP.md)** - **Updated for dgx-pixels MVP**:
+  - MVP definition (v0.1.0 in 3-4 months)
+  - 6 MVP phases + 2 post-MVP phases
+  - Focus on Bevy integration and Sixel position tracking
+  - dgx-pixels integration checklist
+  - Version planning and timeline estimates
+  - Risk mitigation for critical features
+
+- **[DGX_PIXELS_REQUIREMENTS.md](./docs/DGX_PIXELS_REQUIREMENTS.md)** - **MVP Requirements Analysis**:
+  - Gap analysis from GitHub Issue #1
+  - Detailed use case mapping
+  - Sixel position tracking requirements
+  - Bevy ECS integration design
+  - API comparison and enhancements needed
+  - Implementation priority adjustments
 
 ### 🎯 Quick Navigation
 
 | Topic | Document | Key Sections |
 |-------|----------|--------------|
-| **Getting Started** | ARCHITECTURE.md | Example Usage, Dependencies |
+| **MVP Requirements** | DGX_PIXELS_REQUIREMENTS.md | Use Cases, Gap Analysis, Roadmap Adjustments |
+| **Implementation Plan** | ROADMAP.md | MVP Phases 1-6, Timeline, dgx-pixels Checklist |
+| **API Design** | ARCHITECTURE.md | Bevy Integration, Sixel Position Tracking |
 | **Understand the Problem** | EXISTING_SOLUTIONS.md | Gap Analysis, Comparison Matrix |
 | **Testing Strategies** | TESTING_APPROACHES.md | Testing Pyramid, Common Patterns |
 | **Technical Research** | RESEARCH.md | VTE vs vt100, PTY Libraries, Sixel Testing |
-| **Implementation Plan** | ROADMAP.md | Phases, Milestones, Timeline |
 
 ## How term-test Complements Existing Tools
 
@@ -200,15 +254,24 @@ See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for complete details.
 
 ## Roadmap Summary
 
-### Near-term Milestones
+### MVP (v0.1.0) - 3-4 months
 
-- **v0.1.0** - Basic PTY harness, text-based testing
-- **v0.2.0** - Full event simulation, smart waiting
-- **v0.3.0** - Snapshot testing integration
-- **v0.4.0** - Async support (Tokio, async-std)
-- **v0.5.0** - Sixel and graphics testing
-- **v0.6.0** - Ratatui-specific helpers
-- **v1.0.0** - Production ready, complete documentation
+**Target**: Enable dgx-pixels integration testing
+
+- **Phase 1**: Core PTY + Cursor Tracking (2-3 weeks)
+- **Phase 2**: Events + Tokio Async (1-2 weeks)
+- **Phase 3**: Sixel Position Tracking ⭐ (2-3 weeks)
+- **Phase 4**: Bevy ECS Integration ⭐ (2-3 weeks)
+- **Phase 5**: Snapshots + Assertions (1-2 weeks)
+- **Phase 6**: Polish + Docs (2-3 weeks)
+
+**Success Criteria**: dgx-pixels can detect and prevent Sixel positioning/persistence bugs
+
+### Post-MVP
+
+- **v0.2.0** - Enhanced features (mouse, resize, async-std)
+- **v0.3.0** - Cross-platform (macOS, Windows)
+- **v1.0.0** - Production ready, stable API
 
 See [ROADMAP.md](./docs/ROADMAP.md) for the complete implementation plan.
 
@@ -253,4 +316,6 @@ TBD (likely MIT or MIT/Apache-2.0 dual license)
 
 ---
 
-**Status**: 🚧 Research & Design Phase - See [ROADMAP.md](./docs/ROADMAP.md) for implementation timeline
+**Status**: 🚧 Research & Design Phase Complete → Ready for Phase 1 Implementation
+**MVP Target**: v0.1.0 for dgx-pixels in 3-4 months
+**See**: [ROADMAP.md](./docs/ROADMAP.md) | [DGX_PIXELS_REQUIREMENTS.md](./docs/DGX_PIXELS_REQUIREMENTS.md)
