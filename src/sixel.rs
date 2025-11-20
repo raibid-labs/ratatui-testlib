@@ -3,20 +3,86 @@
 //! This module provides functionality for detecting, parsing, and validating
 //! Sixel escape sequences in terminal output, with a focus on position tracking
 //! and bounds checking.
+//!
+//! # Overview
+//!
+//! Sixel is a bitmap graphics format supported by some terminal emulators. This
+//! module helps test TUI applications that render Sixel graphics by:
+//!
+//! - Capturing Sixel sequences from terminal output
+//! - Tracking position and dimensions of Sixel graphics
+//! - Validating that Sixel graphics appear within expected bounds
+//! - Detecting Sixel clearing on screen transitions
+//!
+//! # Key Types
+//!
+//! - [`SixelSequence`]: Represents a single Sixel graphic with position/bounds
+//! - [`SixelCapture`]: Collection of captured Sixel sequences with query methods
+//!
+//! # Example
+//!
+//! ```rust
+//! # #[cfg(feature = "sixel")]
+//! # {
+//! use term_test::{TuiTestHarness, ScreenState};
+//!
+//! # fn test_sixel() -> term_test::Result<()> {
+//! let mut harness = TuiTestHarness::new(80, 24)?;
+//! // ... spawn app and render Sixel graphics ...
+//!
+//! // Define the preview area where Sixel graphics should appear
+//! let preview_area = (5, 5, 30, 15); // (row, col, width, height)
+//!
+//! // Check that all Sixel graphics are within bounds
+//! let regions = harness.state().sixel_regions();
+//! for region in regions {
+//!     let within_bounds = region.start_row >= preview_area.0
+//!         && region.start_col >= preview_area.1
+//!         && (region.start_row as u32 + region.height / 6) <= (preview_area.0 as u32 + preview_area.3 as u32)
+//!         && (region.start_col as u32 + region.width / 8) <= (preview_area.1 as u32 + preview_area.2 as u32);
+//!     assert!(within_bounds, "Sixel at ({}, {}) is outside preview area",
+//!         region.start_row, region.start_col);
+//! }
+//! # Ok(())
+//! # }
+//! # }
+//! ```
 
 use crate::error::{Result, TermTestError};
 
 /// Represents a captured Sixel sequence with position information.
 ///
-/// This is the core type for Sixel testing in the MVP, tracking where
-/// Sixel graphics are rendered on the screen.
+/// This is the core type for Sixel testing, tracking where Sixel graphics
+/// are rendered on the screen along with their dimensions.
+///
+/// # Fields
+///
+/// - `raw`: The raw Sixel escape sequence bytes (including DCS wrapper)
+/// - `position`: Cursor position when the Sixel was rendered (row, col)
+/// - `bounds`: Calculated bounding rectangle (row, col, width, height)
+///
+/// # Example
+///
+/// ```rust
+/// use term_test::sixel::SixelSequence;
+///
+/// let seq = SixelSequence::new(
+///     vec![/* raw bytes */],
+///     (5, 10),           // position
+///     (5, 10, 100, 50),  // bounds
+/// );
+///
+/// // Check if within a preview area
+/// let preview_area = (0, 0, 200, 100);
+/// assert!(seq.is_within(preview_area));
+/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct SixelSequence {
-    /// Raw Sixel escape sequence bytes
+    /// Raw Sixel escape sequence bytes (including DCS wrapper).
     pub raw: Vec<u8>,
-    /// Cursor position when the Sixel was rendered (row, col)
+    /// Cursor position when the Sixel was rendered (row, col).
     pub position: (u16, u16),
-    /// Calculated bounding rectangle (row, col, width, height)
+    /// Calculated bounding rectangle (row, col, width, height).
     pub bounds: (u16, u16, u16, u16),
 }
 
@@ -36,11 +102,33 @@ impl SixelSequence {
         }
     }
 
-    /// Checks if this Sixel is within the specified area.
+    /// Checks if this Sixel is completely within the specified area.
+    ///
+    /// Returns `true` only if the entire Sixel bounding rectangle fits within
+    /// the given area. This is useful for verifying that graphics don't overflow
+    /// their designated regions.
     ///
     /// # Arguments
     ///
     /// * `area` - Area as (row, col, width, height)
+    ///
+    /// # Returns
+    ///
+    /// `true` if the Sixel is entirely within the area, `false` otherwise.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use term_test::sixel::SixelSequence;
+    ///
+    /// let seq = SixelSequence::new(vec![], (5, 5), (5, 5, 10, 10));
+    /// let area = (0, 0, 20, 20);
+    ///
+    /// assert!(seq.is_within(area)); // Completely inside
+    ///
+    /// let small_area = (0, 0, 10, 10);
+    /// assert!(!seq.is_within(small_area)); // Extends beyond
+    /// ```
     pub fn is_within(&self, area: (u16, u16, u16, u16)) -> bool {
         let (row, col, width, height) = self.bounds;
         let (area_row, area_col, area_width, area_height) = area;
@@ -53,9 +141,29 @@ impl SixelSequence {
 
     /// Checks if this Sixel overlaps with the specified area.
     ///
+    /// Returns `true` if any part of the Sixel bounding rectangle intersects
+    /// with the given area. This is useful for detecting unwanted graphics in
+    /// certain screen regions.
+    ///
     /// # Arguments
     ///
     /// * `area` - Area as (row, col, width, height)
+    ///
+    /// # Returns
+    ///
+    /// `true` if the Sixel overlaps with the area, `false` if completely separate.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use term_test::sixel::SixelSequence;
+    ///
+    /// let seq = SixelSequence::new(vec![], (5, 5), (5, 5, 10, 10));
+    ///
+    /// assert!(seq.overlaps((0, 0, 10, 10))); // Partial overlap
+    /// assert!(seq.overlaps((10, 10, 10, 10))); // Edge overlap
+    /// assert!(!seq.overlaps((0, 0, 5, 5))); // No overlap
+    /// ```
     pub fn overlaps(&self, area: (u16, u16, u16, u16)) -> bool {
         let (row, col, width, height) = self.bounds;
         let (area_row, area_col, area_width, area_height) = area;
@@ -70,15 +178,53 @@ impl SixelSequence {
 /// Captures all Sixel sequences from terminal output.
 ///
 /// This type provides methods for querying and validating Sixel graphics
-/// in the terminal screen state.
+/// in the terminal screen state. It's the main interface for Sixel testing,
+/// offering:
+///
+/// - Query methods to find Sixel graphics by location
+/// - Validation methods to assert correct positioning
+/// - Comparison methods to detect Sixel clearing
+///
+/// # Example
+///
+/// ```rust
+/// # #[cfg(feature = "sixel")]
+/// # {
+/// use term_test::sixel::SixelCapture;
+/// use term_test::ScreenState;
+///
+/// # fn test() -> term_test::Result<()> {
+/// let screen = ScreenState::new(80, 24);
+/// let capture = SixelCapture::from_screen_state(&screen);
+///
+/// // Verify no Sixel graphics outside preview area
+/// let preview_area = (5, 5, 30, 20);
+/// capture.assert_all_within(preview_area)?;
+///
+/// // Check for Sixel graphics in specific region
+/// let sequences = capture.sequences_in_area(preview_area);
+/// println!("Found {} Sixel graphics in preview", sequences.len());
+/// # Ok(())
+/// # }
+/// # }
+/// ```
 #[derive(Debug, Clone, PartialEq)]
 pub struct SixelCapture {
-    /// All captured Sixel sequences
+    /// All captured Sixel sequences.
     sequences: Vec<SixelSequence>,
 }
 
 impl SixelCapture {
     /// Creates a new empty Sixel capture.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use term_test::sixel::SixelCapture;
+    ///
+    /// let capture = SixelCapture::new();
+    /// assert!(capture.is_empty());
+    /// ```
     pub fn new() -> Self {
         Self {
             sequences: Vec::new(),
@@ -108,21 +254,90 @@ impl SixelCapture {
         Self::new()
     }
 
+    /// Creates a Sixel capture from a ScreenState.
+    ///
+    /// This extracts all detected Sixel sequences from the screen state.
+    ///
+    /// # Arguments
+    ///
+    /// * `screen` - Reference to the ScreenState containing Sixel information
+    pub fn from_screen_state(screen: &crate::screen::ScreenState) -> Self {
+        use crate::screen::SixelRegion;
+
+        let sequences = screen.sixel_regions()
+            .iter()
+            .map(|region: &SixelRegion| {
+                SixelSequence::new(
+                    region.data.clone(),
+                    (region.start_row, region.start_col),
+                    (region.start_row, region.start_col, region.width as u16, region.height as u16),
+                )
+            })
+            .collect();
+
+        Self { sequences }
+    }
+
     /// Returns all captured sequences.
+    ///
+    /// # Returns
+    ///
+    /// A slice containing all Sixel sequences captured from the screen state.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use term_test::sixel::SixelCapture;
+    ///
+    /// let capture = SixelCapture::new();
+    /// let sequences = capture.sequences();
+    /// println!("Captured {} Sixel graphics", sequences.len());
+    /// ```
     pub fn sequences(&self) -> &[SixelSequence] {
         &self.sequences
     }
 
     /// Checks if any Sixel sequences were captured.
+    ///
+    /// # Returns
+    ///
+    /// `true` if no Sixel sequences were captured, `false` otherwise.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use term_test::sixel::SixelCapture;
+    ///
+    /// let capture = SixelCapture::new();
+    /// assert!(capture.is_empty());
+    /// ```
     pub fn is_empty(&self) -> bool {
         self.sequences.is_empty()
     }
 
-    /// Returns sequences within the specified area.
+    /// Returns sequences that are completely within the specified area.
+    ///
+    /// This filters the captured sequences to only those whose bounding
+    /// rectangles are entirely contained within the given area.
     ///
     /// # Arguments
     ///
     /// * `area` - Area as (row, col, width, height)
+    ///
+    /// # Returns
+    ///
+    /// A vector of references to sequences within the area.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use term_test::sixel::SixelCapture;
+    ///
+    /// let capture = SixelCapture::new();
+    /// let preview_area = (5, 5, 30, 20);
+    /// let sequences = capture.sequences_in_area(preview_area);
+    /// println!("Found {} graphics in preview area", sequences.len());
+    /// ```
     pub fn sequences_in_area(&self, area: (u16, u16, u16, u16)) -> Vec<&SixelSequence> {
         self.sequences
             .iter()
@@ -130,11 +345,29 @@ impl SixelCapture {
             .collect()
     }
 
-    /// Returns sequences outside the specified area.
+    /// Returns sequences that are not completely within the specified area.
+    ///
+    /// This is the inverse of [`sequences_in_area`](Self::sequences_in_area).
+    /// It returns sequences that extend beyond the area boundaries.
     ///
     /// # Arguments
     ///
     /// * `area` - Area as (row, col, width, height)
+    ///
+    /// # Returns
+    ///
+    /// A vector of references to sequences outside or partially outside the area.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use term_test::sixel::SixelCapture;
+    ///
+    /// let capture = SixelCapture::new();
+    /// let preview_area = (5, 5, 30, 20);
+    /// let outside = capture.sequences_outside_area(preview_area);
+    /// assert_eq!(outside.len(), 0, "No graphics should be outside preview area");
+    /// ```
     pub fn sequences_outside_area(&self, area: (u16, u16, u16, u16)) -> Vec<&SixelSequence> {
         self.sequences
             .iter()
@@ -166,11 +399,37 @@ impl SixelCapture {
 
     /// Checks if this capture differs from another.
     ///
-    /// Useful for detecting Sixel clearing on screen transitions.
+    /// This method compares two captures to detect changes in Sixel state,
+    /// which is useful for verifying that Sixel graphics are cleared on
+    /// screen transitions.
     ///
     /// # Arguments
     ///
     /// * `other` - Other capture to compare with
+    ///
+    /// # Returns
+    ///
+    /// `true` if the captures contain different Sixel sequences, `false` if identical.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use term_test::sixel::SixelCapture;
+    /// use term_test::ScreenState;
+    ///
+    /// let screen1 = ScreenState::new(80, 24);
+    /// let capture1 = SixelCapture::from_screen_state(&screen1);
+    ///
+    /// // ... screen transition occurs ...
+    ///
+    /// let screen2 = ScreenState::new(80, 24);
+    /// let capture2 = SixelCapture::from_screen_state(&screen2);
+    ///
+    /// // Verify Sixel graphics were cleared
+    /// if capture1.differs_from(&capture2) {
+    ///     println!("Sixel state changed during transition");
+    /// }
+    /// ```
     pub fn differs_from(&self, other: &SixelCapture) -> bool {
         self.sequences != other.sequences
     }

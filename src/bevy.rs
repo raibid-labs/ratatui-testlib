@@ -2,7 +2,55 @@
 //!
 //! This module provides a test harness that wraps both the TUI test harness
 //! and a Bevy App, enabling comprehensive testing of applications built with
-//! bevy_ratatui.
+//! bevy_ratatui or other Bevy-based TUI frameworks.
+//!
+//! # Overview
+//!
+//! [`BevyTuiTestHarness`] combines terminal testing with Bevy ECS capabilities:
+//!
+//! - Run Bevy update cycles frame-by-frame
+//! - Query ECS entities and components
+//! - Test system execution and state transitions
+//! - Verify terminal output from Bevy systems
+//! - Test Sixel graphics from Bevy rendering systems
+//!
+//! # Status
+//!
+//! This module is currently a stub implementation (Phase 1). Full Bevy integration
+//! will be implemented in Phase 4 after core PTY and Sixel support is validated.
+//!
+//! # Planned Features
+//!
+//! - Headless Bevy app initialization
+//! - Frame-by-frame update control
+//! - ECS entity/component queries
+//! - System execution testing
+//! - Integration with bevy_ratatui plugin
+//!
+//! # Example
+//!
+//! ```rust,no_run
+//! # #[cfg(feature = "bevy")]
+//! # {
+//! use term_test::BevyTuiTestHarness;
+//!
+//! # fn test() -> term_test::Result<()> {
+//! let mut test = BevyTuiTestHarness::new()?;
+//!
+//! // Run one Bevy frame
+//! test.update()?;
+//!
+//! // Run multiple frames
+//! test.update_n(5)?;
+//!
+//! // Render and check screen state
+//! test.render_frame()?;
+//! let state = test.state();
+//! assert!(state.contains("Game Over"));
+//! # Ok(())
+//! # }
+//! # }
+//! ```
 
 use crate::error::{Result, TermTestError};
 use crate::harness::TuiTestHarness;
@@ -16,17 +64,39 @@ use crate::sixel::SixelCapture;
 /// This combines TUI testing with Bevy ECS querying and update cycle control,
 /// specifically designed for testing applications built with bevy_ratatui.
 ///
+/// # Current Status
+///
+/// This is a Phase 1 stub implementation. The full Bevy integration will be
+/// added in Phase 4 after validating core PTY and Sixel capabilities.
+///
+/// # Planned Architecture
+///
+/// - Wraps a [`TuiTestHarness`] for terminal I/O
+/// - Contains a headless Bevy App for ECS operations
+/// - Provides frame-by-frame control of update cycles
+/// - Exposes ECS query methods for testing
+///
 /// # Example
 ///
 /// ```rust,no_run
-/// # #[cfg(feature = "bevy-ratatui")]
+/// # #[cfg(feature = "bevy")]
 /// # {
 /// use term_test::BevyTuiTestHarness;
 ///
-/// let mut test = BevyTuiTestHarness::new()?;
-/// test.update()?;  // Run one Bevy frame
+/// # fn test() -> term_test::Result<()> {
+/// let mut harness = BevyTuiTestHarness::new()?;
+///
+/// // Run one frame
+/// harness.update()?;
+///
+/// // Send input
+/// harness.send_text("quit\n")?;
+///
+/// // Wait for result
+/// harness.wait_for(|state| state.contains("Goodbye"))?;
+/// # Ok(())
 /// # }
-/// # Ok::<(), term_test::TermTestError>(())
+/// # }
 /// ```
 pub struct BevyTuiTestHarness {
     harness: TuiTestHarness,
@@ -37,9 +107,26 @@ pub struct BevyTuiTestHarness {
 impl BevyTuiTestHarness {
     /// Creates a new Bevy TUI test harness.
     ///
+    /// Initializes a new test harness with default terminal dimensions (80x24).
+    /// In Phase 4, this will also initialize a headless Bevy App.
+    ///
     /// # Errors
     ///
-    /// Returns an error if initialization fails.
+    /// Returns an error if terminal or Bevy initialization fails.
+    ///
+    /// # Example
+    ///
+    /// ```rust,no_run
+    /// # #[cfg(feature = "bevy")]
+    /// # {
+    /// use term_test::BevyTuiTestHarness;
+    ///
+    /// # fn test() -> term_test::Result<()> {
+    /// let mut harness = BevyTuiTestHarness::new()?;
+    /// # Ok(())
+    /// # }
+    /// # }
+    /// ```
     pub fn new() -> Result<Self> {
         let harness = TuiTestHarness::new(80, 24)?;
 
@@ -68,11 +155,27 @@ impl BevyTuiTestHarness {
 
     /// Runs one Bevy frame update.
     ///
-    /// This executes all Bevy systems for one frame.
+    /// This executes all Bevy systems for one frame. In Phase 4, this will
+    /// call `app.update()` on the contained Bevy App.
     ///
     /// # Errors
     ///
     /// Returns an error if the update fails.
+    ///
+    /// # Example
+    ///
+    /// ```rust,no_run
+    /// # #[cfg(feature = "bevy")]
+    /// # {
+    /// use term_test::BevyTuiTestHarness;
+    ///
+    /// # fn test() -> term_test::Result<()> {
+    /// let mut harness = BevyTuiTestHarness::new()?;
+    /// harness.update()?; // Run one frame
+    /// # Ok(())
+    /// # }
+    /// # }
+    /// ```
     pub fn update(&mut self) -> Result<()> {
         // TODO: Phase 4 - Implement Bevy update
         // This will call app.update()
@@ -127,19 +230,66 @@ impl BevyTuiTestHarness {
     }
 
     /// Returns the current screen state.
+    ///
+    /// Provides access to the terminal screen state for inspecting rendered
+    /// output from Bevy systems.
+    ///
+    /// # Returns
+    ///
+    /// A reference to the current [`ScreenState`].
+    ///
+    /// # Example
+    ///
+    /// ```rust,no_run
+    /// # #[cfg(feature = "bevy")]
+    /// # {
+    /// use term_test::BevyTuiTestHarness;
+    ///
+    /// # fn test() -> term_test::Result<()> {
+    /// let harness = BevyTuiTestHarness::new()?;
+    /// let state = harness.state();
+    /// println!("Cursor at: {:?}", state.cursor_position());
+    /// # Ok(())
+    /// # }
+    /// # }
+    /// ```
     pub fn state(&self) -> &ScreenState {
         self.harness.state()
     }
 
     /// Waits for a screen condition (delegates to inner harness).
     ///
+    /// This method repeatedly checks the screen state until the condition is met
+    /// or the timeout expires. Useful for waiting for Bevy systems to render output.
+    ///
     /// # Arguments
     ///
-    /// * `condition` - Condition to wait for
+    /// * `condition` - Condition function that receives the current screen state
     ///
     /// # Errors
     ///
-    /// Returns an error if timeout is reached.
+    /// Returns a [`TermTestError::Timeout`] if the condition is not met within
+    /// the configured timeout.
+    ///
+    /// # Example
+    ///
+    /// ```rust,no_run
+    /// # #[cfg(feature = "bevy")]
+    /// # {
+    /// use term_test::BevyTuiTestHarness;
+    ///
+    /// # fn test() -> term_test::Result<()> {
+    /// let mut harness = BevyTuiTestHarness::new()?;
+    /// harness.update()?;
+    ///
+    /// // Wait for specific text to appear
+    /// harness.wait_for(|state| {
+    ///     state.contains("Ready")
+    /// })?;
+    /// # Ok(())
+    /// # }
+    /// # }
+    /// ```
     pub fn wait_for<F>(&mut self, condition: F) -> Result<()>
     where
         F: Fn(&ScreenState) -> bool,

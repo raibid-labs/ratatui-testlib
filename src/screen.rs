@@ -1,19 +1,74 @@
 //! Terminal screen state management using vtparse with Sixel support.
+//!
+//! This module provides the core terminal emulation layer that tracks screen contents,
+//! cursor position, and Sixel graphics regions. It uses the [`vtparse`] crate to parse
+//! VT100/ANSI escape sequences.
+//!
+//! # Key Types
+//!
+//! - [`ScreenState`]: The main screen state tracking type
+//! - [`SixelRegion`]: Represents a Sixel graphics region with position and dimension info
+//!
+//! # Example
+//!
+//! ```rust
+//! use term_test::ScreenState;
+//!
+//! let mut screen = ScreenState::new(80, 24);
+//!
+//! // Feed terminal output
+//! screen.feed(b"Hello, World!");
+//!
+//! // Query screen contents
+//! assert!(screen.contains("Hello"));
+//! assert_eq!(screen.cursor_position(), (0, 13));
+//!
+//! // Check specific position
+//! assert_eq!(screen.text_at(0, 0), Some('H'));
+//! ```
 
 use vtparse::{VTActor, VTParser, CsiParam};
 
 /// Represents a Sixel graphics region in the terminal.
+///
+/// Sixel is a bitmap graphics format used by terminals to display images.
+/// This struct tracks the position and dimensions of Sixel graphics rendered
+/// on the screen, which is essential for verifying that graphics appear in
+/// the correct locations (e.g., within preview areas).
+///
+/// # Fields
+///
+/// - `start_row`: The row where the Sixel begins (0-indexed)
+/// - `start_col`: The column where the Sixel begins (0-indexed)
+/// - `width`: Width of the Sixel image in pixels
+/// - `height`: Height of the Sixel image in pixels
+/// - `data`: The raw Sixel escape sequence data
+///
+/// # Example
+///
+/// ```rust
+/// # use term_test::ScreenState;
+/// let mut screen = ScreenState::new(80, 24);
+///
+/// // After rendering a Sixel image...
+/// let regions = screen.sixel_regions();
+/// for region in regions {
+///     println!("Sixel at ({}, {}), size {}x{}",
+///         region.start_row, region.start_col,
+///         region.width, region.height);
+/// }
+/// ```
 #[derive(Debug, Clone)]
 pub struct SixelRegion {
-    /// Starting row (0-indexed)
+    /// Starting row (0-indexed).
     pub start_row: u16,
-    /// Starting column (0-indexed)
+    /// Starting column (0-indexed).
     pub start_col: u16,
-    /// Width in pixels
+    /// Width in pixels.
     pub width: u32,
-    /// Height in pixels
+    /// Height in pixels.
     pub height: u32,
-    /// Raw Sixel data
+    /// Raw Sixel escape sequence data.
     pub data: Vec<u8>,
 }
 
@@ -256,8 +311,38 @@ impl VTActor for TerminalState {
 
 /// Represents the current state of the terminal screen.
 ///
-/// This wraps a vtparse parser and provides methods to query screen contents,
-/// cursor position, cell attributes, and Sixel graphics regions.
+/// `ScreenState` is the core terminal emulator that tracks:
+/// - Text content at each cell position
+/// - Current cursor position
+/// - Sixel graphics regions (when rendered via DCS sequences)
+///
+/// It wraps a [`vtparse`] parser that processes VT100/ANSI escape sequences
+/// and maintains the screen state accordingly.
+///
+/// # Usage
+///
+/// The typical workflow is:
+/// 1. Create a `ScreenState` with desired dimensions
+/// 2. Feed PTY output bytes using [`feed()`](Self::feed)
+/// 3. Query the state using various accessor methods
+///
+/// # Example
+///
+/// ```rust
+/// use term_test::ScreenState;
+///
+/// let mut screen = ScreenState::new(80, 24);
+///
+/// // Feed some terminal output
+/// screen.feed(b"\x1b[2J"); // Clear screen
+/// screen.feed(b"\x1b[5;10H"); // Move cursor to (5, 10)
+/// screen.feed(b"Hello!");
+///
+/// // Query the state
+/// assert_eq!(screen.cursor_position(), (4, 16)); // 0-indexed
+/// assert_eq!(screen.text_at(4, 9), Some('H'));
+/// assert!(screen.contains("Hello"));
+/// ```
 pub struct ScreenState {
     parser: VTParser,
     state: TerminalState,
@@ -268,10 +353,22 @@ pub struct ScreenState {
 impl ScreenState {
     /// Creates a new screen state with the specified dimensions.
     ///
+    /// Initializes an empty screen filled with spaces, with the cursor at (0, 0).
+    ///
     /// # Arguments
     ///
     /// * `width` - Screen width in columns
     /// * `height` - Screen height in rows
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use term_test::ScreenState;
+    ///
+    /// let screen = ScreenState::new(80, 24);
+    /// assert_eq!(screen.size(), (80, 24));
+    /// assert_eq!(screen.cursor_position(), (0, 0));
+    /// ```
     pub fn new(width: u16, height: u16) -> Self {
         let parser = VTParser::new();
         let state = TerminalState::new(width, height);
@@ -286,19 +383,59 @@ impl ScreenState {
 
     /// Feeds data from the PTY to the parser.
     ///
-    /// This processes escape sequences and updates the screen state,
-    /// including tracking Sixel graphics via DCS callbacks.
+    /// This processes VT100/ANSI escape sequences and updates the screen state,
+    /// including:
+    /// - Text output
+    /// - Cursor movements
+    /// - Sixel graphics (tracked via DCS callbacks)
+    ///
+    /// This method can be called multiple times to incrementally feed data.
+    /// The parser maintains state across calls, so partial escape sequences
+    /// are handled correctly.
     ///
     /// # Arguments
     ///
     /// * `data` - Raw bytes from PTY output
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use term_test::ScreenState;
+    ///
+    /// let mut screen = ScreenState::new(80, 24);
+    ///
+    /// // Feed data incrementally
+    /// screen.feed(b"Hello, ");
+    /// screen.feed(b"World!");
+    ///
+    /// assert!(screen.contains("Hello, World!"));
+    /// ```
     pub fn feed(&mut self, data: &[u8]) {
         self.parser.parse(data, &mut self.state);
     }
 
     /// Returns the screen contents as a string.
     ///
-    /// This includes all visible characters, preserving layout.
+    /// This includes all visible characters, preserving layout with newlines
+    /// between rows. Empty cells are represented as spaces.
+    ///
+    /// # Returns
+    ///
+    /// A string containing the entire screen contents, with rows separated by newlines.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use term_test::ScreenState;
+    ///
+    /// let mut screen = ScreenState::new(10, 3);
+    /// screen.feed(b"Hello");
+    ///
+    /// let contents = screen.contents();
+    /// // First line contains "Hello     " (padded to 10 chars)
+    /// // Second and third lines are all spaces
+    /// assert!(contents.contains("Hello"));
+    /// ```
     pub fn contents(&self) -> String {
         self.state
             .cells
@@ -363,17 +500,61 @@ impl ScreenState {
 
     /// Returns all Sixel graphics regions currently on screen.
     ///
-    /// This is essential for Phase 3 Sixel position tracking.
+    /// This method provides access to all Sixel graphics that have been rendered
+    /// via DCS (Device Control String) sequences. Each region includes position
+    /// and dimension information.
+    ///
+    /// This is essential for verifying Sixel positioning in tests, particularly
+    /// for ensuring that graphics appear within designated preview areas.
+    ///
+    /// # Returns
+    ///
+    /// A slice of [`SixelRegion`] containing all detected Sixel graphics.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use term_test::ScreenState;
+    ///
+    /// let mut screen = ScreenState::new(80, 24);
+    /// // ... render some Sixel graphics ...
+    ///
+    /// let regions = screen.sixel_regions();
+    /// for (i, region) in regions.iter().enumerate() {
+    ///     println!("Region {}: position ({}, {}), size {}x{}",
+    ///         i, region.start_row, region.start_col,
+    ///         region.width, region.height);
+    /// }
+    /// ```
     pub fn sixel_regions(&self) -> &[SixelRegion] {
         &self.state.sixel_regions
     }
 
     /// Checks if a Sixel region exists at the given position.
     ///
+    /// This method checks if any Sixel region has its starting position
+    /// at the exact (row, col) coordinates provided.
+    ///
     /// # Arguments
     ///
-    /// * `row` - Row to check (0-based)
-    /// * `col` - Column to check (0-based)
+    /// * `row` - Row to check (0-indexed)
+    /// * `col` - Column to check (0-indexed)
+    ///
+    /// # Returns
+    ///
+    /// `true` if a Sixel region starts at the given position, `false` otherwise.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use term_test::ScreenState;
+    ///
+    /// let mut screen = ScreenState::new(80, 24);
+    /// // ... render Sixel at position (5, 10) ...
+    ///
+    /// assert!(screen.has_sixel_at(5, 10));
+    /// assert!(!screen.has_sixel_at(0, 0));
+    /// ```
     pub fn has_sixel_at(&self, row: u16, col: u16) -> bool {
         self.state.sixel_regions.iter().any(|region| {
             region.start_row == row && region.start_col == col
@@ -382,12 +563,21 @@ impl ScreenState {
 
     /// Returns the screen contents for debugging purposes.
     ///
-    /// This is similar to `contents()` but may include additional debug information.
+    /// This is currently an alias for [`contents()`](Self::contents), but may
+    /// include additional debug information in the future.
+    ///
+    /// # Returns
+    ///
+    /// A string containing the screen contents.
     pub fn debug_contents(&self) -> String {
         self.contents()
     }
 
     /// Checks if the screen contains the specified text.
+    ///
+    /// This is a convenience method that searches the entire screen contents
+    /// for the given substring. It's useful for simple text-based assertions
+    /// in tests.
     ///
     /// # Arguments
     ///
@@ -395,7 +585,20 @@ impl ScreenState {
     ///
     /// # Returns
     ///
-    /// `true` if the text appears anywhere on the screen
+    /// `true` if the text appears anywhere on the screen, `false` otherwise.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use term_test::ScreenState;
+    ///
+    /// let mut screen = ScreenState::new(80, 24);
+    /// screen.feed(b"Welcome to the application");
+    ///
+    /// assert!(screen.contains("Welcome"));
+    /// assert!(screen.contains("application"));
+    /// assert!(!screen.contains("goodbye"));
+    /// ```
     pub fn contains(&self, text: &str) -> bool {
         self.contents().contains(text)
     }

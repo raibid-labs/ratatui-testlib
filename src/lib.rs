@@ -18,7 +18,7 @@
 //!
 //! ```rust,no_run
 //! use term_test::{TuiTestHarness, Result};
-//! use std::process::Command;
+//! use portable_pty::CommandBuilder;
 //!
 //! #[test]
 //! fn test_my_tui_app() -> Result<()> {
@@ -26,7 +26,8 @@
 //!     let mut harness = TuiTestHarness::new(80, 24)?;
 //!
 //!     // Spawn your TUI application
-//!     harness.spawn(Command::new("./my-tui-app"))?;
+//!     let mut cmd = CommandBuilder::new("./my-tui-app");
+//!     harness.spawn(cmd)?;
 //!
 //!     // Wait for initial render
 //!     harness.wait_for(|state| {
@@ -42,6 +43,31 @@
 //!
 //!     Ok(())
 //! }
+//! ```
+//!
+//! ## Testing Sixel Graphics
+//!
+//! With the `sixel` feature enabled, you can verify Sixel graphics positioning:
+//!
+//! ```rust,no_run
+//! # #[cfg(feature = "sixel")]
+//! # {
+//! use term_test::TuiTestHarness;
+//!
+//! # fn test_sixel() -> term_test::Result<()> {
+//! let mut harness = TuiTestHarness::new(80, 24)?;
+//! // ... spawn your app and trigger Sixel rendering ...
+//!
+//! // Verify all Sixel graphics are within the preview area
+//! let preview_area = (5, 5, 30, 15); // row, col, width, height
+//! let sixel_regions = harness.state().sixel_regions();
+//! for region in sixel_regions {
+//!     assert!(region.start_row >= preview_area.0);
+//!     assert!(region.start_col >= preview_area.1);
+//! }
+//! # Ok(())
+//! # }
+//! # }
 //! ```
 //!
 //! ## Feature Flags
@@ -98,7 +124,7 @@ mod bevy;
 pub use error::{Result, TermTestError};
 pub use harness::TuiTestHarness;
 pub use pty::TestTerminal;
-pub use screen::ScreenState;
+pub use screen::{ScreenState, SixelRegion};
 
 #[cfg(feature = "sixel")]
 pub use sixel::{SixelCapture, SixelSequence};
