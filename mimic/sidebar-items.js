@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["TermTestError"],"mod":["events"],"struct":["BevyTuiTestHarness","Cell","CommandBuilder","ScreenState","SixelCapture","SixelRegion","SixelSequence","TestTerminal","TuiTestHarness"],"type":["Result"]};
+window.SIDEBAR_ITEMS = {"enum":["TermTestError"],"mod":["bevy","events","sixel"],"struct":["Cell","CommandBuilder","ScreenState","SixelRegion","TestTerminal","TuiTestHarness"],"type":["Result"]};
