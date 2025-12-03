@@ -49,6 +49,7 @@ bevy-ratatui = ["bevy", "dep:bevy_ratatui"]
 ratatui-helpers = ["ratatui", "crossterm"]
 sixel = []  # Core Sixel support with position tracking
 snapshot-insta = ["insta", "serde", "serde_json"]
+headless = []  # Headless mode for CI/CD (no display server required)
 
 # MVP bundle (all MVP features)
 mvp = [
@@ -96,6 +97,21 @@ required-features = ["async-tokio"]
 name = "bevy_test"
 path = "examples/bevy_test.rs"
 required-features = ["bevy-ratatui"]
+
+[[example]]
+name = "bevy_component_snapshot"
+path = "examples/bevy_component_snapshot.rs"
+required-features = ["bevy", "snapshot-insta"]
+
+[[example]]
+name = "headless_bevy"
+path = "examples/headless_bevy.rs"
+required-features = ["bevy"]
+
+[[example]]
+name = "benchmark_test"
+path = "examples/benchmark_test.rs"
+required-features = ["bevy"]
 
 [profile.dev]
 opt-level = 0
