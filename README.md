@@ -132,6 +132,66 @@ async fn test_sixel_clears_on_screen_change() -> Result<()> {
 }
 ```
 
+## Headless Mode for CI/CD
+
+The `headless` feature flag enables testing in environments without display servers (X11/Wayland), making it perfect for CI/CD pipelines:
+
+### Usage
+
+```toml
+# Cargo.toml
+[dev-dependencies]
+ratatui-testlib = { version = "0.1", features = ["bevy", "headless"] }
+```
+
+```bash
+# Run tests in headless mode
+cargo test --features bevy,headless
+
+# Works in Docker without DISPLAY
+docker run --rm rust:latest cargo test --features bevy,headless
+```
+
+### How It Works
+
+When the `headless` feature is enabled:
+- Bevy integration uses `MinimalPlugins` instead of `DefaultPlugins`
+- No windowing or rendering system initialization
+- No GPU or graphics driver dependencies
+- Terminal emulation remains fully functional via PTY
+
+### GitHub Actions Example
+
+```yaml
+name: Tests
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Run headless tests
+        run: cargo test --features bevy,headless
+        env:
+          DISPLAY: ""  # Ensure no display server
+```
+
+### When to Use Headless Mode
+
+✅ **Use headless mode when:**
+- Running tests in CI/CD (GitHub Actions, GitLab CI, etc.)
+- Testing in Docker containers
+- Running on headless servers
+- You don't need actual rendering/windowing
+
+❌ **Don't use headless mode when:**
+- Testing actual graphics rendering output
+- You need window management features
+- Testing display-specific behavior
+
 ## Documentation
 
 ### 📚 Core Documentation

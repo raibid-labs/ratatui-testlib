@@ -111,6 +111,8 @@ jobs:
           - "--features ratatui-helpers"
           - "--features sixel"
           - "--features snapshot-insta"
+          - "--features headless"
+          - "--features bevy,headless"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -231,6 +233,111 @@ jobs:
       - name: Build all examples
         run: cargo build --examples --all-features --verbose
 
+  # Headless testing - ensures tests work without display server
+  headless:
+    name: Headless Mode Tests
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-headless-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-headless-cargo-
+
+      - name: Verify no DISPLAY variable
+        run: |
+          if [ -n "$DISPLAY" ]; then
+            echo "Warning: DISPLAY is set to $DISPLAY"
+            unset DISPLAY
+          fi
+          echo "DISPLAY is not set (headless environment confirmed)"
+
+      - name: Run headless tests
+        timeout-minutes: 5
+        run: |
+          # Explicitly unset DISPLAY to simulate CI environment
+          unset DISPLAY
+          cargo test --features bevy,headless --verbose
+        env:
+          DISPLAY: ""
+
+      - name: Run all features in headless mode
+        timeout-minutes: 5
+        run: |
+          unset DISPLAY
+          cargo test --all-features --features headless --verbose
+        env:
+          DISPLAY: ""
+
+  # HeadlessBevyRunner tests - in-process Bevy testing for CI
+  headless-bevy-runner:
+    name: HeadlessBevyRunner Tests
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-headless-bevy-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-headless-bevy-cargo-
+
+      - name: Verify no DISPLAY variable
+        run: |
+          if [ -n "$DISPLAY" ]; then
+            echo "Unsetting DISPLAY for headless environment"
+            unset DISPLAY
+          fi
+          echo "Running in headless mode (no display server required)"
+
+      - name: Run HeadlessBevyRunner tests
+        timeout-minutes: 5
+        run: |
+          unset DISPLAY
+          cargo test --features bevy --lib headless --verbose
+        env:
+          DISPLAY: ""
+
+      - name: Run headless_bevy example
+        timeout-minutes: 3
+        run: |
+          unset DISPLAY
+          cargo run --example headless_bevy --features bevy --verbose
+        env:
+          DISPLAY: ""
+
+      - name: Test HeadlessBevyRunner with snapshot
+        timeout-minutes: 5
+        run: |
+          unset DISPLAY
+          cargo test --features bevy,snapshot-insta headless --verbose
+        env:
+          DISPLAY: ""
+
   # Minimum Supported Rust Version (MSRV) check
   msrv:
     name: Minimum Rust Version
@@ -263,7 +370,7 @@ jobs:
   ci-success:
     name: CI Success
     runs-on: ubuntu-latest
-    needs: [check, test, feature-tests, coverage, security-audit, examples, msrv]
+    needs: [check, test, feature-tests, coverage, security-audit, examples, headless, headless-bevy-runner, msrv]
     if: always()
     steps:
       - name: Check all jobs
@@ -274,6 +381,8 @@ jobs:
              [ "${{ needs.coverage.result }}" != "success" ] || \
              [ "${{ needs.security-audit.result }}" != "success" ] || \
              [ "${{ needs.examples.result }}" != "success" ] || \
+             [ "${{ needs.headless.result }}" != "success" ] || \
+             [ "${{ needs.headless-bevy-runner.result }}" != "success" ] || \
              [ "${{ needs.msrv.result }}" != "success" ]; then
             echo "One or more CI jobs failed"
             exit 1
