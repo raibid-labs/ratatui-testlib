@@ -213,6 +213,7 @@ pub use error::{Result, TermTestError};
 pub use events::{KeyCode, KeyEvent, Modifiers, MouseButton, MouseEvent, ScrollDirection};
 pub use golden::{GoldenFile, GoldenMetadata};
 pub use harness::{Axis, MemoryResults, RecordedEvent, TuiTestHarness};
+pub use navigation::{FocusInfo, HintElementType, HintLabel, NavMode, NavigationTestExt, PromptMarker, PromptMarkerType};
 pub use parallel::{
     IsolatedTerminal, PoolConfig, PoolStats, TerminalGuard, TerminalId, TerminalPool, TestContext,
 };
