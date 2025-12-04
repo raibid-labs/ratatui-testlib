@@ -235,6 +235,17 @@ impl From<crate::shared_state::SharedStateError> for TermTestError {
     }
 }
 
+// Conversion from tokio::task::JoinError
+#[cfg(feature = "async-tokio")]
+impl From<tokio::task::JoinError> for TermTestError {
+    fn from(err: tokio::task::JoinError) -> Self {
+        TermTestError::Io(io::Error::new(
+            io::ErrorKind::Other,
+            format!("Async task join error: {}", err),
+        ))
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -205,6 +205,9 @@ pub mod bevy;
 #[cfg(feature = "shared-state")]
 pub mod shared_state;
 
+#[cfg(feature = "async-tokio")]
+mod async_harness;
+
 // Public API exports
 pub use error::{Result, TermTestError};
 pub use events::{KeyCode, KeyEvent, Modifiers, MouseButton, MouseEvent, ScrollDirection};
@@ -218,6 +221,9 @@ pub use screen::{Cell, GridSnapshot, ITerm2Region, KittyRegion, Rect, ScreenStat
 pub use terminal_profiles::{
     ColorDepth, Feature, MouseProtocol, TerminalCapabilities, TerminalProfile,
 };
+
+#[cfg(feature = "async-tokio")]
+pub use async_harness::{AsyncTuiTestHarness, WaitResult};
 
 /// Re-export of [`ScreenState`] for clarity in stream-based parsing contexts.
 ///
