@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ControlMessage","IpcError"],"struct":["DaemonConfig","DaemonConfigBuilder","DaemonIpcClient","DaemonSharedMemory","DaemonTestHarness","ShmHeader","TerminalStateReader"],"trait":["DaemonTestExt"],"type":["IpcResult"]};
