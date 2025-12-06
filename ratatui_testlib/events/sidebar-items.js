@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["KeyCode"],"fn":["encode_key_event"],"struct":["KeyEvent","Modifiers"]};
+window.SIDEBAR_ITEMS = {"enum":["KeyCode","MouseButton","ScrollDirection"],"fn":["encode_key_event","encode_mouse_event"],"struct":["KeyEvent","Modifiers","MouseEvent"]};

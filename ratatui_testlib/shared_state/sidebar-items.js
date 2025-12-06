@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["SharedStateError"],"fn":["assert_grid_cell","assert_metric","snapshot_grid"],"struct":["MemoryMappedState"],"trait":["SharedStateAccess"],"type":["SharedStateResult"]};

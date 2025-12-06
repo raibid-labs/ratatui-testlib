@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ColorDepth","Feature","MouseProtocol","TerminalProfile"],"struct":["TerminalCapabilities"]};

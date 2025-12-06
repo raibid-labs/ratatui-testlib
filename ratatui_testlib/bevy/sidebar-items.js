@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["BevyTuiTestHarness"]};
+window.SIDEBAR_ITEMS = {"mod":["bench","headless","hybrid"],"struct":["BevyTuiTestHarness","ComponentSnapshot"]};

@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Unified graphics protocol detection and testing support."><title>ratatui_testlib::graphics - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ratatui_testlib" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.1 (ed61e7d7e 2025-11-07)" data-channel="1.91.1" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../static.files/storage-e2aeef58.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module graphics</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../ratatui_testlib/index.html">ratatui_<wbr>testlib</a><span class="version">0.2.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module graphics</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#supported-protocols" title="Supported Protocols">Supported Protocols</a></li><li><a href="#overview" title="Overview">Overview</a></li><li><a href="#key-types" title="Key Types">Key Types</a></li><li><a href="#example" title="Example">Example</a></li><li><a href="#protocol-details" title="Protocol Details">Protocol Details</a><ul><li><a href="#sixel" title="Sixel">Sixel</a></li><li><a href="#kitty-graphics-protocol" title="Kitty Graphics Protocol">Kitty Graphics Protocol</a></li><li><a href="#iterm2-inline-images" title="iTerm2 Inline Images">iTerm2 Inline Images</a></li></ul></li></ul><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#enums" title="Enums">Enums</a></li></ul></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="../index.html">In crate ratatui_<wbr>testlib</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">ratatui_testlib</a></div><h1>Module <span>graphics</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/ratatui_testlib/graphics.rs.html#1-1062">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Unified graphics protocol detection and testing support.</p>
+<p>This module provides comprehensive support for testing graphics protocols in terminal
+emulators, including Sixel, Kitty, and iTerm2 image protocols. It enables position
+tracking, bounds checking, and validation of graphics rendering in TUI applications.</p>
+<h2 id="supported-protocols"><a class="doc-anchor" href="#supported-protocols">§</a>Supported Protocols</h2>
+<ul>
+<li><strong>Sixel</strong>: DCS-based bitmap graphics (ESC P q … ESC )</li>
+<li><strong>Kitty</strong>: Advanced graphics protocol with APC sequences (ESC _ G … ESC )</li>
+<li><strong>iTerm2</strong>: Inline images via OSC 1337 (ESC ] 1337;File=… BEL)</li>
+</ul>
+<h2 id="overview"><a class="doc-anchor" href="#overview">§</a>Overview</h2>
+<p>Graphics protocols allow terminal emulators to display images and other visual
+content beyond plain text. This module helps test TUI applications that use these
+protocols by:</p>
+<ul>
+<li>Capturing graphics sequences from terminal output</li>
+<li>Tracking position and dimensions of graphics</li>
+<li>Validating that graphics appear within expected bounds</li>
+<li>Detecting graphics clearing on screen transitions</li>
+<li>Supporting protocol-specific queries and filtering</li>
+</ul>
+<h2 id="key-types"><a class="doc-anchor" href="#key-types">§</a>Key Types</h2>
+<ul>
+<li><a href="enum.GraphicsProtocol.html" title="enum ratatui_testlib::graphics::GraphicsProtocol"><code>GraphicsProtocol</code></a>: Enum identifying the protocol type</li>
+<li><a href="struct.GraphicsRegion.html" title="struct ratatui_testlib::graphics::GraphicsRegion"><code>GraphicsRegion</code></a>: Represents a single graphic with position/bounds</li>
+<li><a href="struct.GraphicsCapture.html" title="struct ratatui_testlib::graphics::GraphicsCapture"><code>GraphicsCapture</code></a>: Collection of captured graphics with query methods</li>
+</ul>
+<h2 id="example"><a class="doc-anchor" href="#example">§</a>Example</h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ratatui_testlib::{
+    graphics::{GraphicsCapture, GraphicsProtocol},
+    ScreenState, TuiTestHarness,
+};
+
+<span class="kw">let </span><span class="kw-2">mut </span>harness = TuiTestHarness::new(<span class="number">80</span>, <span class="number">24</span>)<span class="question-mark">?</span>;
+<span class="comment">// ... spawn app and render graphics ...
+
+// Define the preview area where graphics should appear
+</span><span class="kw">let </span>preview_area = (<span class="number">5</span>, <span class="number">5</span>, <span class="number">30</span>, <span class="number">15</span>); <span class="comment">// (row, col, width, height)
+
+// Check that all graphics are within bounds
+</span><span class="kw">let </span>capture = GraphicsCapture::from_screen_state(harness.state());
+capture.assert_all_within(preview_area)<span class="question-mark">?</span>;
+
+<span class="comment">// Filter by protocol type
+</span><span class="kw">let </span>sixel_graphics = capture.by_protocol(GraphicsProtocol::Sixel);
+<span class="macro">assert_eq!</span>(sixel_graphics.len(), <span class="number">1</span>);</code></pre></div><h2 id="protocol-details"><a class="doc-anchor" href="#protocol-details">§</a>Protocol Details</h2><h3 id="sixel"><a class="doc-anchor" href="#sixel">§</a>Sixel</h3>
+<p>Sixel is a bitmap graphics format supported by terminals like XTerm, WezTerm, and foot.
+Sequences are wrapped in DCS (Device Control String):</p>
+<div class="example-wrap"><pre class="language-text"><code>ESC P q &lt;raster_attributes&gt; &lt;sixel_data&gt; ESC \</code></pre></div>
+<p>Raster attributes specify dimensions in the format <code>"Pan;Pad;Ph;Pv</code> where:</p>
+<ul>
+<li><code>Ph</code>: Horizontal pixel dimension (width)</li>
+<li><code>Pv</code>: Vertical pixel dimension (height)</li>
+</ul>
+<h3 id="kitty-graphics-protocol"><a class="doc-anchor" href="#kitty-graphics-protocol">§</a>Kitty Graphics Protocol</h3>
+<p>Kitty’s graphics protocol uses APC (Application Program Command) sequences:</p>
+<div class="example-wrap"><pre class="language-text"><code>ESC _ G &lt;control_data&gt; ; &lt;payload&gt; ESC \</code></pre></div>
+<p>Control data includes key-value pairs for actions, formats, dimensions, etc.
+The protocol supports multiple transmission methods and progressive loading.</p>
+<h3 id="iterm2-inline-images"><a class="doc-anchor" href="#iterm2-inline-images">§</a>iTerm2 Inline Images</h3>
+<p>iTerm2 uses OSC (Operating System Command) sequences for inline images:</p>
+<div class="example-wrap"><pre class="language-text"><code>ESC ] 1337 ; File = &lt;params&gt; : &lt;base64_data&gt; BEL</code></pre></div>
+<p>Parameters include filename, width, height, inline status, and preserve aspect ratio.</p>
+</div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.GraphicsCapture.html" title="struct ratatui_testlib::graphics::GraphicsCapture">Graphics<wbr>Capture</a></dt><dd>Captures all graphics sequences from terminal output.</dd><dt><a class="struct" href="struct.GraphicsRegion.html" title="struct ratatui_testlib::graphics::GraphicsRegion">Graphics<wbr>Region</a></dt><dd>Represents a captured graphics region with position information.</dd></dl><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><dl class="item-table"><dt><a class="enum" href="enum.GraphicsProtocol.html" title="enum ratatui_testlib::graphics::GraphicsProtocol">Graphics<wbr>Protocol</a></dt><dd>Identifies the graphics protocol used for rendering.</dd></dl></section></div></main></body></html>

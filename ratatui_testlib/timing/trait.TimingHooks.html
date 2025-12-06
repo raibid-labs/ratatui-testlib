@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Trait for test harnesses that support timing hooks."><title>TimingHooks in ratatui_testlib::timing - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ratatui_testlib" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.1 (ed61e7d7e 2025-11-07)" data-channel="1.91.1" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../static.files/storage-e2aeef58.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">TimingHooks</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../ratatui_testlib/index.html">ratatui_<wbr>testlib</a><span class="version">0.2.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Timing<wbr>Hooks</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#example-implementation" title="Example Implementation">Example Implementation</a></li></ul><h3><a href="#required-methods">Required Methods</a></h3><ul class="block"><li><a href="#tymethod.assert_latency_within" title="assert_latency_within">assert_latency_within</a></li><li><a href="#tymethod.get_timings" title="get_timings">get_timings</a></li><li><a href="#tymethod.measure_latency" title="measure_latency">measure_latency</a></li><li><a href="#tymethod.record_event" title="record_event">record_event</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><div id="rustdoc-modnav"><h2><a href="index.html">In ratatui_<wbr>testlib::<wbr>timing</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">ratatui_testlib</a>::<wbr><a href="index.html">timing</a></div><h1>Trait <span class="trait">Timing<wbr>Hooks</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/ratatui_testlib/timing.rs.html#722-762">Source</a> </span></div><pre class="rust item-decl"><code>pub trait TimingHooks {
+    // Required methods
+    fn <a href="#tymethod.record_event" class="fn">record_event</a>(&amp;mut self, event_name: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>);
+<span class="item-spacer"></span>    fn <a href="#tymethod.measure_latency" class="fn">measure_latency</a>(
+        &amp;self,
+        start_event: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+        end_event: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+    ) -&gt; <a class="enum" href="https://doc.rust-lang.org/1.91.1/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.91.1/core/time/struct.Duration.html" title="struct core::time::Duration">Duration</a>&gt;;
+<span class="item-spacer"></span>    fn <a href="#tymethod.get_timings" class="fn">get_timings</a>(&amp;self) -&gt; &amp;<a class="struct" href="struct.TimingRecorder.html" title="struct ratatui_testlib::timing::TimingRecorder">TimingRecorder</a>;
+<span class="item-spacer"></span>    fn <a href="#tymethod.assert_latency_within" class="fn">assert_latency_within</a>(
+        &amp;self,
+        start_event: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+        end_event: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+        budget: <a class="struct" href="https://doc.rust-lang.org/1.91.1/core/time/struct.Duration.html" title="struct core::time::Duration">Duration</a>,
+    ) -&gt; <a class="type" href="../type.Result.html" title="type ratatui_testlib::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.unit.html">()</a>&gt;;
+}</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Trait for test harnesses that support timing hooks.</p>
+<p>This trait provides methods for recording and measuring latency in test
+harnesses, enabling performance testing and latency budget validation.</p>
+<h2 id="example-implementation"><a class="doc-anchor" href="#example-implementation">§</a>Example Implementation</h2>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="kw">impl </span>TimingHooks <span class="kw">for </span>TuiTestHarness {
+    <span class="kw">fn </span>record_event(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event_name: <span class="kw-2">&amp;</span>str) {
+        <span class="self">self</span>.timing_recorder.record_event(event_name);
+    }
+
+    <span class="kw">fn </span>measure_latency(<span class="kw-2">&amp;</span><span class="self">self</span>, start_event: <span class="kw-2">&amp;</span>str, end_event: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;Duration&gt; {
+        <span class="self">self</span>.timing_recorder.measure_latency(start_event, end_event)
+    }
+
+    <span class="kw">fn </span>get_timings(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>TimingRecorder {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.timing_recorder
+    }
+
+    <span class="kw">fn </span>assert_latency_within(<span class="kw-2">&amp;</span><span class="self">self</span>, start: <span class="kw-2">&amp;</span>str, end: <span class="kw-2">&amp;</span>str, budget: Duration) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="self">self</span>.timing_recorder.assert_latency_within(start, end, budget)
+    }
+}</code></pre></div></div></details><h2 id="required-methods" class="section-header">Required Methods<a href="#required-methods" class="anchor">§</a></h2><div class="methods"><details class="toggle method-toggle" open><summary><section id="tymethod.record_event" class="method"><a class="src rightside" href="../../src/ratatui_testlib/timing.rs.html#728">Source</a><h4 class="code-header">fn <a href="#tymethod.record_event" class="fn">record_event</a>(&amp;mut self, event_name: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>)</h4></section></summary><div class="docblock"><p>Records a timestamp for the named event.</p>
+<h5 id="arguments"><a class="doc-anchor" href="#arguments">§</a>Arguments</h5>
+<ul>
+<li><code>event_name</code> - Name of the event to record</li>
+</ul>
+</div></details><details class="toggle method-toggle" open><summary><section id="tymethod.measure_latency" class="method"><a class="src rightside" href="../../src/ratatui_testlib/timing.rs.html#740">Source</a><h4 class="code-header">fn <a href="#tymethod.measure_latency" class="fn">measure_latency</a>(
+    &amp;self,
+    start_event: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+    end_event: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+) -&gt; <a class="enum" href="https://doc.rust-lang.org/1.91.1/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.91.1/core/time/struct.Duration.html" title="struct core::time::Duration">Duration</a>&gt;</h4></section></summary><div class="docblock"><p>Measures time between two recorded events.</p>
+<h5 id="arguments-1"><a class="doc-anchor" href="#arguments-1">§</a>Arguments</h5>
+<ul>
+<li><code>start_event</code> - Name of the starting event</li>
+<li><code>end_event</code> - Name of the ending event</li>
+</ul>
+<h5 id="returns"><a class="doc-anchor" href="#returns">§</a>Returns</h5>
+<p><code>Some(Duration)</code> if both events exist, <code>None</code> otherwise.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="tymethod.get_timings" class="method"><a class="src rightside" href="../../src/ratatui_testlib/timing.rs.html#743">Source</a><h4 class="code-header">fn <a href="#tymethod.get_timings" class="fn">get_timings</a>(&amp;self) -&gt; &amp;<a class="struct" href="struct.TimingRecorder.html" title="struct ratatui_testlib::timing::TimingRecorder">TimingRecorder</a></h4></section></summary><div class="docblock"><p>Gets the timing recorder for direct access.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="tymethod.assert_latency_within" class="method"><a class="src rightside" href="../../src/ratatui_testlib/timing.rs.html#756-761">Source</a><h4 class="code-header">fn <a href="#tymethod.assert_latency_within" class="fn">assert_latency_within</a>(
+    &amp;self,
+    start_event: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+    end_event: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+    budget: <a class="struct" href="https://doc.rust-lang.org/1.91.1/core/time/struct.Duration.html" title="struct core::time::Duration">Duration</a>,
+) -&gt; <a class="type" href="../type.Result.html" title="type ratatui_testlib::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.unit.html">()</a>&gt;</h4></section></summary><div class="docblock"><p>Asserts that latency between two events is within a budget.</p>
+<h5 id="arguments-2"><a class="doc-anchor" href="#arguments-2">§</a>Arguments</h5>
+<ul>
+<li><code>start_event</code> - Name of the starting event</li>
+<li><code>end_event</code> - Name of the ending event</li>
+<li><code>budget</code> - Maximum allowed latency</li>
+</ul>
+<h5 id="errors"><a class="doc-anchor" href="#errors">§</a>Errors</h5>
+<p>Returns an error if either event doesn’t exist or if the latency exceeds the budget.</p>
+</div></details></div><h2 id="implementors" class="section-header">Implementors<a href="#implementors" class="anchor">§</a></h2><div id="implementors-list"><section id="impl-TimingHooks-for-TuiTestHarness" class="impl"><a class="src rightside" href="../../src/ratatui_testlib/harness.rs.html#2931-2953">Source</a><a href="#impl-TimingHooks-for-TuiTestHarness" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="trait.TimingHooks.html" title="trait ratatui_testlib::timing::TimingHooks">TimingHooks</a> for <a class="struct" href="../struct.TuiTestHarness.html" title="struct ratatui_testlib::TuiTestHarness">TuiTestHarness</a></h3><div class="docblock"><p>Implementation of <code>TimingHooks</code> trait for <code>TuiTestHarness</code>.</p>
+</div></section></div><script src="../../trait.impl/ratatui_testlib/timing/trait.TimingHooks.js" async></script></section></div></main></body></html>

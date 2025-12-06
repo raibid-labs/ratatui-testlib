@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["fps_to_frame_budget"],"struct":["LatencyProfile","LatencyStats","TimingRecorder"],"trait":["TimingHooks"]};

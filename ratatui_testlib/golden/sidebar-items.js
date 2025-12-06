@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["assert_matches_golden","generate_diff","get_golden_dir","save_golden","should_update_goldens","update_golden"],"struct":["GoldenFile","GoldenMetadata"]};

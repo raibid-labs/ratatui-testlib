@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Input-to-render latency measurement and timing utilities."><title>ratatui_testlib::timing - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ratatui_testlib" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.1 (ed61e7d7e 2025-11-07)" data-channel="1.91.1" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../static.files/storage-e2aeef58.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module timing</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../ratatui_testlib/index.html">ratatui_<wbr>testlib</a><span class="version">0.2.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module timing</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#overview" title="Overview">Overview</a></li><li><a href="#example-basic-timing" title="Example: Basic Timing">Example: Basic Timing</a></li><li><a href="#example-inputrender-latency-profiling" title="Example: Input→Render Latency Profiling">Example: Input→Render Latency Profiling</a></li><li><a href="#example-assertion-helpers" title="Example: Assertion Helpers">Example: Assertion Helpers</a></li></ul><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#traits" title="Traits">Traits</a></li><li><a href="#functions" title="Functions">Functions</a></li></ul></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="../index.html">In crate ratatui_<wbr>testlib</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">ratatui_testlib</a></div><h1>Module <span>timing</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/ratatui_testlib/timing.rs.html#1-1043">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Input-to-render latency measurement and timing utilities.</p>
+<p>This module provides comprehensive timing infrastructure for measuring and asserting
+latency budgets in TUI applications. It enables testing that input→render latency
+stays within acceptable bounds, which is critical for responsive user interfaces.</p>
+<h2 id="overview"><a class="doc-anchor" href="#overview">§</a>Overview</h2>
+<p>The timing infrastructure consists of several components:</p>
+<ul>
+<li><a href="struct.TimingRecorder.html" title="struct ratatui_testlib::timing::TimingRecorder"><code>TimingRecorder</code></a>: Records timestamped events for latency analysis</li>
+<li><a href="trait.TimingHooks.html" title="trait ratatui_testlib::timing::TimingHooks"><code>TimingHooks</code></a>: Trait for integrating timing into test harnesses</li>
+<li><a href="struct.LatencyProfile.html" title="struct ratatui_testlib::timing::LatencyProfile"><code>LatencyProfile</code></a>: Tracks input→render→frame latency stages</li>
+<li><a href="struct.LatencyStats.html" title="struct ratatui_testlib::timing::LatencyStats"><code>LatencyStats</code></a>: Statistical analysis of latency measurements</li>
+</ul>
+<h2 id="example-basic-timing"><a class="doc-anchor" href="#example-basic-timing">§</a>Example: Basic Timing</h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::time::Duration;
+
+<span class="kw">use </span>ratatui_testlib::timing::TimingRecorder;
+
+<span class="kw">let </span><span class="kw-2">mut </span>recorder = TimingRecorder::new();
+
+<span class="comment">// Record events
+</span>recorder.record_event(<span class="string">"input_sent"</span>);
+std::thread::sleep(Duration::from_millis(<span class="number">5</span>));
+recorder.record_event(<span class="string">"render_start"</span>);
+std::thread::sleep(Duration::from_millis(<span class="number">10</span>));
+recorder.record_event(<span class="string">"render_end"</span>);
+
+<span class="comment">// Measure latency
+</span><span class="kw">let </span>latency = recorder
+    .measure_latency(<span class="string">"input_sent"</span>, <span class="string">"render_end"</span>)
+    .unwrap();
+<span class="macro">assert!</span>(latency &lt; Duration::from_millis(<span class="number">20</span>));</code></pre></div><h2 id="example-inputrender-latency-profiling"><a class="doc-anchor" href="#example-inputrender-latency-profiling">§</a>Example: Input→Render Latency Profiling</h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::time::Duration;
+
+<span class="kw">use </span>ratatui_testlib::timing::LatencyProfile;
+
+<span class="kw">let </span><span class="kw-2">mut </span>profile = LatencyProfile::new();
+
+<span class="comment">// Track input event
+</span>profile.mark_input();
+std::thread::sleep(Duration::from_millis(<span class="number">3</span>));
+
+<span class="comment">// Track render stages
+</span>profile.mark_render_start();
+std::thread::sleep(Duration::from_millis(<span class="number">8</span>));
+profile.mark_render_end();
+std::thread::sleep(Duration::from_millis(<span class="number">2</span>));
+profile.mark_frame_ready();
+
+<span class="comment">// Analyze latency
+</span><span class="macro">assert!</span>(profile.input_to_render().unwrap() &lt; Duration::from_millis(<span class="number">15</span>));
+<span class="macro">assert!</span>(profile.total_latency().unwrap() &lt; Duration::from_millis(<span class="number">20</span>));</code></pre></div><h2 id="example-assertion-helpers"><a class="doc-anchor" href="#example-assertion-helpers">§</a>Example: Assertion Helpers</h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::time::Duration;
+
+<span class="kw">use </span>ratatui_testlib::timing::TimingRecorder;
+
+<span class="kw">let </span><span class="kw-2">mut </span>recorder = TimingRecorder::new();
+recorder.record_event(<span class="string">"start"</span>);
+<span class="comment">// ... do work ...
+</span>recorder.record_event(<span class="string">"end"</span>);
+
+<span class="comment">// Assert latency is within budget
+</span>recorder.assert_latency_within(<span class="string">"start"</span>, <span class="string">"end"</span>, Duration::from_millis(<span class="number">16</span>))<span class="question-mark">?</span>;</code></pre></div></div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.LatencyProfile.html" title="struct ratatui_testlib::timing::LatencyProfile">Latency<wbr>Profile</a></dt><dd>Profile for tracking input→render→frame latency stages.</dd><dt><a class="struct" href="struct.LatencyStats.html" title="struct ratatui_testlib::timing::LatencyStats">Latency<wbr>Stats</a></dt><dd>Statistical analysis of latency measurements.</dd><dt><a class="struct" href="struct.TimingRecorder.html" title="struct ratatui_testlib::timing::TimingRecorder">Timing<wbr>Recorder</a></dt><dd>Records timestamped events for latency measurement.</dd></dl><h2 id="traits" class="section-header">Traits<a href="#traits" class="anchor">§</a></h2><dl class="item-table"><dt><a class="trait" href="trait.TimingHooks.html" title="trait ratatui_testlib::timing::TimingHooks">Timing<wbr>Hooks</a></dt><dd>Trait for test harnesses that support timing hooks.</dd></dl><h2 id="functions" class="section-header">Functions<a href="#functions" class="anchor">§</a></h2><dl class="item-table"><dt><a class="fn" href="fn.fps_to_frame_budget.html" title="fn ratatui_testlib::timing::fps_to_frame_budget">fps_<wbr>to_<wbr>frame_<wbr>budget</a></dt><dd>Helper function to calculate frame time budget from target FPS.</dd></dl></section></div></main></body></html>

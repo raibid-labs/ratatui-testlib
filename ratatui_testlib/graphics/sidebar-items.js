@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["GraphicsProtocol"],"struct":["GraphicsCapture","GraphicsRegion"]};
