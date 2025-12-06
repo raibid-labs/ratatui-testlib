@@ -77,6 +77,7 @@ snapshot-expect = ["expect-test"]
 sixel-image = ["image"]  # Advanced Sixel decoding
 shared-state = ["memmap2", "bincode", "serde"]  # Shared memory state access
 ipc = ["libc"]  # IPC + shared-memory helpers for split-process terminals
+scarab = ["ipc"]  # Scarab-specific IPC helpers (wraps ipc module)
 
 # Full bundle (all features)
 full = [
@@ -86,6 +87,7 @@ full = [
     "sixel-image",
     "shared-state",
     "ipc",
+    "scarab",
 ]
 
 [[example]]
@@ -160,6 +162,11 @@ path = "examples/timing_demo.rs"
 name = "ipc_daemon_test"
 path = "examples/ipc_daemon_test.rs"
 required-features = ["ipc"]
+
+[[example]]
+name = "scarab_test"
+path = "examples/scarab_test.rs"
+required-features = ["scarab"]
 
 [profile.dev]
 opt-level = 0
