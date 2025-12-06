@@ -209,6 +209,9 @@ pub mod shared_state;
 #[cfg(feature = "ipc")]
 pub mod ipc;
 
+#[cfg(feature = "scarab")]
+pub mod scarab;
+
 #[cfg(feature = "async-tokio")]
 mod async_harness;
 
@@ -266,3 +269,6 @@ pub use ipc::{
     ControlMessage, DaemonConfig, DaemonConfigBuilder, DaemonIpcClient, DaemonTestExt,
     DaemonTestHarness, IpcError, IpcResult, ShmHeader,
 };
+
+#[cfg(feature = "scarab")]
+pub use scarab::{ScarabConfig, ScarabConfigBuilder, ScarabTestExt, ScarabTestHarness};
