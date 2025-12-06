@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-12-06
+
+### Added
+- IPC helpers for split-process terminal testing (#41)
+  - New `ipc` module for testing daemon + client architecture terminals
+  - IPC via Unix sockets to send `ControlMessage::Input` and other commands
+  - Shared memory mapping to read terminal grid state
+  - `DaemonTestHarness` for combined IPC + shared memory testing
+  - `DaemonConfig` builder for customizable socket/shm paths
+  - `DaemonTestExt` trait for TuiTestHarness integration
+  - `wait_for_text`/`wait_for_sequence` helpers with timeout support
+  - `TerminalStateReader` wrappers for grid contents, cursor position
+  - Documentation at `docs/IPC.md` with usage examples
+  - Example at `examples/ipc_daemon_test.rs`
+  - Integration tests at `tests/ipc_test.rs`
+
+### Features
+- `ipc`: IPC + shared-memory helpers for split-process terminals
+
 ## [0.2.0] - 2025-12-06
 
 ### Added
@@ -74,6 +93,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Issue #7: Add public API for headless/stream-based parsing - Implemented via `ScreenState::feed()`
 - Issue #8: Expose Screen/Grid state for verification - Implemented via `get_cell()` and public `Cell` struct
 
-[Unreleased]: https://github.com/raibid-labs/ratatui-testlib/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/raibid-labs/ratatui-testlib/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/raibid-labs/ratatui-testlib/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/raibid-labs/ratatui-testlib/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/raibid-labs/ratatui-testlib/releases/tag/v0.1.0
