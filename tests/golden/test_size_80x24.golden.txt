@@ -1,9 +1,9 @@
 --- GOLDEN FILE ---
-test: test_harness_save
+test: test_size_80x24
 size: 80x24
-timestamp: 2025-12-09T07:12:07Z
+timestamp: 2025-12-10T04:40:50Z
 --- CONTENT ---
-Harness test content                                                            
+Test content                                                                    
                                                                                 
                                                                                 
                                                                                 
