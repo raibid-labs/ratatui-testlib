@@ -183,6 +183,7 @@
 )]
 #![deny(unsafe_code)]
 
+pub mod audit;
 mod error;
 pub mod events;
 pub mod golden;
@@ -209,6 +210,18 @@ pub mod shared_state;
 #[cfg(feature = "ipc")]
 pub mod ipc;
 
+#[cfg(feature = "ipc")]
+pub mod theme;
+
+#[cfg(feature = "ipc")]
+pub mod seqlock;
+
+#[cfg(feature = "ipc")]
+pub mod regions;
+
+#[cfg(feature = "ipc")]
+pub mod zones;
+
 #[cfg(feature = "scarab")]
 pub mod scarab;
 
@@ -218,6 +231,9 @@ mod async_harness;
 // Public API exports
 #[cfg(feature = "async-tokio")]
 pub use async_harness::{AsyncTuiTestHarness, WaitResult};
+pub use audit::{
+    AuditSummary, HarnessType, PlaceholderPattern, PlaceholderTest, ScaffoldConfig, TestAuditor,
+};
 pub use error::{Result, TermTestError};
 pub use events::{KeyCode, KeyEvent, Modifiers, MouseButton, MouseEvent, ScrollDirection};
 pub use golden::{GoldenFile, GoldenMetadata};
@@ -266,9 +282,26 @@ pub use sixel::{SixelCapture, SixelSequence};
 
 #[cfg(feature = "ipc")]
 pub use ipc::{
-    ControlMessage, DaemonConfig, DaemonConfigBuilder, DaemonIpcClient, DaemonTestExt,
-    DaemonTestHarness, IpcError, IpcResult, ShmHeader,
+    CellAttributes, CellFlags, ControlMessage, DaemonConfig, DaemonConfigBuilder, DaemonIpcClient,
+    DaemonTestExt, DaemonTestHarness, IpcError, IpcResult, ShmHeader,
 };
 
+#[cfg(feature = "ipc")]
+pub use theme::{AnsiColor, ColorPalette, ColorScan, ThemeTestExt};
+
+#[cfg(feature = "ipc")]
+pub use seqlock::{SeqlockReport, SeqlockVerifier};
+
+#[cfg(feature = "ipc")]
+pub use regions::{RegionAnchor, RegionBounds, UiRegion, UiRegionTester};
+
 #[cfg(feature = "scarab")]
-pub use scarab::{ScarabConfig, ScarabConfigBuilder, ScarabTestExt, ScarabTestHarness};
+pub use regions::UiRegionTestExt;
+
+#[cfg(feature = "ipc")]
+pub use zones::{Osc133Marker, Osc133Parser, SemanticZone, SemanticZoneExt, ZoneType};
+
+#[cfg(feature = "scarab")]
+pub use scarab::{
+    ScarabConfig, ScarabConfigBuilder, ScarabTestExt, ScarabTestHarness, SeqlockTestExt,
+};

@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Fixed UI region testing helpers (#51)
+  - New `regions` module for testing fixed UI regions (status bars, tabs, sidebars)
+  - `UiRegion` for defining fixed regions with anchor points
+  - `RegionAnchor` enum for positioning regions (Top, Bottom, Left, Right)
+  - `RegionBounds` for representing rectangular regions with intersection testing
+  - `UiRegionTester` builder for defining and querying multiple regions
+  - `with_status_bar()`, `with_tab_bar()`, `with_left_sidebar()`, `with_right_sidebar()` helpers
+  - `content_area()` to calculate remaining space after fixed regions
+  - `is_in_region()` and `is_in_content_area()` for position checking
+  - `UiRegionTestExt` trait for ScarabTestHarness integration:
+    - `region_contents()`: Extract grid content from specific region
+    - `content_area_contents()`: Get content excluding fixed regions
+    - `assert_not_in_region()`: Verify text doesn't appear in region
+    - `assert_region_contains()`: Verify expected text in region
+    - `verify_resize()`: Test resize behavior with region recalculation
+  - Comprehensive unit tests with 100% coverage
+  - Example at `examples/ui_regions_test.rs`
+  - Full documentation with usage patterns
+
 ## [0.4.0] - 2025-12-06
 
 ### Added

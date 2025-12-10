@@ -168,6 +168,16 @@ name = "scarab_test"
 path = "examples/scarab_test.rs"
 required-features = ["scarab"]
 
+[[example]]
+name = "ui_regions_test"
+path = "examples/ui_regions_test.rs"
+required-features = ["scarab"]
+
+[[example]]
+name = "theme_test"
+path = "examples/theme_test.rs"
+required-features = ["scarab"]
+
 [profile.dev]
 opt-level = 0
 
