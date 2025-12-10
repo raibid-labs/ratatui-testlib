@@ -322,6 +322,27 @@ impl ScarabSharedMemory {
     pub fn cell_at(&self, row: u16, col: u16) -> IpcResult<char> {
         self.inner.cell_at(row, col)
     }
+
+    /// Get cell attributes at (row, col).
+    ///
+    /// Returns the color and style attributes for the specified cell.
+    pub fn cell_attrs_at(&self, row: u16, col: u16) -> IpcResult<crate::ipc::CellAttributes> {
+        self.inner.cell_attrs_at(row, col)
+    }
+
+    /// Get all cell attributes for a specific row.
+    ///
+    /// Returns a vector of attributes for all cells in the specified row.
+    pub fn row_attrs(&self, row: u16) -> IpcResult<Vec<crate::ipc::CellAttributes>> {
+        self.inner.row_attrs(row)
+    }
+
+    /// Get a reference to the underlying DaemonSharedMemory.
+    ///
+    /// This is useful for advanced operations like seqlock verification.
+    pub fn as_daemon_shm(&self) -> &DaemonSharedMemory {
+        &self.inner
+    }
 }
 
 /// Scarab test harness for integration testing.
@@ -550,6 +571,139 @@ impl ScarabTestHarness {
     pub fn shared_memory(&self) -> &ScarabSharedMemory {
         &self.shm
     }
+
+    /// Get cell attributes at (row, col).
+    ///
+    /// Returns the color and style attributes for the specified cell.
+    pub fn cell_attrs_at(&self, row: u16, col: u16) -> IpcResult<crate::ipc::CellAttributes> {
+        self.shm.cell_attrs_at(row, col)
+    }
+
+    /// Assert that a cell has the expected foreground color.
+    ///
+    /// # Arguments
+    ///
+    /// * `row` - The row of the cell (0-indexed)
+    /// * `col` - The column of the cell (0-indexed)
+    /// * `expected_color` - The expected foreground color as RGBA u32
+    ///
+    /// # Example
+    ///
+    /// ```rust,no_run
+    /// # #[cfg(feature = "scarab")]
+    /// # {
+    /// use ratatui_testlib::scarab::ScarabTestHarness;
+    ///
+    /// # fn test() -> Result<(), Box<dyn std::error::Error>> {
+    /// let harness = ScarabTestHarness::connect()?;
+    ///
+    /// // Assert cell at (0, 0) has red foreground (0xFF0000FF)
+    /// harness.assert_cell_fg(0, 0, 0xFF0000FF)?;
+    /// # Ok(())
+    /// # }
+    /// # }
+    /// ```
+    pub fn assert_cell_fg(&self, row: u16, col: u16, expected_color: u32) -> IpcResult<()> {
+        let attrs = self.cell_attrs_at(row, col)?;
+        if attrs.fg == expected_color {
+            Ok(())
+        } else {
+            Err(IpcError::InvalidData(format!(
+                "Cell ({}, {}) foreground color mismatch: expected 0x{:08X}, got 0x{:08X}",
+                row, col, expected_color, attrs.fg
+            )))
+        }
+    }
+
+    /// Assert that a cell has the expected background color.
+    ///
+    /// # Arguments
+    ///
+    /// * `row` - The row of the cell (0-indexed)
+    /// * `col` - The column of the cell (0-indexed)
+    /// * `expected_color` - The expected background color as RGBA u32
+    ///
+    /// # Example
+    ///
+    /// ```rust,no_run
+    /// # #[cfg(feature = "scarab")]
+    /// # {
+    /// use ratatui_testlib::scarab::ScarabTestHarness;
+    ///
+    /// # fn test() -> Result<(), Box<dyn std::error::Error>> {
+    /// let harness = ScarabTestHarness::connect()?;
+    ///
+    /// // Assert cell at (0, 0) has blue background (0x0000FFFF)
+    /// harness.assert_cell_bg(0, 0, 0x0000FFFF)?;
+    /// # Ok(())
+    /// # }
+    /// # }
+    /// ```
+    pub fn assert_cell_bg(&self, row: u16, col: u16, expected_color: u32) -> IpcResult<()> {
+        let attrs = self.cell_attrs_at(row, col)?;
+        if attrs.bg == expected_color {
+            Ok(())
+        } else {
+            Err(IpcError::InvalidData(format!(
+                "Cell ({}, {}) background color mismatch: expected 0x{:08X}, got 0x{:08X}",
+                row, col, expected_color, attrs.bg
+            )))
+        }
+    }
+
+    /// Assert that a cell has the expected style flags.
+    ///
+    /// # Arguments
+    ///
+    /// * `row` - The row of the cell (0-indexed)
+    /// * `col` - The column of the cell (0-indexed)
+    /// * `flags` - The expected style flags
+    ///
+    /// # Example
+    ///
+    /// ```rust,no_run
+    /// # #[cfg(feature = "scarab")]
+    /// # {
+    /// use ratatui_testlib::scarab::ScarabTestHarness;
+    /// use ratatui_testlib::ipc::CellFlags;
+    ///
+    /// # fn test() -> Result<(), Box<dyn std::error::Error>> {
+    /// let harness = ScarabTestHarness::connect()?;
+    ///
+    /// // Assert cell at (0, 0) is bold and italic
+    /// harness.assert_cell_styled(0, 0, CellFlags::BOLD | CellFlags::ITALIC)?;
+    /// # Ok(())
+    /// # }
+    /// # }
+    /// ```
+    pub fn assert_cell_styled(&self, row: u16, col: u16, flags: crate::ipc::CellFlags) -> IpcResult<()> {
+        let attrs = self.cell_attrs_at(row, col)?;
+        let cell_flags = crate::ipc::CellFlags::from_bits_truncate(attrs.flags);
+
+        if cell_flags.contains(flags) {
+            Ok(())
+        } else {
+            Err(IpcError::InvalidData(format!(
+                "Cell ({}, {}) style flags mismatch: expected {:?}, got {:?}",
+                row, col, flags, cell_flags
+            )))
+        }
+    }
+
+    /// Get a mutable reference to the underlying shared memory reader.
+    ///
+    /// This is useful for advanced operations like seqlock verification
+    /// that need mutable access to the shared memory.
+    pub fn shared_memory_mut(&mut self) -> &mut DaemonSharedMemory {
+        &mut self.shm.inner
+    }
+}
+
+// Implement ThemeTestExt for ScarabTestHarness
+impl crate::theme::ThemeTestExt for ScarabTestHarness {
+    fn cell_attrs_at(&self, row: u16, col: u16) -> IpcResult<crate::ipc::CellAttributes> {
+        self.shm.cell_attrs_at(row, col)
+    }
 }
 
 /// Extension trait for integrating Scarab testing with TuiTestHarness.
@@ -575,6 +729,183 @@ impl ScarabTestExt for crate::TuiTestHarness {
 
     fn scarab_enabled(&self) -> bool {
         ScarabTestHarness::is_enabled()
+    }
+}
+
+/// Extension trait for seqlock verification on ScarabTestHarness.
+///
+/// Provides convenient methods for detecting torn reads in shared memory
+/// using seqlock verification patterns.
+pub trait SeqlockTestExt {
+    /// Create a seqlock verifier for this harness.
+    fn seqlock_verifier(&self) -> crate::seqlock::SeqlockVerifier;
+
+    /// Perform a synchronized read with torn-read protection.
+    ///
+    /// This method automatically retries if a torn read is detected,
+    /// ensuring consistent data is returned.
+    fn synchronized_read<F, T>(&mut self, reader: F) -> IpcResult<T>
+    where
+        F: Fn(&DaemonSharedMemory) -> IpcResult<T>;
+
+    /// Run seqlock verification for a duration.
+    ///
+    /// Continuously reads from shared memory and tracks torn read statistics.
+    fn verify_seqlock(&mut self, duration: Duration) -> IpcResult<crate::seqlock::SeqlockReport>;
+}
+
+impl SeqlockTestExt for ScarabTestHarness {
+    fn seqlock_verifier(&self) -> crate::seqlock::SeqlockVerifier {
+        crate::seqlock::SeqlockVerifier::new()
+    }
+
+    fn synchronized_read<F, T>(&mut self, reader: F) -> IpcResult<T>
+    where
+        F: Fn(&DaemonSharedMemory) -> IpcResult<T>,
+    {
+        let mut verifier = crate::seqlock::SeqlockVerifier::new();
+        let (result, _retries) = verifier.synchronized_read(self.shared_memory_mut(), reader)?;
+        Ok(result)
+    }
+
+    fn verify_seqlock(&mut self, duration: Duration) -> IpcResult<crate::seqlock::SeqlockReport> {
+        let mut verifier = crate::seqlock::SeqlockVerifier::new();
+        let poll_interval = Duration::from_millis(10);
+        verifier.verify_seqlock_pattern(self.shared_memory_mut(), duration, poll_interval)
+    }
+}
+
+// Implement SemanticZoneExt for ScarabTestHarness
+#[cfg(target_family = "unix")]
+impl crate::zones::SemanticZoneExt for ScarabTestHarness {
+    fn zones(&self) -> IpcResult<Vec<crate::zones::SemanticZone>> {
+        // For now, return empty - this would need grid data parsing
+        // In a real implementation, we'd parse the grid contents for OSC 133 markers
+        Ok(Vec::new())
+    }
+
+    fn zone_at(&self, row: u16, col: u16) -> IpcResult<Option<crate::zones::SemanticZone>> {
+        let zones = self.zones()?;
+        Ok(zones.into_iter().find(|zone| {
+            row >= zone.start_row
+                && row <= zone.end_row
+                && col >= zone.start_col
+                && col <= zone.end_col
+        }))
+    }
+
+    fn last_output_zone(&self) -> IpcResult<Option<crate::zones::SemanticZone>> {
+        let zones = self.zones()?;
+        Ok(zones
+            .into_iter()
+            .filter(|z| z.zone_type == crate::zones::ZoneType::Output)
+            .last())
+    }
+
+    fn last_command_zone(&self) -> IpcResult<Option<crate::zones::SemanticZone>> {
+        let zones = self.zones()?;
+        Ok(zones
+            .into_iter()
+            .filter(|z| z.zone_type == crate::zones::ZoneType::Command)
+            .last())
+    }
+
+    fn zone_text(&self, zone: &crate::zones::SemanticZone) -> IpcResult<String> {
+        let grid = self.grid_contents()?;
+        let lines: Vec<&str> = grid.lines().collect();
+
+        let mut result = String::new();
+        for row in zone.start_row..=zone.end_row {
+            if let Some(line) = lines.get(row as usize) {
+                let start_col = if row == zone.start_row {
+                    zone.start_col as usize
+                } else {
+                    0
+                };
+                let end_col = if row == zone.end_row {
+                    zone.end_col as usize
+                } else {
+                    line.len()
+                };
+
+                if start_col < line.len() {
+                    let end = end_col.min(line.len());
+                    result.push_str(&line[start_col..end]);
+                }
+
+                if row < zone.end_row {
+                    result.push('\n');
+                }
+            }
+        }
+
+        Ok(result)
+    }
+
+    fn assert_zone_at(
+        &self,
+        row: u16,
+        col: u16,
+        expected_type: crate::zones::ZoneType,
+    ) -> IpcResult<()> {
+        match self.zone_at(row, col)? {
+            Some(zone) if zone.zone_type == expected_type => Ok(()),
+            Some(zone) => Err(IpcError::InvalidData(format!(
+                "Zone at ({}, {}) has type {:?}, expected {:?}",
+                row, col, zone.zone_type, expected_type
+            ))),
+            None => Err(IpcError::InvalidData(format!(
+                "No zone found at ({}, {})",
+                row, col
+            ))),
+        }
+    }
+
+    fn wait_for_output_zone(&mut self, timeout: Duration) -> IpcResult<crate::zones::SemanticZone> {
+        let start = std::time::Instant::now();
+        let poll_interval = Duration::from_millis(50);
+        let initial_count = self.zones()?.len();
+
+        loop {
+            self.shm.refresh()?;
+            let zones = self.zones()?;
+
+            // Look for new output zones
+            if zones.len() > initial_count {
+                if let Some(zone) = zones
+                    .into_iter()
+                    .filter(|z| z.zone_type == crate::zones::ZoneType::Output)
+                    .last()
+                {
+                    return Ok(zone);
+                }
+            }
+
+            if start.elapsed() >= timeout {
+                return Err(IpcError::Timeout(timeout));
+            }
+
+            std::thread::sleep(poll_interval);
+        }
+    }
+
+    fn wait_for_command_complete(&mut self, timeout: Duration) -> IpcResult<Option<i32>> {
+        let start = std::time::Instant::now();
+        let poll_interval = Duration::from_millis(50);
+
+        loop {
+            self.shm.refresh()?;
+
+            if let Some(zone) = self.last_output_zone()? {
+                return Ok(zone.exit_code);
+            }
+
+            if start.elapsed() >= timeout {
+                return Err(IpcError::Timeout(timeout));
+            }
+
+            std::thread::sleep(poll_interval);
+        }
     }
 }
 
@@ -638,5 +969,23 @@ mod tests {
     fn test_scarab_magic_constants() {
         assert_eq!(SCARAB_MAGIC, 0x5343_5241);
         assert_eq!(SCARAB_VERSION, 1);
+    }
+
+    #[test]
+    fn test_cell_attributes_export() {
+        // Verify that CellAttributes can be used through scarab module
+        use crate::ipc::CellAttributes;
+        let attrs = CellAttributes::default();
+        assert_eq!(attrs.fg, 0);
+        assert_eq!(attrs.bg, 0);
+    }
+
+    #[test]
+    fn test_cell_flags_export() {
+        // Verify that CellFlags can be used through scarab module
+        use crate::ipc::CellFlags;
+        let flags = CellFlags::BOLD | CellFlags::ITALIC;
+        assert!(flags.contains(CellFlags::BOLD));
+        assert!(flags.contains(CellFlags::ITALIC));
     }
 }

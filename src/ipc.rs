@@ -207,6 +207,43 @@ const DEFAULT_SOCKET_PATH: &str = "/tmp/term-daemon.sock";
 const DEFAULT_SHM_PATH: &str = "/term_shm_v1";
 const DEFAULT_DAEMON_COMMAND: &str = "term-daemon";
 
+/// Cell attribute structure for colors and styling.
+#[repr(C)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct CellAttributes {
+    /// Foreground color as RGBA.
+    pub fg: u32,
+    /// Background color as RGBA.
+    pub bg: u32,
+    /// Style flags (bold, italic, underline, etc.).
+    pub flags: u16,
+    /// Reserved for future use.
+    pub reserved: u16,
+}
+
+bitflags::bitflags! {
+    /// Cell styling flags.
+    #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+    pub struct CellFlags: u16 {
+        /// Bold text.
+        const BOLD = 0x0001;
+        /// Italic text.
+        const ITALIC = 0x0002;
+        /// Underlined text.
+        const UNDERLINE = 0x0004;
+        /// Blinking text.
+        const BLINK = 0x0008;
+        /// Inverse/reverse video.
+        const INVERSE = 0x0010;
+        /// Hidden text.
+        const HIDDEN = 0x0020;
+        /// Strikethrough text.
+        const STRIKETHROUGH = 0x0040;
+        /// Dim/faint text.
+        const DIM = 0x0080;
+    }
+}
+
 /// Errors that can occur during IPC test operations.
 #[derive(Debug, Error)]
 pub enum IpcError {
@@ -706,6 +743,21 @@ impl DaemonSharedMemory {
         self.header.sequence_number
     }
 
+    /// Read the raw sequence number directly from memory-mapped region.
+    ///
+    /// This bypasses the cached header and reads directly from shared memory,
+    /// which is essential for seqlock verification where we need to detect
+    /// changes between read operations.
+    #[allow(unsafe_code)]
+    pub fn raw_sequence_number(&self) -> u32 {
+        // Sequence number is at offset 16 in the header
+        const SEQ_OFFSET: usize = 16;
+        unsafe {
+            let seq_ptr = self.mmap.add(SEQ_OFFSET) as *const u32;
+            std::ptr::read_volatile(seq_ptr)
+        }
+    }
+
     /// Read the terminal grid as a string.
     ///
     /// Returns the grid content with newlines between rows.
@@ -766,6 +818,67 @@ impl DaemonSharedMemory {
         let byte = unsafe { *cell_ptr };
 
         Ok(byte as char)
+    }
+
+    /// Get cell attributes at (row, col).
+    ///
+    /// Returns the color and style attributes for the specified cell.
+    #[allow(unsafe_code)]
+    pub fn cell_attrs_at(&self, row: u16, col: u16) -> IpcResult<CellAttributes> {
+        if row >= self.header.rows || col >= self.header.cols {
+            return Err(IpcError::InvalidData(format!(
+                "Position ({}, {}) out of bounds ({}x{})",
+                row, col, self.header.rows, self.header.cols
+            )));
+        }
+
+        if self.header.attrs_offset == 0 || self.header.attrs_size == 0 {
+            // No attributes data available, return default
+            return Ok(CellAttributes::default());
+        }
+
+        let attrs_offset = self.header.attrs_offset as usize;
+        let index = (row as usize * self.header.cols as usize) + col as usize;
+        let attr_size = std::mem::size_of::<CellAttributes>();
+        let byte_offset = attrs_offset + (index * attr_size);
+
+        if byte_offset + attr_size > self.size {
+            return Err(IpcError::InvalidData(
+                "Cell attributes index out of bounds".to_string(),
+            ));
+        }
+
+        let attr_ptr = unsafe { self.mmap.add(byte_offset) as *const CellAttributes };
+        let attrs = unsafe { std::ptr::read(attr_ptr) };
+
+        Ok(attrs)
+    }
+
+    /// Get all cell attributes for a specific row.
+    ///
+    /// Returns a vector of attributes for all cells in the specified row.
+    #[allow(unsafe_code)]
+    pub fn row_attrs(&self, row: u16) -> IpcResult<Vec<CellAttributes>> {
+        if row >= self.header.rows {
+            return Err(IpcError::InvalidData(format!(
+                "Row {} out of bounds (max {})",
+                row, self.header.rows
+            )));
+        }
+
+        if self.header.attrs_offset == 0 || self.header.attrs_size == 0 {
+            // No attributes data available, return default attributes
+            return Ok(vec![CellAttributes::default(); self.header.cols as usize]);
+        }
+
+        let cols = self.header.cols as usize;
+        let mut attrs = Vec::with_capacity(cols);
+
+        for col in 0..cols {
+            attrs.push(self.cell_attrs_at(row, col as u16)?);
+        }
+
+        Ok(attrs)
     }
 }
 
@@ -1170,5 +1283,137 @@ mod tests {
         // Clear the env var if set
         std::env::remove_var("RTL_IPC_TEST");
         assert!(!DaemonTestHarness::is_enabled());
+    }
+
+    #[test]
+    fn test_cell_attributes_default() {
+        let attrs = CellAttributes::default();
+        assert_eq!(attrs.fg, 0);
+        assert_eq!(attrs.bg, 0);
+        assert_eq!(attrs.flags, 0);
+        assert_eq!(attrs.reserved, 0);
+    }
+
+    #[test]
+    fn test_cell_attributes_size() {
+        // Ensure CellAttributes has expected size for C interop
+        assert_eq!(std::mem::size_of::<CellAttributes>(), 12);
+    }
+
+    #[test]
+    fn test_cell_flags_basic() {
+        let bold = CellFlags::BOLD;
+        assert_eq!(bold.bits(), 0x0001);
+
+        let italic = CellFlags::ITALIC;
+        assert_eq!(italic.bits(), 0x0002);
+
+        let combined = CellFlags::BOLD | CellFlags::ITALIC;
+        assert_eq!(combined.bits(), 0x0003);
+        assert!(combined.contains(CellFlags::BOLD));
+        assert!(combined.contains(CellFlags::ITALIC));
+        assert!(!combined.contains(CellFlags::UNDERLINE));
+    }
+
+    #[test]
+    fn test_cell_flags_all() {
+        let flags = CellFlags::BOLD
+            | CellFlags::ITALIC
+            | CellFlags::UNDERLINE
+            | CellFlags::BLINK
+            | CellFlags::INVERSE
+            | CellFlags::HIDDEN
+            | CellFlags::STRIKETHROUGH
+            | CellFlags::DIM;
+
+        assert_eq!(flags.bits(), 0x00FF);
+        assert!(flags.contains(CellFlags::BOLD));
+        assert!(flags.contains(CellFlags::ITALIC));
+        assert!(flags.contains(CellFlags::UNDERLINE));
+        assert!(flags.contains(CellFlags::BLINK));
+        assert!(flags.contains(CellFlags::INVERSE));
+        assert!(flags.contains(CellFlags::HIDDEN));
+        assert!(flags.contains(CellFlags::STRIKETHROUGH));
+        assert!(flags.contains(CellFlags::DIM));
+    }
+
+    #[test]
+    fn test_cell_flags_from_bits() {
+        let flags = CellFlags::from_bits_truncate(0x0003);
+        assert!(flags.contains(CellFlags::BOLD));
+        assert!(flags.contains(CellFlags::ITALIC));
+        assert!(!flags.contains(CellFlags::UNDERLINE));
+    }
+
+    #[test]
+    fn test_cell_flags_empty() {
+        let flags = CellFlags::empty();
+        assert_eq!(flags.bits(), 0);
+        assert!(!flags.contains(CellFlags::BOLD));
+        assert!(!flags.contains(CellFlags::ITALIC));
+    }
+
+    #[test]
+    fn test_cell_flags_default() {
+        let flags = CellFlags::default();
+        assert_eq!(flags.bits(), 0);
+    }
+
+    #[test]
+    fn test_cell_attributes_with_flags() {
+        let attrs = CellAttributes {
+            fg: 0xFF0000FF, // Red foreground
+            bg: 0x0000FFFF, // Blue background
+            flags: (CellFlags::BOLD | CellFlags::ITALIC).bits(),
+            reserved: 0,
+        };
+
+        assert_eq!(attrs.fg, 0xFF0000FF);
+        assert_eq!(attrs.bg, 0x0000FFFF);
+
+        let flags = CellFlags::from_bits_truncate(attrs.flags);
+        assert!(flags.contains(CellFlags::BOLD));
+        assert!(flags.contains(CellFlags::ITALIC));
+        assert!(!flags.contains(CellFlags::UNDERLINE));
+    }
+
+    #[test]
+    fn test_cell_attributes_equality() {
+        let attrs1 = CellAttributes {
+            fg: 0xFF0000FF,
+            bg: 0x0000FFFF,
+            flags: CellFlags::BOLD.bits(),
+            reserved: 0,
+        };
+
+        let attrs2 = CellAttributes {
+            fg: 0xFF0000FF,
+            bg: 0x0000FFFF,
+            flags: CellFlags::BOLD.bits(),
+            reserved: 0,
+        };
+
+        let attrs3 = CellAttributes {
+            fg: 0x00FF00FF, // Different color
+            bg: 0x0000FFFF,
+            flags: CellFlags::BOLD.bits(),
+            reserved: 0,
+        };
+
+        assert_eq!(attrs1, attrs2);
+        assert_ne!(attrs1, attrs3);
+    }
+
+    #[test]
+    fn test_cell_attributes_clone() {
+        let attrs1 = CellAttributes {
+            fg: 0xFF0000FF,
+            bg: 0x0000FFFF,
+            flags: CellFlags::BOLD.bits(),
+            reserved: 0,
+        };
+
+        let attrs2 = attrs1;
+        assert_eq!(attrs1, attrs2);
     }
 }
