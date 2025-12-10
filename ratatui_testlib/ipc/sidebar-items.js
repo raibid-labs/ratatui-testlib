@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["ControlMessage","IpcError"],"struct":["DaemonConfig","DaemonConfigBuilder","DaemonIpcClient","DaemonSharedMemory","DaemonTestHarness","ShmHeader","TerminalStateReader"],"trait":["DaemonTestExt"],"type":["IpcResult"]};
+window.SIDEBAR_ITEMS = {"enum":["ControlMessage","IpcError"],"struct":["CellAttributes","CellFlags","DaemonConfig","DaemonConfigBuilder","DaemonIpcClient","DaemonSharedMemory","DaemonTestHarness","ShmHeader","TerminalStateReader"],"trait":["DaemonTestExt"],"type":["IpcResult"]};

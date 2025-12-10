@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Extension trait for UI region testing with harnesses."><title>UiRegionTestExt in ratatui_testlib::regions - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="ratatui_testlib" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.1 (ed61e7d7e 2025-11-07)" data-channel="1.91.1" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../static.files/storage-e2aeef58.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">UiRegionTestExt</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../ratatui_testlib/index.html">ratatui_<wbr>testlib</a><span class="version">0.5.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">UiRegion<wbr>Test<wbr>Ext</a></h2><h3><a href="#required-methods">Required Methods</a></h3><ul class="block"><li><a href="#tymethod.assert_not_in_region" title="assert_not_in_region">assert_not_in_region</a></li><li><a href="#tymethod.assert_region_contains" title="assert_region_contains">assert_region_contains</a></li><li><a href="#tymethod.content_area_contents" title="content_area_contents">content_area_contents</a></li><li><a href="#tymethod.region_contents" title="region_contents">region_contents</a></li><li><a href="#tymethod.verify_resize" title="verify_resize">verify_resize</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><div id="rustdoc-modnav"><h2><a href="index.html">In ratatui_<wbr>testlib::<wbr>regions</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">ratatui_testlib</a>::<wbr><a href="index.html">regions</a></div><h1>Trait <span class="trait">UiRegion<wbr>Test<wbr>Ext</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/ratatui_testlib/regions.rs.html#660-864">Source</a> </span></div><pre class="rust item-decl"><code>pub trait UiRegionTestExt {
+    // Required methods
+    fn <a href="#tymethod.region_contents" class="fn">region_contents</a>(
+        &amp;self,
+        tester: &amp;<a class="struct" href="struct.UiRegionTester.html" title="struct ratatui_testlib::regions::UiRegionTester">UiRegionTester</a>,
+        region_name: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+    ) -&gt; <a class="type" href="../ipc/type.IpcResult.html" title="type ratatui_testlib::ipc::IpcResult">IpcResult</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.91.1/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;;
+<span class="item-spacer"></span>    fn <a href="#tymethod.content_area_contents" class="fn">content_area_contents</a>(
+        &amp;self,
+        tester: &amp;<a class="struct" href="struct.UiRegionTester.html" title="struct ratatui_testlib::regions::UiRegionTester">UiRegionTester</a>,
+    ) -&gt; <a class="type" href="../ipc/type.IpcResult.html" title="type ratatui_testlib::ipc::IpcResult">IpcResult</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.91.1/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;;
+<span class="item-spacer"></span>    fn <a href="#tymethod.assert_not_in_region" class="fn">assert_not_in_region</a>(
+        &amp;self,
+        tester: &amp;<a class="struct" href="struct.UiRegionTester.html" title="struct ratatui_testlib::regions::UiRegionTester">UiRegionTester</a>,
+        region_name: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+        text: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+    ) -&gt; <a class="type" href="../ipc/type.IpcResult.html" title="type ratatui_testlib::ipc::IpcResult">IpcResult</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.unit.html">()</a>&gt;;
+<span class="item-spacer"></span>    fn <a href="#tymethod.assert_region_contains" class="fn">assert_region_contains</a>(
+        &amp;self,
+        tester: &amp;<a class="struct" href="struct.UiRegionTester.html" title="struct ratatui_testlib::regions::UiRegionTester">UiRegionTester</a>,
+        region_name: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+        expected: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+    ) -&gt; <a class="type" href="../ipc/type.IpcResult.html" title="type ratatui_testlib::ipc::IpcResult">IpcResult</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.unit.html">()</a>&gt;;
+<span class="item-spacer"></span>    fn <a href="#tymethod.verify_resize" class="fn">verify_resize</a>(
+        &amp;mut self,
+        tester: &amp;mut <a class="struct" href="struct.UiRegionTester.html" title="struct ratatui_testlib::regions::UiRegionTester">UiRegionTester</a>,
+        new_width: <a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.u16.html">u16</a>,
+        new_height: <a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.u16.html">u16</a>,
+    ) -&gt; <a class="type" href="../ipc/type.IpcResult.html" title="type ratatui_testlib::ipc::IpcResult">IpcResult</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.unit.html">()</a>&gt;;
+}</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Extension trait for UI region testing with harnesses.</p>
+<p>This trait integrates UI region testing with test harnesses like
+<code>ScarabTestHarness</code>. It provides methods to extract region contents,
+verify region constraints, and test resize behavior.</p>
+</div></details><h2 id="required-methods" class="section-header">Required Methods<a href="#required-methods" class="anchor">§</a></h2><div class="methods"><details class="toggle method-toggle" open><summary><section id="tymethod.region_contents" class="method"><a class="src rightside" href="../../src/ratatui_testlib/regions.rs.html#697">Source</a><h4 class="code-header">fn <a href="#tymethod.region_contents" class="fn">region_contents</a>(
+    &amp;self,
+    tester: &amp;<a class="struct" href="struct.UiRegionTester.html" title="struct ratatui_testlib::regions::UiRegionTester">UiRegionTester</a>,
+    region_name: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+) -&gt; <a class="type" href="../ipc/type.IpcResult.html" title="type ratatui_testlib::ipc::IpcResult">IpcResult</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.91.1/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</h4></section></summary><div class="docblock"><p>Get the grid contents for a specific region.</p>
+<p>This method extracts only the portion of the terminal grid that
+falls within the specified region.</p>
+<h5 id="arguments"><a class="doc-anchor" href="#arguments">§</a>Arguments</h5>
+<ul>
+<li><code>tester</code> - The UI region tester with region definitions</li>
+<li><code>region_name</code> - Name of the region to extract</li>
+</ul>
+<h5 id="errors"><a class="doc-anchor" href="#errors">§</a>Errors</h5>
+<p>Returns an error if:</p>
+<ul>
+<li>The region doesn’t exist</li>
+<li>Failed to read the terminal grid</li>
+</ul>
+<h5 id="examples"><a class="doc-anchor" href="#examples">§</a>Examples</h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ratatui_testlib::{
+    scarab::ScarabTestHarness,
+    regions::{UiRegionTester, UiRegionTestExt},
+};
+
+<span class="kw">let </span><span class="kw-2">mut </span>harness = ScarabTestHarness::connect()<span class="question-mark">?</span>;
+<span class="kw">let </span>tester = UiRegionTester::new(<span class="number">80</span>, <span class="number">24</span>).with_status_bar(<span class="number">1</span>);
+
+<span class="kw">let </span>status = harness.region_contents(<span class="kw-2">&amp;</span>tester, <span class="string">"status_bar"</span>)<span class="question-mark">?</span>;
+<span class="macro">assert!</span>(status.contains(<span class="string">"Ready"</span>));</code></pre></div></div></details><details class="toggle method-toggle" open><summary><section id="tymethod.content_area_contents" class="method"><a class="src rightside" href="../../src/ratatui_testlib/regions.rs.html#734">Source</a><h4 class="code-header">fn <a href="#tymethod.content_area_contents" class="fn">content_area_contents</a>(&amp;self, tester: &amp;<a class="struct" href="struct.UiRegionTester.html" title="struct ratatui_testlib::regions::UiRegionTester">UiRegionTester</a>) -&gt; <a class="type" href="../ipc/type.IpcResult.html" title="type ratatui_testlib::ipc::IpcResult">IpcResult</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.91.1/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</h4></section></summary><div class="docblock"><p>Get the content area grid contents (excluding fixed regions).</p>
+<p>This method extracts the terminal grid content that falls within
+the content area (i.e., not in any fixed regions).</p>
+<h5 id="arguments-1"><a class="doc-anchor" href="#arguments-1">§</a>Arguments</h5>
+<ul>
+<li><code>tester</code> - The UI region tester with region definitions</li>
+</ul>
+<h5 id="errors-1"><a class="doc-anchor" href="#errors-1">§</a>Errors</h5>
+<p>Returns an error if failed to read the terminal grid.</p>
+<h5 id="examples-1"><a class="doc-anchor" href="#examples-1">§</a>Examples</h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ratatui_testlib::{
+    scarab::ScarabTestHarness,
+    regions::{UiRegionTester, UiRegionTestExt},
+};
+
+<span class="kw">let </span><span class="kw-2">mut </span>harness = ScarabTestHarness::connect()<span class="question-mark">?</span>;
+<span class="kw">let </span>tester = UiRegionTester::new(<span class="number">80</span>, <span class="number">24</span>)
+    .with_status_bar(<span class="number">1</span>)
+    .with_tab_bar(<span class="number">2</span>);
+
+<span class="kw">let </span>content = harness.content_area_contents(<span class="kw-2">&amp;</span>tester)<span class="question-mark">?</span>;
+<span class="macro">assert!</span>(content.contains(<span class="string">"Main content"</span>));</code></pre></div></div></details><details class="toggle method-toggle" open><summary><section id="tymethod.assert_not_in_region" class="method"><a class="src rightside" href="../../src/ratatui_testlib/regions.rs.html#774-779">Source</a><h4 class="code-header">fn <a href="#tymethod.assert_not_in_region" class="fn">assert_not_in_region</a>(
+    &amp;self,
+    tester: &amp;<a class="struct" href="struct.UiRegionTester.html" title="struct ratatui_testlib::regions::UiRegionTester">UiRegionTester</a>,
+    region_name: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+    text: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+) -&gt; <a class="type" href="../ipc/type.IpcResult.html" title="type ratatui_testlib::ipc::IpcResult">IpcResult</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.unit.html">()</a>&gt;</h4></section></summary><div class="docblock"><p>Assert that text doesn’t appear in a fixed region.</p>
+<p>This is useful for verifying that error messages or other content
+doesn’t leak into UI chrome regions.</p>
+<h5 id="arguments-2"><a class="doc-anchor" href="#arguments-2">§</a>Arguments</h5>
+<ul>
+<li><code>tester</code> - The UI region tester with region definitions</li>
+<li><code>region_name</code> - Name of the region to check</li>
+<li><code>text</code> - Text that should not appear in the region</li>
+</ul>
+<h5 id="errors-2"><a class="doc-anchor" href="#errors-2">§</a>Errors</h5>
+<p>Returns an error if:</p>
+<ul>
+<li>The region doesn’t exist</li>
+<li>Failed to read the terminal grid</li>
+<li>The text is found in the region</li>
+</ul>
+<h5 id="examples-2"><a class="doc-anchor" href="#examples-2">§</a>Examples</h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ratatui_testlib::{
+    scarab::ScarabTestHarness,
+    regions::{UiRegionTester, UiRegionTestExt},
+};
+
+<span class="kw">let </span><span class="kw-2">mut </span>harness = ScarabTestHarness::connect()<span class="question-mark">?</span>;
+<span class="kw">let </span>tester = UiRegionTester::new(<span class="number">80</span>, <span class="number">24</span>).with_status_bar(<span class="number">1</span>);
+
+<span class="comment">// Verify error messages don't leak into status bar
+</span>harness.assert_not_in_region(<span class="kw-2">&amp;</span>tester, <span class="string">"status_bar"</span>, <span class="string">"ERROR"</span>)<span class="question-mark">?</span>;</code></pre></div></div></details><details class="toggle method-toggle" open><summary><section id="tymethod.assert_region_contains" class="method"><a class="src rightside" href="../../src/ratatui_testlib/regions.rs.html#815-820">Source</a><h4 class="code-header">fn <a href="#tymethod.assert_region_contains" class="fn">assert_region_contains</a>(
+    &amp;self,
+    tester: &amp;<a class="struct" href="struct.UiRegionTester.html" title="struct ratatui_testlib::regions::UiRegionTester">UiRegionTester</a>,
+    region_name: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+    expected: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.str.html">str</a>,
+) -&gt; <a class="type" href="../ipc/type.IpcResult.html" title="type ratatui_testlib::ipc::IpcResult">IpcResult</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.unit.html">()</a>&gt;</h4></section></summary><div class="docblock"><p>Assert that content in a fixed region matches expected.</p>
+<h5 id="arguments-3"><a class="doc-anchor" href="#arguments-3">§</a>Arguments</h5>
+<ul>
+<li><code>tester</code> - The UI region tester with region definitions</li>
+<li><code>region_name</code> - Name of the region to check</li>
+<li><code>expected</code> - Expected text in the region</li>
+</ul>
+<h5 id="errors-3"><a class="doc-anchor" href="#errors-3">§</a>Errors</h5>
+<p>Returns an error if:</p>
+<ul>
+<li>The region doesn’t exist</li>
+<li>Failed to read the terminal grid</li>
+<li>The expected text is not found in the region</li>
+</ul>
+<h5 id="examples-3"><a class="doc-anchor" href="#examples-3">§</a>Examples</h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ratatui_testlib::{
+    scarab::ScarabTestHarness,
+    regions::{UiRegionTester, UiRegionTestExt},
+};
+
+<span class="kw">let </span><span class="kw-2">mut </span>harness = ScarabTestHarness::connect()<span class="question-mark">?</span>;
+<span class="kw">let </span>tester = UiRegionTester::new(<span class="number">80</span>, <span class="number">24</span>).with_status_bar(<span class="number">1</span>);
+
+harness.assert_region_contains(<span class="kw-2">&amp;</span>tester, <span class="string">"status_bar"</span>, <span class="string">"Ready"</span>)<span class="question-mark">?</span>;</code></pre></div></div></details><details class="toggle method-toggle" open><summary><section id="tymethod.verify_resize" class="method"><a class="src rightside" href="../../src/ratatui_testlib/regions.rs.html#858-863">Source</a><h4 class="code-header">fn <a href="#tymethod.verify_resize" class="fn">verify_resize</a>(
+    &amp;mut self,
+    tester: &amp;mut <a class="struct" href="struct.UiRegionTester.html" title="struct ratatui_testlib::regions::UiRegionTester">UiRegionTester</a>,
+    new_width: <a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.u16.html">u16</a>,
+    new_height: <a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.u16.html">u16</a>,
+) -&gt; <a class="type" href="../ipc/type.IpcResult.html" title="type ratatui_testlib::ipc::IpcResult">IpcResult</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.91.1/std/primitive.unit.html">()</a>&gt;</h4></section></summary><div class="docblock"><p>Verify resize event correctly calculated terminal dimensions.</p>
+<p>This method resizes the terminal and verifies that the content area
+and fixed regions are recalculated correctly.</p>
+<h5 id="arguments-4"><a class="doc-anchor" href="#arguments-4">§</a>Arguments</h5>
+<ul>
+<li><code>tester</code> - The UI region tester with region definitions (will be updated)</li>
+<li><code>new_width</code> - New terminal width</li>
+<li><code>new_height</code> - New terminal height</li>
+</ul>
+<h5 id="errors-4"><a class="doc-anchor" href="#errors-4">§</a>Errors</h5>
+<p>Returns an error if:</p>
+<ul>
+<li>Failed to resize the terminal</li>
+<li>The terminal dimensions don’t match after resize</li>
+</ul>
+<h5 id="examples-4"><a class="doc-anchor" href="#examples-4">§</a>Examples</h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>ratatui_testlib::{
+    scarab::ScarabTestHarness,
+    regions::{UiRegionTester, UiRegionTestExt},
+};
+
+<span class="kw">let </span><span class="kw-2">mut </span>harness = ScarabTestHarness::connect()<span class="question-mark">?</span>;
+<span class="kw">let </span><span class="kw-2">mut </span>tester = UiRegionTester::new(<span class="number">80</span>, <span class="number">24</span>).with_status_bar(<span class="number">1</span>);
+
+harness.verify_resize(<span class="kw-2">&amp;mut </span>tester, <span class="number">100</span>, <span class="number">30</span>)<span class="question-mark">?</span>;</code></pre></div></div></details></div><h2 id="implementors" class="section-header">Implementors<a href="#implementors" class="anchor">§</a></h2><div id="implementors-list"><section id="impl-UiRegionTestExt-for-ScarabTestHarness" class="impl"><a class="src rightside" href="../../src/ratatui_testlib/regions.rs.html#867-949">Source</a><a href="#impl-UiRegionTestExt-for-ScarabTestHarness" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="trait.UiRegionTestExt.html" title="trait ratatui_testlib::regions::UiRegionTestExt">UiRegionTestExt</a> for <a class="struct" href="../scarab/struct.ScarabTestHarness.html" title="struct ratatui_testlib::scarab::ScarabTestHarness">ScarabTestHarness</a></h3></section></div><script src="../../trait.impl/ratatui_testlib/regions/trait.UiRegionTestExt.js" async></script></section></div></main></body></html>

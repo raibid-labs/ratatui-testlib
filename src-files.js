@@ -1,2 +1,2 @@
-createSrcSidebar('[["ratatui_testlib",["",[["bevy",[],["bench.rs","headless.rs","hybrid.rs","mod.rs"]]],["async_harness.rs","error.rs","events.rs","golden.rs","graphics.rs","harness.rs","ipc.rs","lib.rs","navigation.rs","parallel.rs","pty.rs","scarab.rs","screen.rs","shared_state.rs","sixel.rs","terminal_profiles.rs","timing.rs"]]]]');
-//{"start":19,"fragment_lengths":[314]}
+createSrcSidebar('[["ratatui_testlib",["",[["bevy",[],["bench.rs","headless.rs","hybrid.rs","mod.rs"]]],["async_harness.rs","audit.rs","error.rs","events.rs","golden.rs","graphics.rs","harness.rs","ipc.rs","lib.rs","navigation.rs","parallel.rs","pty.rs","regions.rs","scarab.rs","screen.rs","seqlock.rs","shared_state.rs","sixel.rs","terminal_profiles.rs","theme.rs","timing.rs","zones.rs"]]]]');
+//{"start":19,"fragment_lengths":[373]}

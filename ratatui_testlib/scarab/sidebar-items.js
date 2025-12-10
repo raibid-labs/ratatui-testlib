@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["ScarabConfig","ScarabConfigBuilder","ScarabSharedMemory","ScarabTestHarness"],"trait":["ScarabTestExt"]};
+window.SIDEBAR_ITEMS = {"struct":["ScarabConfig","ScarabConfigBuilder","ScarabSharedMemory","ScarabTestHarness"],"trait":["ScarabTestExt","SeqlockTestExt"]};

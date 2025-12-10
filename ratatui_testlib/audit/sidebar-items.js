@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["HarnessType","PlaceholderPattern"],"struct":["AuditSummary","PlaceholderTest","ScaffoldConfig","TestAuditor"]};
