@@ -1,7 +1,7 @@
 //! Keyboard event simulation demonstration.
 //!
 //! This example shows how to use the keyboard event simulation features
-//! of ratatui_testlib to send various types of input to TUI applications.
+//! of terminal_testlib to send various types of input to TUI applications.
 //!
 //! # Running This Example
 //!
@@ -22,7 +22,7 @@
 use std::time::Duration;
 
 use portable_pty::CommandBuilder;
-use ratatui_testlib::{KeyCode, Modifiers, Result, TuiTestHarness};
+use terminal_testlib::{KeyCode, Modifiers, Result, TuiTestHarness};
 
 fn main() -> Result<()> {
     println!("=== Keyboard Event Simulation Demo ===\n");

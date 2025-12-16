@@ -8,9 +8,9 @@
 //! cargo run --example terminal_profiles_demo --features sixel
 //! ```
 
-use ratatui_testlib::{ColorDepth, Feature, TerminalProfile, TuiTestHarness};
+use terminal_testlib::{ColorDepth, Feature, TerminalProfile, TuiTestHarness};
 
-fn main() -> ratatui_testlib::Result<()> {
+fn main() -> terminal_testlib::Result<()> {
     println!("Terminal Profile Demo\n");
     println!("===================\n");
 

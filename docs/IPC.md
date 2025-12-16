@@ -16,7 +16,7 @@ This pattern is common in modern terminal emulators that separate parsing from r
 
 ```toml
 [dependencies]
-ratatui-testlib = { version = "0.3", features = ["ipc"] }
+terminal-testlib = { version = "0.3", features = ["ipc"] }
 ```
 
 ### 2. Set Environment Variable
@@ -31,7 +31,7 @@ export RTL_IPC_TEST=1
 
 ```rust
 use std::time::Duration;
-use ratatui_testlib::ipc::{DaemonTestHarness, DaemonConfig};
+use terminal_testlib::ipc::{DaemonTestHarness, DaemonConfig};
 
 #[test]
 fn test_echo_command() -> Result<(), Box<dyn std::error::Error>> {
@@ -201,7 +201,7 @@ Offset  Size    Field
 If your daemon uses a different shared memory format, you can provide custom validation:
 
 ```rust
-use ratatui_testlib::ipc::DaemonSharedMemory;
+use terminal_testlib::ipc::DaemonSharedMemory;
 
 // Open with custom magic/version
 let shm = DaemonSharedMemory::open_with_validation(
@@ -214,7 +214,7 @@ let shm = DaemonSharedMemory::open_with_validation(
 ## Error Handling
 
 ```rust
-use ratatui_testlib::ipc::{DaemonTestHarness, DaemonConfig, IpcError};
+use terminal_testlib::ipc::{DaemonTestHarness, DaemonConfig, IpcError};
 
 match DaemonTestHarness::with_config(config) {
     Ok(harness) => println!("Connected!"),

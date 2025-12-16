@@ -18,7 +18,7 @@
 //! against deterministic byte sequences.
 //!
 //! ```rust
-//! use ratatui_testlib::ScreenState;
+//! use terminal_testlib::ScreenState;
 //!
 //! // Create a parser without any PTY
 //! let mut screen = ScreenState::new(80, 24);
@@ -39,13 +39,13 @@
 //!
 //! ```rust,no_run
 //! use portable_pty::CommandBuilder;
-//! use ratatui_testlib::TuiTestHarness;
+//! use terminal_testlib::TuiTestHarness;
 //!
 //! let mut harness = TuiTestHarness::new(80, 24)?;
 //! let cmd = CommandBuilder::new("my-tui-app");
 //! harness.spawn(cmd)?;
 //! harness.wait_for_text("Welcome")?;
-//! # Ok::<(), ratatui_testlib::TermTestError>(())
+//! # Ok::<(), terminal_testlib::TermTestError>(())
 //! ```
 //!
 //! # Example: Verification Oracle
@@ -53,7 +53,7 @@
 //! Use [`ScreenState`] as a reference implementation to verify other terminal emulators:
 //!
 //! ```rust
-//! use ratatui_testlib::ScreenState;
+//! use terminal_testlib::ScreenState;
 //!
 //! // Define a deterministic test sequence
 //! let test_sequence = b"\x1b[2J\x1b[H\x1b[31mTest\x1b[0m";
@@ -123,7 +123,7 @@ impl Default for Cell {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::Rect;
+/// use terminal_testlib::Rect;
 ///
 /// // Create a rectangle at (5, 10) with size 30x20
 /// let rect = Rect::new(5, 10, 30, 20);
@@ -222,7 +222,7 @@ impl Rect {
 /// # Example
 ///
 /// ```rust
-/// # use ratatui_testlib::ScreenState;
+/// # use terminal_testlib::ScreenState;
 /// let mut screen = ScreenState::new(80, 24);
 ///
 /// // After rendering a Sixel image...
@@ -317,7 +317,7 @@ pub struct ITerm2Region {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::ScreenState;
+/// use terminal_testlib::ScreenState;
 ///
 /// let mut screen = ScreenState::new(80, 24);
 /// screen.feed(b"\x1b[31mTest");
@@ -903,7 +903,7 @@ impl VTActor for TerminalState {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::ScreenState;
+/// use terminal_testlib::ScreenState;
 ///
 /// let mut screen = ScreenState::new(80, 24);
 ///
@@ -937,7 +937,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::ScreenState;
+    /// use terminal_testlib::ScreenState;
     ///
     /// let screen = ScreenState::new(80, 24);
     /// assert_eq!(screen.size(), (80, 24));
@@ -969,7 +969,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::ScreenState;
+    /// use terminal_testlib::ScreenState;
     ///
     /// let mut screen = ScreenState::new(80, 24);
     ///
@@ -995,7 +995,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::ScreenState;
+    /// use terminal_testlib::ScreenState;
     ///
     /// let mut screen = ScreenState::new(10, 3);
     /// screen.feed(b"Hello");
@@ -1069,7 +1069,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::ScreenState;
+    /// use terminal_testlib::ScreenState;
     ///
     /// let mut screen = ScreenState::new(80, 24);
     /// screen.feed(b"\x1b[31mRed\x1b[0m");
@@ -1112,7 +1112,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::ScreenState;
+    /// use terminal_testlib::ScreenState;
     ///
     /// let screen = ScreenState::new(80, 24);
     /// assert_eq!(screen.cols(), 80);
@@ -1128,7 +1128,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::ScreenState;
+    /// use terminal_testlib::ScreenState;
     ///
     /// let screen = ScreenState::new(80, 24);
     /// assert_eq!(screen.rows(), 24);
@@ -1144,7 +1144,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::ScreenState;
+    /// use terminal_testlib::ScreenState;
     ///
     /// let mut screen = ScreenState::new(80, 24);
     /// screen.feed(b"Line 1\r\nLine 2");
@@ -1173,7 +1173,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::ScreenState;
+    /// use terminal_testlib::ScreenState;
     ///
     /// let mut screen = ScreenState::new(80, 24);
     /// screen.feed(b"\x1b[31mRed\x1b[32mGreen\x1b[34mBlue");
@@ -1211,7 +1211,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::ScreenState;
+    /// use terminal_testlib::ScreenState;
     ///
     /// let mut screen = ScreenState::new(80, 24);
     /// screen.feed(b"\x1b[31mHello");
@@ -1248,7 +1248,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::ScreenState;
+    /// use terminal_testlib::ScreenState;
     ///
     /// let mut screen = ScreenState::new(80, 24);
     /// // ... render some Sixel graphics ...
@@ -1277,7 +1277,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::{screen::SixelRegion, ScreenState};
+    /// use terminal_testlib::{screen::SixelRegion, ScreenState};
     ///
     /// let mut screen = ScreenState::new(80, 24);
     ///
@@ -1313,7 +1313,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::ScreenState;
+    /// use terminal_testlib::ScreenState;
     ///
     /// let mut screen = ScreenState::new(80, 24);
     ///
@@ -1347,7 +1347,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::ScreenState;
+    /// use terminal_testlib::ScreenState;
     ///
     /// let mut screen = ScreenState::new(80, 24);
     /// // ... render some Kitty graphics ...
@@ -1387,7 +1387,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::ScreenState;
+    /// use terminal_testlib::ScreenState;
     ///
     /// let mut screen = ScreenState::new(80, 24);
     /// // ... render some iTerm2 inline images ...
@@ -1444,7 +1444,7 @@ impl ScreenState {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::ScreenState;
+    /// use terminal_testlib::ScreenState;
     ///
     /// let mut screen = ScreenState::new(80, 24);
     /// screen.feed(b"Welcome to the application");

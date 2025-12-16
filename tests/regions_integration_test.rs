@@ -2,7 +2,7 @@
 
 #[cfg(feature = "ipc")]
 mod region_tests {
-    use ratatui_testlib::regions::{
+    use terminal_testlib::regions::{
         RegionAnchor, RegionBounds, UiRegion, UiRegionTester,
     };
 
@@ -256,7 +256,7 @@ mod region_tests {
 
 #[cfg(all(feature = "scarab", target_family = "unix"))]
 mod scarab_integration_tests {
-    use ratatui_testlib::{
+    use terminal_testlib::{
         regions::{UiRegionTestExt, UiRegionTester},
         scarab::ScarabTestHarness,
     };

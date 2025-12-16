@@ -16,7 +16,7 @@ Phase 3 Sixel Position Tracking architecture has been fully designed and is read
 ## Deliverables Created
 
 ### 1. **PHASE3_CHECKLIST.md** - Comprehensive Implementation Guide
-**Location**: `/home/beengud/raibid-labs/ratatui-testlib/PHASE3_CHECKLIST.md`
+**Location**: `/home/beengud/raibid-labs/terminal-testlib/PHASE3_CHECKLIST.md`
 
 **Contents**:
 - 7 major implementation sections
@@ -36,7 +36,7 @@ Phase 3 Sixel Position Tracking architecture has been fully designed and is read
 7. Testing & CI Integration (50+ tests)
 
 ### 2. **SIXEL_PARSING_STRATEGY.md** - Algorithm Design
-**Location**: `/home/beengud/raibid-labs/ratatui-testlib/docs/SIXEL_PARSING_STRATEGY.md`
+**Location**: `/home/beengud/raibid-labs/terminal-testlib/docs/SIXEL_PARSING_STRATEGY.md`
 
 **Contents**:
 - Complete Sixel escape sequence format documentation
@@ -54,7 +54,7 @@ Phase 3 Sixel Position Tracking architecture has been fully designed and is read
 - Bounds: Check if (start + size) ≤ (area + area_size)
 
 ### 3. **PHASE3_VALIDATION_API.md** - API Specification
-**Location**: `/home/beengud/raibid-labs/ratatui-testlib/docs/PHASE3_VALIDATION_API.md`
+**Location**: `/home/beengud/raibid-labs/terminal-testlib/docs/PHASE3_VALIDATION_API.md`
 
 **Contents**:
 - Complete API surface for Sixel validation
@@ -80,7 +80,7 @@ capture.total_coverage();
 ```
 
 ### 4. **PHASE3_TEST_STRATEGY.md** - Comprehensive Testing Plan
-**Location**: `/home/beengud/raibid-labs/ratatui-testlib/docs/PHASE3_TEST_STRATEGY.md`
+**Location**: `/home/beengud/raibid-labs/terminal-testlib/docs/PHASE3_TEST_STRATEGY.md`
 
 **Contents**:
 - Test pyramid: 30 unit + 15 integration + 5 E2E tests
@@ -100,7 +100,7 @@ capture.total_coverage();
 - E2E: 5 dgx-pixels scenarios (Gallery, transitions, thumbnails)
 
 ### 5. **ROADMAP_PHASE3_UPDATE.md** - ROADMAP Changes
-**Location**: `/home/beengud/raibid-labs/ratatui-testlib/docs/ROADMAP_PHASE3_UPDATE.md`
+**Location**: `/home/beengud/raibid-labs/terminal-testlib/docs/ROADMAP_PHASE3_UPDATE.md`
 
 **Contents**:
 - Phase 2 status update (85% complete)
@@ -431,16 +431,16 @@ All blockers have been resolved:
 ### Documentation References
 
 **Architecture Documents**:
-- /home/beengud/raibid-labs/ratatui-testlib/PHASE3_CHECKLIST.md
-- /home/beengud/raibid-labs/ratatui-testlib/docs/SIXEL_PARSING_STRATEGY.md
-- /home/beengud/raibid-labs/ratatui-testlib/docs/PHASE3_VALIDATION_API.md
-- /home/beengud/raibid-labs/ratatui-testlib/docs/PHASE3_TEST_STRATEGY.md
+- /home/beengud/raibid-labs/terminal-testlib/PHASE3_CHECKLIST.md
+- /home/beengud/raibid-labs/terminal-testlib/docs/SIXEL_PARSING_STRATEGY.md
+- /home/beengud/raibid-labs/terminal-testlib/docs/PHASE3_VALIDATION_API.md
+- /home/beengud/raibid-labs/terminal-testlib/docs/PHASE3_TEST_STRATEGY.md
 
 **Existing Code**:
-- /home/beengud/raibid-labs/ratatui-testlib/src/sixel.rs (SixelSequence, SixelCapture)
-- /home/beengud/raibid-labs/ratatui-testlib/src/screen.rs (ScreenState, SixelRegion, parse stub)
-- /home/beengud/raibid-labs/ratatui-testlib/examples/sixel_test.rs (usage example)
-- /home/beengud/raibid-labs/ratatui-testlib/tests/integration/sixel.rs (basic tests)
+- /home/beengud/raibid-labs/terminal-testlib/src/sixel.rs (SixelSequence, SixelCapture)
+- /home/beengud/raibid-labs/terminal-testlib/src/screen.rs (ScreenState, SixelRegion, parse stub)
+- /home/beengud/raibid-labs/terminal-testlib/examples/sixel_test.rs (usage example)
+- /home/beengud/raibid-labs/terminal-testlib/tests/integration/sixel.rs (basic tests)
 
 **External References**:
 - DEC Sixel Specification: https://www.vt100.net/docs/vt3xx-gp/chapter14.html

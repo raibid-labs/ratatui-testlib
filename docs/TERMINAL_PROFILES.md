@@ -14,7 +14,7 @@ Different terminal emulators support different features:
 ## Quick Start
 
 ```rust
-use ratatui_testlib::{TuiTestHarness, TerminalProfile, Feature};
+use terminal_testlib::{TuiTestHarness, TerminalProfile, Feature};
 
 // Create a harness configured for WezTerm
 let harness = TuiTestHarness::new(80, 24)?
@@ -207,7 +207,7 @@ All features enabled for comprehensive testing.
 ### Basic Profile Selection
 
 ```rust
-use ratatui_testlib::{TuiTestHarness, TerminalProfile};
+use terminal_testlib::{TuiTestHarness, TerminalProfile};
 
 // Direct profile selection
 let harness = TuiTestHarness::new(80, 24)?
@@ -229,7 +229,7 @@ let harness = TuiTestHarness::new(80, 24)?
 ### Feature Checking
 
 ```rust
-use ratatui_testlib::Feature;
+use terminal_testlib::Feature;
 
 if harness.supports_feature(Feature::Sixel) {
     // Run Sixel graphics tests
@@ -261,7 +261,7 @@ println!("{}", caps.summary());
 ### Testing Across Multiple Profiles
 
 ```rust
-use ratatui_testlib::TerminalProfile;
+use terminal_testlib::TerminalProfile;
 
 #[test]
 fn test_app_works_on_all_terminals() -> Result<()> {
@@ -522,4 +522,4 @@ cargo run --example terminal_profiles_demo --features sixel
 
 - [Testing Guide](./TESTING.md) - General testing approaches
 - [Sixel Testing](./SIXEL.md) - Graphics protocol testing
-- [API Documentation](https://docs.rs/ratatui-testlib) - Full API reference
+- [API Documentation](https://docs.rs/terminal-testlib) - Full API reference

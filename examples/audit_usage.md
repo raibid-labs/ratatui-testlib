@@ -1,6 +1,6 @@
 # Test Audit and Scaffolding Guide
 
-The `audit` module in `ratatui-testlib` provides utilities for detecting placeholder tests and generating meaningful test templates. This is particularly useful for:
+The `audit` module in `terminal-testlib` provides utilities for detecting placeholder tests and generating meaningful test templates. This is particularly useful for:
 
 - Identifying incomplete or placeholder tests in your codebase
 - Generating meaningful test stubs based on function names
@@ -10,7 +10,7 @@ The `audit` module in `ratatui-testlib` provides utilities for detecting placeho
 ## Quick Start
 
 ```rust
-use ratatui_testlib::audit::{TestAuditor, ScaffoldConfig, HarnessType};
+use terminal_testlib::audit::{TestAuditor, ScaffoldConfig, HarnessType};
 use std::path::Path;
 
 // Find all placeholder tests in a directory
@@ -284,7 +284,7 @@ cargo run --example audit_cli -- scaffold tests/my_test.rs --harness async
 You can integrate the auditor into your CI pipeline:
 
 ```rust
-use ratatui_testlib::audit::TestAuditor;
+use terminal_testlib::audit::TestAuditor;
 use std::path::Path;
 
 #[test]

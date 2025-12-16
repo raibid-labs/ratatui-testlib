@@ -14,8 +14,8 @@
 //! # #[cfg(feature = "scarab")]
 //! # {
 //! use std::time::Duration;
-//! use ratatui_testlib::scarab::ScarabTestHarness;
-//! use ratatui_testlib::theme::{ColorPalette, AnsiColor, ThemeTestExt};
+//! use terminal_testlib::scarab::ScarabTestHarness;
+//! use terminal_testlib::theme::{ColorPalette, AnsiColor, ThemeTestExt};
 //!
 //! # fn test() -> Result<(), Box<dyn std::error::Error>> {
 //! let mut harness = ScarabTestHarness::connect()?;

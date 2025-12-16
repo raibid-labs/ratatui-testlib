@@ -8,7 +8,7 @@
 //! cargo run --example graphics_detection --features sixel
 //! ```
 
-use ratatui_testlib::{
+use terminal_testlib::{
     graphics::{GraphicsCapture, GraphicsProtocol},
     ITerm2Region, KittyRegion, ScreenState, SixelRegion,
 };

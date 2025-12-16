@@ -13,7 +13,7 @@
 //! ```
 
 #[cfg(feature = "scarab")]
-use ratatui_testlib::{
+use terminal_testlib::{
     scarab::ScarabTestHarness,
     theme::{AnsiColor, ColorPalette, ThemeTestExt},
 };

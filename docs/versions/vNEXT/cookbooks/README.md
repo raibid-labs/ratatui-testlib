@@ -1,6 +1,6 @@
 # Project Cookbooks
 
-This directory contains project-specific testing guides showing how to use ratatui-testlib in different application contexts.
+This directory contains project-specific testing guides showing how to use terminal-testlib in different application contexts.
 
 ## Available Cookbooks
 
@@ -78,12 +78,12 @@ To add a new cookbook:
 ## Cross-References
 
 Cookbooks reference common functionality from:
-- [Core API Documentation](https://docs.rs/ratatui-testlib)
+- [Core API Documentation](https://docs.rs/terminal-testlib)
 - [Examples Gallery](../../../../examples/)
 - [ROADMAP.md](../ROADMAP.md) - Planned features
 
 ## Questions?
 
 - For cookbook-specific questions, see the Troubleshooting section in each guide
-- For general ratatui-testlib questions, see the main [README](../../../../README.md)
+- For general terminal-testlib questions, see the main [README](../../../../README.md)
 - For bugs or feature requests, open an issue on GitHub

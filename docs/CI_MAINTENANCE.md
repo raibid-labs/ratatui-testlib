@@ -2,7 +2,7 @@
 
 ## Overview
 
-The ratatui-testlib project uses GitHub Actions for continuous integration and deployment. This guide covers how to maintain and troubleshoot the CI/CD pipeline.
+The terminal-testlib project uses GitHub Actions for continuous integration and deployment. This guide covers how to maintain and troubleshoot the CI/CD pipeline.
 
 ## CI/CD Architecture
 

@@ -2,7 +2,7 @@
 
 use std::fs;
 
-use ratatui_testlib::{Result, TuiTestHarness};
+use terminal_testlib::{Result, TuiTestHarness};
 use tempfile::TempDir;
 
 #[test]

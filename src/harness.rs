@@ -17,9 +17,9 @@
 //!
 //! ```rust,no_run
 //! use portable_pty::CommandBuilder;
-//! use ratatui_testlib::TuiTestHarness;
+//! use terminal_testlib::TuiTestHarness;
 //!
-//! # fn test() -> ratatui_testlib::Result<()> {
+//! # fn test() -> terminal_testlib::Result<()> {
 //! // Create a test harness
 //! let mut harness = TuiTestHarness::new(80, 24)?;
 //!
@@ -81,9 +81,9 @@ const DEFAULT_TIMEOUT: Duration = Duration::from_secs(5);
 /// # Example
 ///
 /// ```rust,no_run
-/// use ratatui_testlib::TuiTestHarness;
+/// use terminal_testlib::TuiTestHarness;
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let harness = TuiTestHarness::new(80, 24)?;
 ///
 /// // Get memory usage estimate
@@ -147,9 +147,9 @@ impl MemoryResults {
 /// # Example
 ///
 /// ```rust,no_run
-/// use ratatui_testlib::{Axis, Rect, TuiTestHarness};
+/// use terminal_testlib::{Axis, Rect, TuiTestHarness};
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let harness = TuiTestHarness::new(80, 24)?;
 /// let button1 = Rect::new(10, 20, 15, 3);
 /// let button2 = Rect::new(30, 20, 15, 3);
@@ -210,13 +210,13 @@ struct TimestampedEvent {
 ///
 /// ```rust,no_run
 /// use portable_pty::CommandBuilder;
-/// use ratatui_testlib::TuiTestHarness;
+/// use terminal_testlib::TuiTestHarness;
 ///
 /// let mut harness = TuiTestHarness::new(80, 24)?;
 /// let mut cmd = CommandBuilder::new("my-app");
 /// harness.spawn(cmd)?;
 /// harness.wait_for(|state| state.contains("Ready"))?;
-/// # Ok::<(), ratatui_testlib::TermTestError>(())
+/// # Ok::<(), terminal_testlib::TermTestError>(())
 /// ```
 ///
 /// # Builder Pattern
@@ -224,14 +224,14 @@ struct TimestampedEvent {
 /// ```rust,no_run
 /// use std::time::Duration;
 ///
-/// use ratatui_testlib::TuiTestHarness;
+/// use terminal_testlib::TuiTestHarness;
 ///
 /// let mut harness = TuiTestHarness::builder()
 ///     .with_size(80, 24)
 ///     .with_timeout(Duration::from_secs(10))
 ///     .with_poll_interval(Duration::from_millis(50))
 ///     .build()?;
-/// # Ok::<(), ratatui_testlib::TermTestError>(())
+/// # Ok::<(), terminal_testlib::TermTestError>(())
 /// ```
 pub struct TuiTestHarness {
     terminal: TestTerminal,
@@ -291,13 +291,13 @@ impl TuiTestHarness {
     /// ```rust,no_run
     /// use std::time::Duration;
     ///
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
     /// let mut harness = TuiTestHarness::builder()
     ///     .with_size(80, 24)
     ///     .with_timeout(Duration::from_secs(10))
     ///     .build()?;
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn builder() -> TuiTestHarnessBuilder {
         TuiTestHarnessBuilder::default()
@@ -336,9 +336,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::{TerminalProfile, TuiTestHarness};
+    /// use terminal_testlib::{TerminalProfile, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// // Test with WezTerm profile (supports Sixel)
     /// let harness = TuiTestHarness::new(80, 24)?.with_terminal_profile(TerminalProfile::WezTerm);
     ///
@@ -368,9 +368,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// // Simulate WezTerm using TERM value
     /// let harness = TuiTestHarness::new(80, 24)?.simulate_terminfo("wezterm");
     ///
@@ -398,9 +398,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::{Feature, TerminalProfile, TuiTestHarness};
+    /// use terminal_testlib::{Feature, TerminalProfile, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?.with_terminal_profile(TerminalProfile::WezTerm);
     ///
     /// if harness.supports_feature(Feature::Sixel) {
@@ -427,9 +427,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::{TerminalProfile, TuiTestHarness};
+    /// use terminal_testlib::{TerminalProfile, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?.with_terminal_profile(TerminalProfile::WezTerm);
     ///
     /// let caps = harness.terminal_capabilities();
@@ -449,9 +449,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::{TerminalProfile, TuiTestHarness};
+    /// use terminal_testlib::{TerminalProfile, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?.with_terminal_profile(TerminalProfile::WezTerm);
     ///
     /// assert_eq!(harness.terminal_profile(), TerminalProfile::WezTerm);
@@ -521,9 +521,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::{KeyCode, TuiTestHarness};
+    /// use terminal_testlib::{KeyCode, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// // ... spawn application ...
     ///
@@ -558,9 +558,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::{KeyCode, Modifiers, TuiTestHarness};
+    /// use terminal_testlib::{KeyCode, Modifiers, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// // ... spawn application ...
     ///
@@ -595,9 +595,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// // ... spawn application ...
     ///
@@ -623,9 +623,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.type_text("typing speed simulation")?;
     /// # Ok(())
@@ -650,9 +650,9 @@ impl TuiTestHarness {
     /// ```rust,no_run
     /// use std::time::Duration;
     ///
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     ///
     /// // Set 100ms delay between events
@@ -677,9 +677,9 @@ impl TuiTestHarness {
     /// ```rust,no_run
     /// use std::time::Duration;
     ///
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     ///
     /// harness.set_event_delay(Duration::from_millis(100));
@@ -705,13 +705,13 @@ impl TuiTestHarness {
     /// ```rust,no_run
     /// use std::time::Duration;
     ///
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     ///
     /// // Send a key, then wait to test debouncing
-    /// harness.send_key(ratatui_testlib::KeyCode::Char('a'))?;
+    /// harness.send_key(terminal_testlib::KeyCode::Char('a'))?;
     /// harness.advance_time(Duration::from_millis(300))?;
     ///
     /// // Now the debounced action should have occurred
@@ -745,9 +745,9 @@ impl TuiTestHarness {
     /// ```rust,no_run
     /// use std::time::Duration;
     ///
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     ///
     /// // Simulate holding down the right arrow key (10 presses, 50ms apart)
@@ -783,9 +783,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::{MouseButton, MouseEvent, TuiTestHarness};
+    /// use terminal_testlib::{MouseButton, MouseEvent, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     ///
     /// // Send a left click at (10, 5)
@@ -839,9 +839,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::{MouseButton, TuiTestHarness};
+    /// use terminal_testlib::{MouseButton, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.mouse_click(10, 5, MouseButton::Left)?;
     /// # Ok(())
@@ -1025,10 +1025,10 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// # use ratatui_testlib::TuiTestHarness;
+    /// # use terminal_testlib::TuiTestHarness;
     /// # let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.wait_for(|state| state.contains("Ready"))?;
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn wait_for<F>(&mut self, condition: F) -> Result<()>
     where
@@ -1126,10 +1126,10 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// # use ratatui_testlib::TuiTestHarness;
+    /// # use terminal_testlib::TuiTestHarness;
     /// # let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.wait_for_text("Ready")?;
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn wait_for_text(&mut self, text: &str) -> Result<()> {
         let text = text.to_string();
@@ -1154,11 +1154,11 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// # use ratatui_testlib::TuiTestHarness;
+    /// # use terminal_testlib::TuiTestHarness;
     /// # use std::time::Duration;
     /// # let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.wait_for_text_timeout("Ready", Duration::from_secs(2))?;
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn wait_for_text_timeout(&mut self, text: &str, timeout: Duration) -> Result<()> {
         let text = text.to_string();
@@ -1231,10 +1231,10 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// # use ratatui_testlib::TuiTestHarness;
+    /// # use terminal_testlib::TuiTestHarness;
     /// # let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.wait_for_cursor((5, 10))?;
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn wait_for_cursor(&mut self, pos: (u16, u16)) -> Result<()> {
         let description = format!("cursor at ({}, {})", pos.0, pos.1);
@@ -1257,11 +1257,11 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// # use ratatui_testlib::TuiTestHarness;
+    /// # use terminal_testlib::TuiTestHarness;
     /// # use std::time::Duration;
     /// # let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.wait_for_cursor_timeout((5, 10), Duration::from_millis(500))?;
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn wait_for_cursor_timeout(&mut self, pos: (u16, u16), timeout: Duration) -> Result<()> {
         let description = format!("cursor at ({}, {})", pos.0, pos.1);
@@ -1333,11 +1333,11 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// # use ratatui_testlib::TuiTestHarness;
+    /// # use terminal_testlib::TuiTestHarness;
     /// # let harness = TuiTestHarness::new(80, 24)?;
     /// let (row, col) = harness.cursor_position();
     /// println!("Cursor at: row={}, col={}", row, col);
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn cursor_position(&self) -> (u16, u16) {
         self.state.cursor_position()
@@ -1362,9 +1362,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?;
     /// let state = harness.state();
     /// println!("Screen size: {:?}", state.size());
@@ -1387,9 +1387,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.state_mut().feed(b"Test data");
     /// assert!(harness.screen_contents().contains("Test"));
@@ -1417,9 +1417,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.resize(120, 40)?;
     /// assert_eq!(harness.state().size(), (120, 40));
@@ -1442,9 +1442,9 @@ impl TuiTestHarness {
     ///
     /// ```rust,no_run
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// let cmd = CommandBuilder::new("sleep");
     /// harness.spawn(cmd)?;
@@ -1472,9 +1472,9 @@ impl TuiTestHarness {
     ///
     /// ```rust,no_run
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// let mut cmd = CommandBuilder::new("echo");
     /// cmd.arg("test");
@@ -1509,9 +1509,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?;
     ///
     /// let memory = harness.memory_usage();
@@ -1565,9 +1565,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?;
     ///
     /// // Assert memory stays under 1 MB
@@ -1616,9 +1616,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?;
     /// // ... render UI with tab bar at bottom ...
     ///
@@ -1684,9 +1684,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::{Rect, TuiTestHarness};
+    /// use terminal_testlib::{Rect, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?;
     /// // ... render UI ...
     ///
@@ -1751,9 +1751,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::{Rect, TuiTestHarness};
+    /// use terminal_testlib::{Rect, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?;
     ///
     /// let sidebar = Rect::new(0, 0, 20, 24);
@@ -1810,9 +1810,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::{Axis, Rect, TuiTestHarness};
+    /// use terminal_testlib::{Axis, Rect, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?;
     ///
     /// let button1 = Rect::new(10, 20, 15, 3);
@@ -1885,9 +1885,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// // ... spawn app that renders Sixel graphics ...
     ///
@@ -1918,9 +1918,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?;
     /// // ... render graphics ...
     ///
@@ -1951,9 +1951,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?;
     /// // ... render Sixel at (5, 10) ...
     ///
@@ -1991,9 +1991,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?;
     /// // ... render graphics ...
     ///
@@ -2027,9 +2027,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?;
     /// // ... render graphics ...
     ///
@@ -2066,14 +2066,14 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// // ... render some graphics ...
     ///
     /// // Simulate screen transition (e.g., press a key to switch files)
-    /// harness.send_key(ratatui_testlib::KeyCode::Down)?;
+    /// harness.send_key(terminal_testlib::KeyCode::Down)?;
     ///
     /// // Verify graphics were cleared
     /// if harness.verify_sixel_cleared()? {
@@ -2107,9 +2107,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(80, 24)?;
     /// // ... render image preview ...
     ///
@@ -2160,9 +2160,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::new(120, 40)?;
     /// // ... render image preview in large terminal ...
     ///
@@ -2216,9 +2216,9 @@ impl TuiTestHarness {
     ///
     /// ```rust,no_run
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// let cmd = CommandBuilder::new("my-app");
     /// harness.spawn(cmd)?;
@@ -2260,9 +2260,9 @@ impl TuiTestHarness {
     ///
     /// ```rust,no_run
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// let cmd = CommandBuilder::new("my-app");
     /// harness.spawn(cmd)?;
@@ -2306,9 +2306,9 @@ impl TuiTestHarness {
     ///
     /// ```rust,no_run
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// let cmd = CommandBuilder::new("my-app");
     /// harness.spawn(cmd)?;
@@ -2340,9 +2340,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.start_recording();
     ///
@@ -2519,9 +2519,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// // ... spawn app and interact ...
     ///
@@ -2564,9 +2564,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// // ... spawn app and interact ...
     ///
@@ -2604,9 +2604,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.set_verbose(true);
     ///
@@ -2691,9 +2691,9 @@ impl TuiTestHarness {
     ///
     /// ```rust,no_run
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// TuiTestHarness::with_isolation(|harness| {
     ///     let mut cmd = CommandBuilder::new("echo");
     ///     cmd.arg("test");
@@ -2730,9 +2730,9 @@ impl TuiTestHarness {
     ///
     /// ```rust,no_run
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// TuiTestHarness::with_isolation_sized(100, 30, |harness| {
     ///     let mut cmd = CommandBuilder::new("echo");
     ///     cmd.arg("test");
@@ -2761,9 +2761,9 @@ impl TuiTestHarness {
     /// ```rust,no_run
     /// use std::time::Duration;
     ///
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = TuiTestHarness::parallel_harness_builder()
     ///     .with_size(100, 30)
     ///     .with_timeout(Duration::from_secs(10))
@@ -2788,9 +2788,9 @@ impl TuiTestHarness {
     /// ```rust,no_run
     /// use std::time::Duration;
     ///
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.send_text("hello")?;
     ///
@@ -2824,9 +2824,9 @@ impl TuiTestHarness {
     /// ```rust,no_run
     /// use std::time::Duration;
     ///
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.send_text("hello")?;
     ///
@@ -2871,9 +2871,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.send_text("hello")?;
     ///
@@ -2895,9 +2895,9 @@ impl TuiTestHarness {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TuiTestHarness;
+    /// use terminal_testlib::TuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     ///
     /// // Warm-up
@@ -2959,7 +2959,7 @@ impl TimingHooks for TuiTestHarness {
 /// ```rust,no_run
 /// use std::time::Duration;
 ///
-/// use ratatui_testlib::TuiTestHarness;
+/// use terminal_testlib::TuiTestHarness;
 ///
 /// let mut harness = TuiTestHarness::builder()
 ///     .with_size(80, 24)
@@ -2967,7 +2967,7 @@ impl TimingHooks for TuiTestHarness {
 ///     .with_poll_interval(Duration::from_millis(50))
 ///     .with_buffer_size(8192)
 ///     .build()?;
-/// # Ok::<(), ratatui_testlib::TermTestError>(())
+/// # Ok::<(), terminal_testlib::TermTestError>(())
 /// ```
 #[derive(Debug, Clone)]
 pub struct TuiTestHarnessBuilder {

@@ -1,4 +1,4 @@
-# ratatui-testlib vNEXT - Unreleased Features
+# terminal-testlib vNEXT - Unreleased Features
 
 This directory contains documentation for features and changes planned for the next release.
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the headless mode implementation for ratatui-testlib, which enables testing in CI/CD environments without display server dependencies (X11/Wayland).
+This document describes the headless mode implementation for terminal-testlib, which enables testing in CI/CD environments without display server dependencies (X11/Wayland).
 
 ## Issue Reference
 
@@ -88,7 +88,7 @@ cargo test --all-features --features headless
 
 ```toml
 [dev-dependencies]
-ratatui-testlib = { version = "0.1", features = ["bevy", "headless"] }
+terminal-testlib = { version = "0.1", features = ["bevy", "headless"] }
 ```
 
 ### GitHub Actions
@@ -188,4 +188,4 @@ This implementation is part of Wave 2 of the parallel orchestration:
 
 ## Conclusion
 
-The headless mode implementation provides robust CI/CD compatibility for ratatui-testlib. The feature is well-tested, documented, and ready for use in automated testing environments.
+The headless mode implementation provides robust CI/CD compatibility for terminal-testlib. The feature is well-tested, documented, and ready for use in automated testing environments.

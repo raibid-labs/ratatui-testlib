@@ -1,6 +1,6 @@
 //! Headless CI Example - Demonstrates Bevy+PTY hybrid testing without X/Wayland
 //!
-//! This example shows how to use `ratatui-testlib` for comprehensive integration
+//! This example shows how to use `terminal-testlib` for comprehensive integration
 //! testing in CI/CD environments like GitHub Actions without requiring a display server.
 //!
 //! # Features Demonstrated
@@ -19,7 +19,7 @@
 //! ```
 
 use bevy::prelude::*;
-use ratatui_testlib::{HeadlessBevyRunner, HybridBevyHarness, Result, ScreenState};
+use terminal_testlib::{HeadlessBevyRunner, HybridBevyHarness, Result, ScreenState};
 
 // ============================================================================
 // Test Components (simulate Scarab-like components)
@@ -227,7 +227,7 @@ fn test_nav_lifecycle() -> Result<()> {
 
 #[cfg(feature = "sixel")]
 fn test_graphics_detection() -> Result<()> {
-    use ratatui_testlib::{GraphicsCapture, GraphicsProtocol};
+    use terminal_testlib::{GraphicsCapture, GraphicsProtocol};
 
     println!("\n=== Test: Graphics Protocol Detection ===\n");
 
@@ -333,7 +333,7 @@ fn test_hybrid_harness_ecs() -> Result<()> {
 // ============================================================================
 
 fn test_performance_budgets() -> Result<()> {
-    use ratatui_testlib::bevy::BenchmarkableHarness;
+    use terminal_testlib::bevy::BenchmarkableHarness;
 
     println!("\n=== Test: Performance Budgets ===\n");
 
@@ -419,7 +419,7 @@ fn test_snapshot_integration() -> Result<()> {
 
 fn main() -> Result<()> {
     println!("============================================");
-    println!("  Headless CI Example - ratatui-testlib");
+    println!("  Headless CI Example - terminal-testlib");
     println!("============================================");
     println!();
     println!("This demonstrates testing without X11/Wayland");

@@ -18,7 +18,7 @@ This module provides the glue to test Scarab without reimplementing IPC/shared-m
 
 ```toml
 [dependencies]
-ratatui-testlib = { version = "0.3", features = ["scarab"] }
+terminal-testlib = { version = "0.3", features = ["scarab"] }
 ```
 
 ### 2. Set Environment Variable
@@ -33,7 +33,7 @@ export SCARAB_TEST_RTL=1
 
 ```rust
 use std::time::Duration;
-use ratatui_testlib::scarab::ScarabTestHarness;
+use terminal_testlib::scarab::ScarabTestHarness;
 
 #[test]
 fn test_echo_command() -> Result<(), Box<dyn std::error::Error>> {
@@ -70,7 +70,7 @@ Scarab uses these default paths:
 
 ```rust
 use std::time::Duration;
-use ratatui_testlib::scarab::{ScarabTestHarness, ScarabConfig};
+use terminal_testlib::scarab::{ScarabTestHarness, ScarabConfig};
 
 let config = ScarabConfig::builder()
     .socket_path("/tmp/test-scarab.sock")
@@ -88,7 +88,7 @@ let mut harness = ScarabTestHarness::with_config(config)?;
 
 ```rust
 use std::time::Duration;
-use ratatui_testlib::scarab::ScarabTestHarness;
+use terminal_testlib::scarab::ScarabTestHarness;
 
 #[test]
 fn test_with_prompt() -> Result<(), Box<dyn std::error::Error>> {
@@ -111,7 +111,7 @@ fn test_with_prompt() -> Result<(), Box<dyn std::error::Error>> {
 
 ```rust
 use std::time::Duration;
-use ratatui_testlib::scarab::ScarabTestHarness;
+use terminal_testlib::scarab::ScarabTestHarness;
 
 #[test]
 fn test_cursor_movement() -> Result<(), Box<dyn std::error::Error>> {
@@ -132,7 +132,7 @@ fn test_cursor_movement() -> Result<(), Box<dyn std::error::Error>> {
 
 ```rust
 use std::time::Duration;
-use ratatui_testlib::scarab::ScarabTestHarness;
+use terminal_testlib::scarab::ScarabTestHarness;
 
 #[test]
 fn test_command_sequence() -> Result<(), Box<dyn std::error::Error>> {
@@ -151,7 +151,7 @@ fn test_command_sequence() -> Result<(), Box<dyn std::error::Error>> {
 
 ```rust
 use std::time::Duration;
-use ratatui_testlib::scarab::ScarabTestHarness;
+use terminal_testlib::scarab::ScarabTestHarness;
 
 #[test]
 fn test_clear_screen() -> Result<(), Box<dyn std::error::Error>> {

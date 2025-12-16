@@ -4,10 +4,10 @@
 //! that communicates with a daemon process running in a PTY.
 
 #[cfg(feature = "bevy")]
-fn main() -> ratatui_testlib::Result<()> {
+fn main() -> terminal_testlib::Result<()> {
     use bevy::prelude::*;
     use portable_pty::CommandBuilder;
-    use ratatui_testlib::HybridBevyHarness;
+    use terminal_testlib::HybridBevyHarness;
 
     // Define client-side components
     #[derive(Component)]

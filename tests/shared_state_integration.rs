@@ -4,7 +4,7 @@
 
 use std::{collections::HashMap, fs::File, io::Write};
 
-use ratatui_testlib::{
+use terminal_testlib::{
     bevy::{BevyTuiTestHarness, HybridBevyHarness},
     shared_state::{MemoryMappedState, SharedStateAccess},
 };
@@ -39,8 +39,8 @@ fn write_state_to_file(path: &str, state: &TestState) -> std::io::Result<()> {
 }
 
 #[test]
-fn test_bevy_harness_with_shared_state_path() -> ratatui_testlib::Result<()> {
-    let temp_path = "/tmp/ratatui_testlib_test_bevy_shared_state.mmap";
+fn test_bevy_harness_with_shared_state_path() -> terminal_testlib::Result<()> {
+    let temp_path = "/tmp/terminal_testlib_test_bevy_shared_state.mmap";
 
     // Create initial state
     let state = TestState::new();
@@ -67,8 +67,8 @@ fn test_bevy_harness_with_shared_state_path() -> ratatui_testlib::Result<()> {
 }
 
 #[test]
-fn test_hybrid_harness_with_shared_state_path() -> ratatui_testlib::Result<()> {
-    let temp_path = "/tmp/ratatui_testlib_test_hybrid_shared_state.mmap";
+fn test_hybrid_harness_with_shared_state_path() -> terminal_testlib::Result<()> {
+    let temp_path = "/tmp/terminal_testlib_test_hybrid_shared_state.mmap";
 
     // Create initial state
     let state = TestState::new();
@@ -94,7 +94,7 @@ fn test_hybrid_harness_with_shared_state_path() -> ratatui_testlib::Result<()> {
 }
 
 #[test]
-fn test_shared_state_without_configuration() -> ratatui_testlib::Result<()> {
+fn test_shared_state_without_configuration() -> terminal_testlib::Result<()> {
     // Create harness without shared state
     let harness = BevyTuiTestHarness::new()?;
 
@@ -105,8 +105,8 @@ fn test_shared_state_without_configuration() -> ratatui_testlib::Result<()> {
 }
 
 #[test]
-fn test_shared_state_read_after_update() -> ratatui_testlib::Result<()> {
-    let temp_path = "/tmp/ratatui_testlib_test_state_update.mmap";
+fn test_shared_state_read_after_update() -> terminal_testlib::Result<()> {
+    let temp_path = "/tmp/terminal_testlib_test_state_update.mmap";
 
     // Create initial state
     let mut state = TestState::new();
@@ -133,10 +133,10 @@ fn test_shared_state_read_after_update() -> ratatui_testlib::Result<()> {
 }
 
 #[test]
-fn test_shared_state_with_metrics() -> ratatui_testlib::Result<()> {
-    use ratatui_testlib::shared_state::assert_metric;
+fn test_shared_state_with_metrics() -> terminal_testlib::Result<()> {
+    use terminal_testlib::shared_state::assert_metric;
 
-    let temp_path = "/tmp/ratatui_testlib_test_metrics.mmap";
+    let temp_path = "/tmp/terminal_testlib_test_metrics.mmap";
 
     // Create state with metrics
     let mut state = TestState::new();

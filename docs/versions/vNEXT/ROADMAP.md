@@ -1,6 +1,6 @@
-# ratatui-testlib Roadmap - vNEXT
+# terminal-testlib Roadmap - vNEXT
 
-This document outlines planned features and enhancements for future versions of ratatui-testlib.
+This document outlines planned features and enhancements for future versions of terminal-testlib.
 
 ## Table of Contents
 
@@ -19,7 +19,7 @@ This document outlines planned features and enhancements for future versions of 
 
 **Proposed API**:
 ```rust
-use ratatui_testlib::AsyncTuiTestHarness;
+use terminal_testlib::AsyncTuiTestHarness;
 
 #[tokio::test]
 async fn test_async_redraw() -> Result<()> {
@@ -55,7 +55,7 @@ async fn test_async_redraw() -> Result<()> {
 
 **Proposed API**:
 ```rust
-use ratatui_testlib::{TuiTestHarness, Snapshot};
+use terminal_testlib::{TuiTestHarness, Snapshot};
 
 #[test]
 fn test_time_travel() -> Result<()> {
@@ -102,7 +102,7 @@ fn test_time_travel() -> Result<()> {
 
 **Proposed API**:
 ```rust
-use ratatui_testlib::{TuiTestHarness, LayoutDiff};
+use terminal_testlib::{TuiTestHarness, LayoutDiff};
 
 #[test]
 fn test_layout_diff() -> Result<()> {
@@ -153,7 +153,7 @@ fn test_layout_diff() -> Result<()> {
 
 **Proposed API**:
 ```rust
-use ratatui_testlib::fixtures::{TableFixture, ListFixture, PopupFixture};
+use terminal_testlib::fixtures::{TableFixture, ListFixture, PopupFixture};
 use ratatui::widgets::Table;
 
 #[test]
@@ -207,7 +207,7 @@ fn test_popup() -> Result<()> {
 
 **Proposed API**:
 ```rust
-use ratatui_testlib::scripting::{EventScript, event_script};
+use terminal_testlib::scripting::{EventScript, event_script};
 
 #[test]
 fn test_navigation_flow() -> Result<()> {
@@ -336,7 +336,7 @@ jobs:
 
 **Status**: Planned
 
-**Description**: Project-specific guides showing ratatui-testlib patterns for different use cases.
+**Description**: Project-specific guides showing terminal-testlib patterns for different use cases.
 
 **Planned Cookbooks**:
 
@@ -435,7 +435,7 @@ examples/
 
 **Example Gallery README**:
 ```markdown
-# ratatui-testlib Examples Gallery
+# terminal-testlib Examples Gallery
 
 ## Index
 

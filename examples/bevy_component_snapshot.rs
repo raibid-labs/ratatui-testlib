@@ -1,6 +1,6 @@
 //! Component snapshot testing example for Bevy ECS.
 //!
-//! This example demonstrates how to use ratatui_testlib to create and compare
+//! This example demonstrates how to use terminal_testlib to create and compare
 //! snapshots of Bevy ECS component state for regression testing:
 //!
 //! - Capturing component state as JSON snapshots
@@ -24,7 +24,7 @@
 //! - Quickly review changes with `cargo insta review`
 
 use bevy::prelude::*;
-use ratatui_testlib::{BevyTuiTestHarness, Result};
+use terminal_testlib::{BevyTuiTestHarness, Result};
 use serde::Serialize;
 
 fn main() -> Result<()> {
@@ -323,7 +323,7 @@ fn example_5_ui_layout() -> Result<()> {
 // mod tests {
 //     use super::*;
 //     use insta::assert_json_snapshot;
-//     use ratatui_testlib::BevyTuiTestHarness;
+//     use terminal_testlib::BevyTuiTestHarness;
 //
 //     #[derive(Component, Serialize, Clone)]
 //     struct UiLayout {

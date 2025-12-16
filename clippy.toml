@@ -1,4 +1,4 @@
-# Clippy configuration for ratatui-testlib
+# Clippy configuration for terminal-testlib
 msrv = "1.75"
 
 # Lints to allow in tests

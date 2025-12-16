@@ -2,7 +2,7 @@
 
 #![cfg(feature = "ipc")]
 
-use ratatui_testlib::{
+use terminal_testlib::{
     ipc::{CellAttributes, IpcResult},
     theme::{AnsiColor, ColorPalette, ColorScan, ThemeTestExt},
 };
@@ -30,7 +30,7 @@ impl ThemeTestExt for MockTerminal {
         let col = col as usize;
 
         if row >= self.cells.len() || col >= self.cells[row].len() {
-            return Err(ratatui_testlib::ipc::IpcError::InvalidData(
+            return Err(terminal_testlib::ipc::IpcError::InvalidData(
                 "Out of bounds".to_string(),
             ));
         }

@@ -138,7 +138,7 @@ Created `examples/zones_demo.rs` demonstrating:
 ## Usage Example
 
 ```rust
-use ratatui_testlib::{
+use terminal_testlib::{
     zones::{Osc133Parser, ZoneType, SemanticZoneExt},
     scarab::ScarabTestHarness,
 };

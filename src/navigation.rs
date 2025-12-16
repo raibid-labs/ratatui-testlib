@@ -11,9 +11,9 @@
 //! # Example: Testing Hint Mode
 //!
 //! ```rust,no_run
-//! use ratatui_testlib::{navigation::NavigationTestExt, TuiTestHarness};
+//! use terminal_testlib::{navigation::NavigationTestExt, TuiTestHarness};
 //!
-//! # fn test() -> ratatui_testlib::Result<()> {
+//! # fn test() -> terminal_testlib::Result<()> {
 //! let mut harness = TuiTestHarness::new(80, 24)?;
 //! // ... spawn your app ...
 //!
@@ -32,9 +32,9 @@
 //! # Example: Testing Focus Navigation
 //!
 //! ```rust,no_run
-//! use ratatui_testlib::{navigation::NavigationTestExt, TuiTestHarness};
+//! use terminal_testlib::{navigation::NavigationTestExt, TuiTestHarness};
 //!
-//! # fn test() -> ratatui_testlib::Result<()> {
+//! # fn test() -> terminal_testlib::Result<()> {
 //! let mut harness = TuiTestHarness::new(80, 24)?;
 //! // ... spawn your app ...
 //!
@@ -65,7 +65,7 @@ use crate::{
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::navigation::NavMode;
+/// use terminal_testlib::navigation::NavMode;
 ///
 /// let mode = NavMode::Normal;
 /// assert_eq!(mode, NavMode::default());
@@ -130,7 +130,7 @@ pub enum HintElementType {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::navigation::{HintElementType, HintLabel};
+/// use terminal_testlib::navigation::{HintElementType, HintLabel};
 ///
 /// let hint = HintLabel {
 ///     label: "a".to_string(),
@@ -162,7 +162,7 @@ pub struct HintLabel {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::{navigation::FocusInfo, Rect};
+/// use terminal_testlib::{navigation::FocusInfo, Rect};
 ///
 /// let focus = FocusInfo {
 ///     bounds: Rect::new(10, 5, 20, 3),
@@ -215,7 +215,7 @@ pub enum PromptMarkerType {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::navigation::{PromptMarker, PromptMarkerType};
+/// use terminal_testlib::navigation::{PromptMarker, PromptMarkerType};
 ///
 /// let marker = PromptMarker {
 ///     line: 10,
@@ -257,9 +257,9 @@ pub trait NavigationTestExt {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::{navigation::NavigationTestExt, TuiTestHarness};
+    /// use terminal_testlib::{navigation::NavigationTestExt, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// // ... spawn app ...
     /// harness.enter_hint_mode()?;
@@ -288,12 +288,12 @@ pub trait NavigationTestExt {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::{
+    /// use terminal_testlib::{
     ///     navigation::{NavMode, NavigationTestExt},
     ///     TuiTestHarness,
     /// };
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// assert_eq!(harness.current_mode(), NavMode::Normal);
     /// # Ok(())
@@ -324,9 +324,9 @@ pub trait NavigationTestExt {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::{navigation::NavigationTestExt, TuiTestHarness};
+    /// use terminal_testlib::{navigation::NavigationTestExt, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.enter_hint_mode()?;
     ///
@@ -367,9 +367,9 @@ pub trait NavigationTestExt {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::{navigation::NavigationTestExt, TuiTestHarness};
+    /// use terminal_testlib::{navigation::NavigationTestExt, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// harness.enter_hint_mode()?;
     ///
@@ -417,9 +417,9 @@ pub trait NavigationTestExt {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::{navigation::NavigationTestExt, TuiTestHarness};
+    /// use terminal_testlib::{navigation::NavigationTestExt, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?;
     /// // ... spawn shell ...
     ///

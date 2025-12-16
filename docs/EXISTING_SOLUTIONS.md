@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document catalogs existing testing solutions and approaches for Ratatui TUI applications, analyzing their strengths, limitations, and how `ratatui-testlib` fits into the ecosystem.
+This document catalogs existing testing solutions and approaches for Ratatui TUI applications, analyzing their strengths, limitations, and how `terminal-testlib` fits into the ecosystem.
 
 ## Ratatui Built-in Testing: TestBackend
 
@@ -287,7 +287,7 @@ https://github.com/holo-q/Ratatui.cs
 
 While this is a .NET library, it demonstrates the **concept** of headless Ratatui testing. Key takeaway: It's possible to create a test backend that doesn't require a PTY or actual terminal.
 
-### Lessons for ratatui-testlib
+### Lessons for terminal-testlib
 
 - Headless testing is valuable for CI/CD
 - Could complement PTY-based testing
@@ -306,7 +306,7 @@ https://github.com/ratatui-org/ratatui/discussions/78
 - **Community desire**: Better testing framework for Ratatui
 - **Open question**: What would an ideal testing framework look like?
 
-### Implications for ratatui-testlib
+### Implications for terminal-testlib
 
 This discussion confirms:
 1. There's a real need for better Ratatui testing solutions
@@ -361,7 +361,7 @@ input_file.write_str("test data")?;
 | **term-transcript** | CLI testing | ⚠️ Limited | ❌ | ✅ | ❌ (CLI only) | ❌ |
 | **tui-term** | Widget | N/A (is a widget) | Depends on vt100 | N/A | ❌ | ❌ |
 | **assert_cmd** | CLI testing | ❌ | ❌ | ❌ | ❌ | ❌ |
-| **ratatui-testlib** (proposed) | Integration | ✅ | ✅ Sixel | ✅ | ✅ | ✅ |
+| **terminal-testlib** (proposed) | Integration | ✅ | ✅ Sixel | ✅ | ✅ | ✅ |
 
 ## Gap Analysis: What's Missing?
 
@@ -411,22 +411,22 @@ input_file.write_str("test data")?;
 - Need to test async event loops
 - Race conditions and timing issues
 
-## How ratatui-testlib Fits In
+## How terminal-testlib Fits In
 
 ### Complementary, Not Competitive
 
-`ratatui-testlib` **complements** existing solutions:
+`terminal-testlib` **complements** existing solutions:
 
 | Testing Level | Use This | For What |
 |---------------|----------|----------|
 | **Unit Tests** | TestBackend + insta | Individual widgets, layout calculations |
-| **Integration Tests** | **ratatui-testlib** | Full app behavior, PTY interaction, graphics |
+| **Integration Tests** | **terminal-testlib** | Full app behavior, PTY interaction, graphics |
 | **CLI Tests** | assert_cmd | Binary execution, exit codes |
 | **Snapshot Tests** | insta or expect-test | Both unit and integration level |
 
 ### Unique Value Proposition
 
-What `ratatui-testlib` provides that nothing else does:
+What `terminal-testlib` provides that nothing else does:
 
 1. **PTY-based testing**: Real terminal environment
 2. **Sixel support**: Graphics protocol testing
@@ -466,7 +466,7 @@ fn test_app_integration() {
 - No PTY or graphics required
 - Unit testing individual components
 
-### Use ratatui-testlib When:
+### Use terminal-testlib When:
 
 - Testing full application behavior
 - Testing PTY-specific features
@@ -491,7 +491,7 @@ fn test_app_integration() {
 
 ## Code Reuse Opportunities
 
-Components from existing solutions that ratatui-testlib can leverage:
+Components from existing solutions that terminal-testlib can leverage:
 
 1. **vt100 crate**: Already proven in tui-term, good for screen parsing
 2. **portable-pty**: From WezTerm, cross-platform, well-maintained
@@ -502,10 +502,10 @@ Components from existing solutions that ratatui-testlib can leverage:
 
 From Ratatui community discussions:
 
-1. **Testing is currently hard** ✅ ratatui-testlib addresses this
-2. **TestBackend not user-friendly** ✅ ratatui-testlib provides better API
-3. **Need for integration testing** ✅ ratatui-testlib's core purpose
-4. **Graphics testing missing** ✅ ratatui-testlib includes Sixel support
+1. **Testing is currently hard** ✅ terminal-testlib addresses this
+2. **TestBackend not user-friendly** ✅ terminal-testlib provides better API
+3. **Need for integration testing** ✅ terminal-testlib's core purpose
+4. **Graphics testing missing** ✅ terminal-testlib includes Sixel support
 
 ## References
 

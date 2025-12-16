@@ -1,6 +1,6 @@
 # Documentation Structure
 
-This document describes the organization and required sections for ratatui-testlib documentation.
+This document describes the organization and required sections for terminal-testlib documentation.
 
 ## Directory Layout
 

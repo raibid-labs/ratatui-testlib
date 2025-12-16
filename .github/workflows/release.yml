@@ -49,10 +49,10 @@ jobs:
           echo "" >> RELEASE_NOTES.md
           echo "## Artifacts" >> RELEASE_NOTES.md
           echo "" >> RELEASE_NOTES.md
-          echo "- **Crate**: Published to [crates.io/crates/ratatui-testlib](https://crates.io/crates/ratatui-testlib)" >> RELEASE_NOTES.md
-          echo "- **Documentation**: Available at [docs.rs/ratatui-testlib](https://docs.rs/ratatui-testlib)" >> RELEASE_NOTES.md
+          echo "- **Crate**: Published to [crates.io/crates/terminal-testlib](https://crates.io/crates/terminal-testlib)" >> RELEASE_NOTES.md
+          echo "- **Documentation**: Available at [docs.rs/terminal-testlib](https://docs.rs/terminal-testlib)" >> RELEASE_NOTES.md
           echo "- **GitHub Pages**: API docs deployed to GitHub Pages" >> RELEASE_NOTES.md
-          echo "- **Examples**: See [examples/](https://github.com/raibid-labs/ratatui-testlib/tree/${{ steps.get_version.outputs.version }}/examples)" >> RELEASE_NOTES.md
+          echo "- **Examples**: See [examples/](https://github.com/raibid-labs/terminal-testlib/tree/${{ steps.get_version.outputs.version }}/examples)" >> RELEASE_NOTES.md
           echo "" >> RELEASE_NOTES.md
           echo "## Changes" >> RELEASE_NOTES.md
           echo "" >> RELEASE_NOTES.md
@@ -63,7 +63,7 @@ jobs:
           echo "" >> RELEASE_NOTES.md
           echo '```toml' >> RELEASE_NOTES.md
           echo '[dev-dependencies]' >> RELEASE_NOTES.md
-          echo "ratatui-testlib = \"${GITHUB_REF#refs/tags/v}\"" >> RELEASE_NOTES.md
+          echo "terminal-testlib = \"${GITHUB_REF#refs/tags/v}\"" >> RELEASE_NOTES.md
           echo '```' >> RELEASE_NOTES.md
 
       - name: Create GitHub Release
@@ -123,7 +123,7 @@ jobs:
         run: cargo doc --all-features --no-deps
 
       - name: Add index redirect
-        run: echo '<meta http-equiv="refresh" content="0; url=ratatui_testlib/index.html">' > target/doc/index.html
+        run: echo '<meta http-equiv="refresh" content="0; url=terminal_testlib/index.html">' > target/doc/index.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

@@ -1,6 +1,6 @@
 //! Example demonstrating IPC testing with split-process terminal daemons.
 //!
-//! This example shows how to use `ratatui-testlib` to test terminal applications
+//! This example shows how to use `terminal-testlib` to test terminal applications
 //! using a daemon + client architecture where the daemon manages the PTY and
 //! exposes state via shared memory.
 //!
@@ -29,7 +29,7 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use std::time::Duration;
 
-    use ratatui_testlib::ipc::{DaemonConfig, DaemonTestHarness, IpcError};
+    use terminal_testlib::ipc::{DaemonConfig, DaemonTestHarness, IpcError};
 
     println!("IPC Daemon Test Example");
     println!("=======================\n");
@@ -84,12 +84,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             println!("---\n");
 
             // Send a test command
-            println!("Sending test command: echo 'Hello from ratatui-testlib!'");
-            harness.send_input("echo 'Hello from ratatui-testlib!'\n")?;
+            println!("Sending test command: echo 'Hello from terminal-testlib!'");
+            harness.send_input("echo 'Hello from terminal-testlib!'\n")?;
 
             // Wait for the output
             println!("Waiting for output...");
-            match harness.wait_for_text("Hello from ratatui-testlib!", Duration::from_secs(5)) {
+            match harness.wait_for_text("Hello from terminal-testlib!", Duration::from_secs(5)) {
                 Ok(()) => {
                     println!("Output received!\n");
 

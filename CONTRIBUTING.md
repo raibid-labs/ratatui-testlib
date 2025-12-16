@@ -1,6 +1,6 @@
-# Contributing to ratatui-testlib
+# Contributing to terminal-testlib
 
-Thank you for your interest in contributing to `ratatui-testlib`! We welcome contributions from the community to help make TUI testing easier and more robust.
+Thank you for your interest in contributing to `terminal-testlib`! We welcome contributions from the community to help make TUI testing easier and more robust.
 
 ## Getting Started
 

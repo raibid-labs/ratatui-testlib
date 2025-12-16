@@ -9,7 +9,7 @@ mod scarab_tests {
     use std::path::PathBuf;
     use std::time::Duration;
 
-    use ratatui_testlib::scarab::{ScarabConfig, ScarabTestHarness};
+    use terminal_testlib::scarab::{ScarabConfig, ScarabTestHarness};
 
     #[test]
     fn test_default_config_values() {

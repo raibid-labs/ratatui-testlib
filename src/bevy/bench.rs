@@ -17,9 +17,9 @@
 //! ```rust,no_run
 //! # #[cfg(feature = "bevy")]
 //! # {
-//! use ratatui_testlib::BevyTuiTestHarness;
+//! use terminal_testlib::BevyTuiTestHarness;
 //!
-//! # fn test() -> ratatui_testlib::Result<()> {
+//! # fn test() -> terminal_testlib::Result<()> {
 //! let mut harness = BevyTuiTestHarness::new()?;
 //!
 //! // Benchmark 1000 frames
@@ -41,9 +41,9 @@
 //! ```rust,no_run
 //! # #[cfg(feature = "bevy")]
 //! # {
-//! use ratatui_testlib::BevyTuiTestHarness;
+//! use terminal_testlib::BevyTuiTestHarness;
 //!
-//! # fn test() -> ratatui_testlib::Result<()> {
+//! # fn test() -> terminal_testlib::Result<()> {
 //! let mut harness = BevyTuiTestHarness::new()?;
 //!
 //! // Run benchmark and assert FPS in one call
@@ -58,9 +58,9 @@
 //! ```rust,no_run
 //! # #[cfg(feature = "bevy")]
 //! # {
-//! use ratatui_testlib::BevyTuiTestHarness;
+//! use terminal_testlib::BevyTuiTestHarness;
 //!
-//! # fn test() -> ratatui_testlib::Result<()> {
+//! # fn test() -> terminal_testlib::Result<()> {
 //! let mut harness = BevyTuiTestHarness::new()?;
 //!
 //! // Profile a single update cycle
@@ -102,9 +102,9 @@ use crate::error::Result;
 /// ```rust,no_run
 /// # #[cfg(feature = "bevy")]
 /// # {
-/// use ratatui_testlib::BevyTuiTestHarness;
+/// use terminal_testlib::BevyTuiTestHarness;
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let mut harness = BevyTuiTestHarness::new()?;
 /// let results = harness.benchmark_rendering(1000)?;
 ///
@@ -259,9 +259,9 @@ impl BenchmarkResults {
 /// ```rust,no_run
 /// # #[cfg(feature = "bevy")]
 /// # {
-/// use ratatui_testlib::BevyTuiTestHarness;
+/// use terminal_testlib::BevyTuiTestHarness;
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let mut harness = BevyTuiTestHarness::new()?;
 ///
 /// // Profile a single frame
@@ -345,9 +345,9 @@ impl ProfileResults {
 /// ```rust,no_run
 /// # #[cfg(feature = "bevy")]
 /// # {
-/// use ratatui_testlib::TuiTestHarness;
+/// use terminal_testlib::TuiTestHarness;
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let harness = TuiTestHarness::new(80, 24)?;
 ///
 /// // Get memory usage estimate
@@ -464,9 +464,9 @@ pub trait BenchmarkableHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     ///
     /// // Benchmark 1000 frames
@@ -509,9 +509,9 @@ pub trait BenchmarkableHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     ///
     /// let profile = harness.profile_update_cycle()?;
@@ -553,9 +553,9 @@ pub trait BenchmarkableHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     ///
     /// // Assert 60 FPS over 1000 frames

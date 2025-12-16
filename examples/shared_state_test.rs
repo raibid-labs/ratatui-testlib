@@ -12,7 +12,7 @@
 
 use std::{collections::HashMap, fs::File, io::Write, time::Duration};
 
-use ratatui_testlib::shared_state::{
+use terminal_testlib::shared_state::{
     assert_grid_cell, assert_metric, snapshot_grid, MemoryMappedState, SharedStateAccess,
 };
 use serde::{Deserialize, Serialize};
@@ -47,7 +47,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("=== Shared State Testing Example ===\n");
 
     // Create a temporary file for the shared state
-    let temp_path = "/tmp/ratatui_testlib_example_state.mmap";
+    let temp_path = "/tmp/terminal_testlib_example_state.mmap";
 
     println!("1. Creating example shared state...");
     let state = TuiState::new();

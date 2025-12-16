@@ -2,7 +2,7 @@
 
 #[cfg(feature = "ipc")]
 mod zones_integration {
-    use ratatui_testlib::zones::{Osc133Marker, Osc133Parser, ZoneType};
+    use terminal_testlib::zones::{Osc133Marker, Osc133Parser, ZoneType};
 
     #[test]
     fn test_complete_command_cycle() {

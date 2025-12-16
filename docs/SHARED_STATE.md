@@ -1,6 +1,6 @@
 # Shared State Testing Guide
 
-This document describes the shared state testing feature in `ratatui-testlib`, which enables memory-mapped shared state access for integration testing.
+This document describes the shared state testing feature in `terminal-testlib`, which enables memory-mapped shared state access for integration testing.
 
 ## Overview
 
@@ -29,7 +29,7 @@ pub trait SharedStateAccess {
 A concrete implementation using the `memmap2` crate:
 
 ```rust
-use ratatui_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
+use terminal_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -55,8 +55,8 @@ Convenience functions for common test patterns:
 ### BevyTuiTestHarness
 
 ```rust
-use ratatui_testlib::BevyTuiTestHarness;
-use ratatui_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
+use terminal_testlib::BevyTuiTestHarness;
+use terminal_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
 
 let harness = BevyTuiTestHarness::new()?
     .with_shared_state("/tmp/tui_state.mmap")?;
@@ -75,7 +75,7 @@ if let Some(path) = harness.shared_state_path() {
 ### HybridBevyHarness
 
 ```rust
-use ratatui_testlib::HybridBevyHarness;
+use terminal_testlib::HybridBevyHarness;
 
 let harness = HybridBevyHarness::new()?
     .with_shared_state("/tmp/client_state.mmap")?;
@@ -92,7 +92,7 @@ if let Some(path) = harness.shared_state_path() {
 ### Basic State Access
 
 ```rust
-use ratatui_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
+use terminal_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
 use serde::{Deserialize, Serialize};
 use std::time::Duration;
 
@@ -120,7 +120,7 @@ state.wait_for(
 ### Grid Verification
 
 ```rust
-use ratatui_testlib::shared_state::{assert_grid_cell, snapshot_grid};
+use terminal_testlib::shared_state::{assert_grid_cell, snapshot_grid};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 struct TuiState {
@@ -142,7 +142,7 @@ insta::assert_snapshot!(snapshot);
 ### Metrics Validation
 
 ```rust
-use ratatui_testlib::shared_state::assert_metric;
+use terminal_testlib::shared_state::assert_metric;
 use std::collections::HashMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

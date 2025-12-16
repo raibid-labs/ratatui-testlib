@@ -66,9 +66,9 @@
 //! ```rust,no_run
 //! # #[cfg(feature = "bevy")]
 //! # {
-//! use ratatui_testlib::BevyTuiTestHarness;
+//! use terminal_testlib::BevyTuiTestHarness;
 //!
-//! # fn test() -> ratatui_testlib::Result<()> {
+//! # fn test() -> terminal_testlib::Result<()> {
 //! let mut test = BevyTuiTestHarness::new()?;
 //!
 //! // Run one Bevy frame
@@ -137,7 +137,7 @@ use crate::{
 /// # #[cfg(all(feature = "bevy", feature = "snapshot-insta"))]
 /// # {
 /// use bevy::prelude::*;
-/// use ratatui_testlib::BevyTuiTestHarness;
+/// use terminal_testlib::BevyTuiTestHarness;
 /// use serde::Serialize;
 ///
 /// #[derive(Component, Serialize)]
@@ -146,7 +146,7 @@ use crate::{
 ///     y: f32,
 /// }
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let mut harness = BevyTuiTestHarness::new()?;
 /// harness.world_mut().spawn(Position { x: 10.0, y: 20.0 });
 ///
@@ -240,9 +240,9 @@ impl<T: Serialize> ComponentSnapshot<T> {
 /// ```rust,no_run
 /// # #[cfg(feature = "bevy")]
 /// # {
-/// use ratatui_testlib::BevyTuiTestHarness;
+/// use terminal_testlib::BevyTuiTestHarness;
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let mut harness = BevyTuiTestHarness::new()?;
 ///
 /// // Run one frame
@@ -286,9 +286,9 @@ impl BevyTuiTestHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     /// # Ok(())
     /// # }
@@ -347,9 +347,9 @@ impl BevyTuiTestHarness {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut app = App::new();
     /// app.add_plugins(MinimalPlugins);
     /// // Add custom systems, resources, etc.
@@ -389,9 +389,9 @@ impl BevyTuiTestHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     /// harness.update()?; // Run one frame
     /// # Ok(())
@@ -453,9 +453,9 @@ impl BevyTuiTestHarness {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = BevyTuiTestHarness::new()?;
     /// let world = harness.world();
     /// let entity_count = world.entities().len();
@@ -483,12 +483,12 @@ impl BevyTuiTestHarness {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
     /// #[derive(Component)]
     /// struct TestMarker;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     /// harness.world_mut().spawn(TestMarker);
     /// # Ok(())
@@ -518,12 +518,12 @@ impl BevyTuiTestHarness {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
     /// #[derive(Component)]
     /// struct Health(u32);
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     /// harness.world_mut().spawn(Health(100));
     /// harness.world_mut().spawn(Health(75));
@@ -560,7 +560,7 @@ impl BevyTuiTestHarness {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
     /// #[derive(Component)]
     /// struct Position(i32, i32);
@@ -568,7 +568,7 @@ impl BevyTuiTestHarness {
     /// #[derive(Component)]
     /// struct Enemy;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     /// harness.world_mut().spawn((Position(10, 20), Enemy));
     /// harness.world_mut().spawn(Position(5, 15)); // No Enemy marker
@@ -608,12 +608,12 @@ impl BevyTuiTestHarness {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
     /// #[derive(Component)]
     /// struct Name(String);
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     /// let entity = harness.world_mut().spawn(Name("Player".to_string())).id();
     ///
@@ -644,12 +644,12 @@ impl BevyTuiTestHarness {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
     /// #[derive(Component)]
     /// struct CommandPaletteMarker;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     /// harness.world_mut().spawn(CommandPaletteMarker);
     ///
@@ -689,12 +689,12 @@ impl BevyTuiTestHarness {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
     /// #[derive(Component)]
     /// struct Enemy;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     /// harness.world_mut().spawn(Enemy);
     /// harness.world_mut().spawn(Enemy);
@@ -758,7 +758,7 @@ impl BevyTuiTestHarness {
     /// # #[cfg(all(feature = "bevy", feature = "snapshot-insta"))]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     /// use serde::Serialize;
     ///
     /// #[derive(Component, Serialize)]
@@ -767,7 +767,7 @@ impl BevyTuiTestHarness {
     ///     max: u32,
     /// }
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     /// harness.world_mut().spawn(Health { current: 100, max: 100 });
     /// harness.world_mut().spawn(Health { current: 75, max: 100 });
@@ -812,7 +812,7 @@ impl BevyTuiTestHarness {
     /// # #[cfg(all(feature = "bevy", feature = "snapshot-insta"))]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     /// use serde::Serialize;
     ///
     /// #[derive(Component, Serialize, Clone)]
@@ -824,7 +824,7 @@ impl BevyTuiTestHarness {
     /// #[derive(Component)]
     /// struct Enemy;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     /// harness
     ///     .world_mut()
@@ -873,7 +873,7 @@ impl BevyTuiTestHarness {
     /// # #[cfg(all(feature = "bevy", feature = "snapshot-insta"))]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     /// use serde::Serialize;
     ///
     /// #[derive(Component, Serialize, Clone)]
@@ -882,7 +882,7 @@ impl BevyTuiTestHarness {
     ///     height: u32,
     /// }
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     /// harness
     ///     .world_mut()
@@ -933,9 +933,9 @@ impl BevyTuiTestHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = BevyTuiTestHarness::new()?;
     /// if harness.is_headless() {
     ///     println!("Running in headless mode - suitable for CI");
@@ -968,9 +968,9 @@ impl BevyTuiTestHarness {
     /// ```rust,no_run
     /// # #[cfg(all(feature = "bevy", feature = "shared-state"))]
     /// # {
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?.with_shared_state("/tmp/tui_state.mmap")?;
     ///
     /// // Now you can access shared state in tests
@@ -1000,7 +1000,7 @@ impl BevyTuiTestHarness {
     /// ```rust,no_run
     /// # #[cfg(all(feature = "bevy", feature = "shared-state"))]
     /// # {
-    /// use ratatui_testlib::{
+    /// use terminal_testlib::{
     ///     shared_state::{MemoryMappedState, SharedStateAccess},
     ///     BevyTuiTestHarness,
     /// };
@@ -1011,7 +1011,7 @@ impl BevyTuiTestHarness {
     ///     score: u32,
     /// }
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = BevyTuiTestHarness::new()?.with_shared_state("/tmp/game.mmap")?;
     ///
     /// if let Some(path) = harness.shared_state_path() {
@@ -1042,9 +1042,9 @@ impl BevyTuiTestHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = BevyTuiTestHarness::new()?;
     /// let state = harness.state();
     /// println!("Cursor at: {:?}", state.cursor_position());
@@ -1075,9 +1075,9 @@ impl BevyTuiTestHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = BevyTuiTestHarness::new()?;
     /// harness.update()?;
     ///
@@ -1104,9 +1104,9 @@ impl BevyTuiTestHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = BevyTuiTestHarness::new()?;
     /// // ... render some graphics ...
     ///
@@ -1138,9 +1138,9 @@ impl BevyTuiTestHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::BevyTuiTestHarness;
+    /// use terminal_testlib::BevyTuiTestHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = BevyTuiTestHarness::new()?;
     /// // ... render graphics ...
     ///

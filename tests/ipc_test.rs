@@ -8,7 +8,7 @@
 mod ipc_tests {
     use std::time::Duration;
 
-    use ratatui_testlib::ipc::{ControlMessage, DaemonConfig, DaemonTestHarness, ShmHeader};
+    use terminal_testlib::ipc::{ControlMessage, DaemonConfig, DaemonTestHarness, ShmHeader};
 
     #[test]
     fn test_control_message_input_serialization() {

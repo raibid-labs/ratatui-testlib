@@ -397,7 +397,7 @@ Parallel: Dependabot Security Updates
 └─────────┼─────────────────┼─────────────────┼──────────────┘
           │                 │                 │
 ┌─────────┼─────────────────┼─────────────────┼──────────────┐
-│         │  ratatui-testlib CI/CD Infrastructure   │              │
+│         │  terminal-testlib CI/CD Infrastructure   │              │
 │         │                 │                 │              │
 │  ┌──────▼──────────┐  ┌───▼────────┐  ┌─────▼──────┐       │
 │  │   Workflows     │  │   Config   │  │   Docs     │       │

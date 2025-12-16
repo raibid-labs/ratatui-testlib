@@ -30,7 +30,7 @@
 //! # {
 //! use std::time::Duration;
 //!
-//! use ratatui_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
+//! use terminal_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
 //! use serde::{Deserialize, Serialize};
 //!
 //! #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -60,9 +60,9 @@
 //! ```rust,no_run
 //! # #[cfg(all(feature = "bevy", feature = "shared-state"))]
 //! # {
-//! use ratatui_testlib::BevyTuiTestHarness;
+//! use terminal_testlib::BevyTuiTestHarness;
 //!
-//! # fn test() -> ratatui_testlib::Result<()> {
+//! # fn test() -> terminal_testlib::Result<()> {
 //! let mut harness = BevyTuiTestHarness::new()?.with_shared_state("/tmp/tui_state.mmap")?;
 //!
 //! // Run some updates
@@ -82,7 +82,7 @@
 //! ```rust,no_run
 //! # #[cfg(feature = "shared-state")]
 //! # {
-//! use ratatui_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
+//! use terminal_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
 //! use serde::{Deserialize, Serialize};
 //!
 //! #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -96,10 +96,10 @@
 //! let snapshot = state.read()?;
 //!
 //! // Verify grid contents
-//! ratatui_testlib::shared_state::assert_grid_cell(&snapshot.grid, 0, 0, 'H');
+//! terminal_testlib::shared_state::assert_grid_cell(&snapshot.grid, 0, 0, 'H');
 //!
 //! // Verify metrics
-//! ratatui_testlib::shared_state::assert_metric(&snapshot.metrics, "fps", 60.0);
+//! terminal_testlib::shared_state::assert_metric(&snapshot.metrics, "fps", 60.0);
 //! # Ok(())
 //! # }
 //! # }
@@ -188,7 +188,7 @@ pub type SharedStateResult<T> = std::result::Result<T, SharedStateError>;
 /// # {
 /// use std::time::Duration;
 ///
-/// use ratatui_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
+/// use terminal_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
 /// use serde::{Deserialize, Serialize};
 ///
 /// #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -235,7 +235,7 @@ pub trait SharedStateAccess {
     /// ```rust,no_run
     /// # #[cfg(feature = "shared-state")]
     /// # {
-    /// use ratatui_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
+    /// use terminal_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
     /// use serde::{Deserialize, Serialize};
     ///
     /// #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -270,7 +270,7 @@ pub trait SharedStateAccess {
     /// ```rust,no_run
     /// # #[cfg(feature = "shared-state")]
     /// # {
-    /// use ratatui_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
+    /// use terminal_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
     /// use serde::{Deserialize, Serialize};
     ///
     /// #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -312,7 +312,7 @@ pub trait SharedStateAccess {
     /// # {
     /// use std::time::Duration;
     ///
-    /// use ratatui_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
+    /// use terminal_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
     /// use serde::{Deserialize, Serialize};
     ///
     /// #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -359,7 +359,7 @@ pub trait SharedStateAccess {
 /// # {
 /// use std::time::Duration;
 ///
-/// use ratatui_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
+/// use terminal_testlib::shared_state::{MemoryMappedState, SharedStateAccess};
 /// use serde::{Deserialize, Serialize};
 ///
 /// #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -528,7 +528,7 @@ where
 /// # Examples
 ///
 /// ```rust
-/// use ratatui_testlib::shared_state::assert_grid_cell;
+/// use terminal_testlib::shared_state::assert_grid_cell;
 ///
 /// let grid = vec![vec!['H', 'e', 'l', 'l', 'o'], vec!['W', 'o', 'r', 'l', 'd']];
 ///
@@ -582,7 +582,7 @@ pub fn assert_grid_cell(
 /// ```rust
 /// use std::collections::HashMap;
 ///
-/// use ratatui_testlib::shared_state::assert_metric;
+/// use terminal_testlib::shared_state::assert_metric;
 ///
 /// let mut metrics = HashMap::new();
 /// metrics.insert("fps".to_string(), 60.0);
@@ -643,7 +643,7 @@ pub fn assert_metric(
 /// # Examples
 ///
 /// ```rust
-/// use ratatui_testlib::shared_state::snapshot_grid;
+/// use terminal_testlib::shared_state::snapshot_grid;
 ///
 /// let grid = vec![vec!['H', 'e', 'l', 'l', 'o'], vec!['W', 'o', 'r', 'l', 'd']];
 ///

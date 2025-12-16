@@ -22,14 +22,14 @@
 //! # {
 //! use bevy::prelude::*;
 //! use portable_pty::CommandBuilder;
-//! use ratatui_testlib::HybridBevyHarness;
+//! use terminal_testlib::HybridBevyHarness;
 //!
 //! #[derive(Component)]
 //! struct ConnectionState {
 //!     connected: bool,
 //! }
 //!
-//! # fn test() -> ratatui_testlib::Result<()> {
+//! # fn test() -> terminal_testlib::Result<()> {
 //! // Create hybrid harness
 //! let mut harness = HybridBevyHarness::builder()
 //!     .with_dimensions(80, 24)
@@ -102,9 +102,9 @@ use crate::{
 /// use std::time::Duration;
 ///
 /// use portable_pty::CommandBuilder;
-/// use ratatui_testlib::HybridBevyHarness;
+/// use terminal_testlib::HybridBevyHarness;
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let harness = HybridBevyHarness::builder()
 ///     .with_dimensions(100, 30)
 ///     .with_pty_command(CommandBuilder::new("daemon"))
@@ -236,14 +236,14 @@ impl HybridBevyHarnessBuilder {
 /// # {
 /// use bevy::prelude::*;
 /// use portable_pty::CommandBuilder;
-/// use ratatui_testlib::HybridBevyHarness;
+/// use terminal_testlib::HybridBevyHarness;
 ///
 /// #[derive(Component)]
 /// struct ClientState {
 ///     status: String,
 /// }
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let mut harness = HybridBevyHarness::builder()
 ///     .with_pty_command(CommandBuilder::new("my-daemon"))
 ///     .build()?;
@@ -292,9 +292,9 @@ impl HybridBevyHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::HybridBevyHarness;
+    /// use terminal_testlib::HybridBevyHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = HybridBevyHarness::new()?;
     /// # Ok(())
     /// # }
@@ -311,9 +311,9 @@ impl HybridBevyHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::HybridBevyHarness;
+    /// use terminal_testlib::HybridBevyHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = HybridBevyHarness::builder()
     ///     .with_dimensions(100, 30)
     ///     .build()?;
@@ -359,9 +359,9 @@ impl HybridBevyHarness {
     /// ```rust,no_run
     /// # #[cfg(all(feature = "bevy", feature = "shared-state"))]
     /// # {
-    /// use ratatui_testlib::HybridBevyHarness;
+    /// use terminal_testlib::HybridBevyHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = HybridBevyHarness::new()?.with_shared_state("/tmp/hybrid_state.mmap")?;
     ///
     /// // Access shared state in tests
@@ -391,7 +391,7 @@ impl HybridBevyHarness {
     /// ```rust,no_run
     /// # #[cfg(all(feature = "bevy", feature = "shared-state"))]
     /// # {
-    /// use ratatui_testlib::{
+    /// use terminal_testlib::{
     ///     shared_state::{MemoryMappedState, SharedStateAccess},
     ///     HybridBevyHarness,
     /// };
@@ -402,7 +402,7 @@ impl HybridBevyHarness {
     ///     connected: bool,
     /// }
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = HybridBevyHarness::new()?.with_shared_state("/tmp/client.mmap")?;
     ///
     /// if let Some(path) = harness.shared_state_path() {
@@ -437,9 +437,9 @@ impl HybridBevyHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::HybridBevyHarness;
+    /// use terminal_testlib::HybridBevyHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = HybridBevyHarness::new()?;
     /// harness.tick()?;
     /// # Ok(())
@@ -474,9 +474,9 @@ impl HybridBevyHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::HybridBevyHarness;
+    /// use terminal_testlib::HybridBevyHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let harness = HybridBevyHarness::new()?;
     /// let entity_count = harness.world().entities().len();
     /// # Ok(())
@@ -497,12 +497,12 @@ impl HybridBevyHarness {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::HybridBevyHarness;
+    /// use terminal_testlib::HybridBevyHarness;
     ///
     /// #[derive(Component)]
     /// struct Player;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = HybridBevyHarness::new()?;
     /// harness.world_mut().spawn(Player);
     /// # Ok(())
@@ -534,12 +534,12 @@ impl HybridBevyHarness {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::HybridBevyHarness;
+    /// use terminal_testlib::HybridBevyHarness;
     ///
     /// #[derive(Component)]
     /// struct Health(u32);
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = HybridBevyHarness::new()?;
     /// harness.world_mut().spawn(Health(100));
     ///
@@ -630,9 +630,9 @@ impl HybridBevyHarness {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::HybridBevyHarness;
+    /// use terminal_testlib::HybridBevyHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = HybridBevyHarness::builder()
     ///     .with_pty_command(CommandBuilder::new("my-daemon"))
     ///     .build()?;
@@ -680,9 +680,9 @@ impl HybridBevyHarness {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::HybridBevyHarness;
+    /// use terminal_testlib::HybridBevyHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = HybridBevyHarness::builder()
     ///     .with_pty_command(CommandBuilder::new("daemon"))
     ///     .build()?;
@@ -722,9 +722,9 @@ impl HybridBevyHarness {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::HybridBevyHarness;
+    /// use terminal_testlib::HybridBevyHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = HybridBevyHarness::builder()
     ///     .with_pty_command(CommandBuilder::new("daemon"))
     ///     .build()?;
@@ -771,9 +771,9 @@ impl HybridBevyHarness {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::HybridBevyHarness;
+    /// use terminal_testlib::HybridBevyHarness;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = HybridBevyHarness::builder()
     ///     .with_pty_command(CommandBuilder::new("daemon"))
     ///     .build()?;

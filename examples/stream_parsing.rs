@@ -1,12 +1,12 @@
-//! Example: Using ratatui-testlib for headless stream-based parsing.
+//! Example: Using terminal-testlib for headless stream-based parsing.
 //!
-//! This example demonstrates how to use ratatui-testlib as a verification oracle
+//! This example demonstrates how to use terminal-testlib as a verification oracle
 //! for terminal emulators without any PTY overhead. Instead of spawning processes,
 //! you feed raw byte sequences directly to the parser.
 //!
 //! Run with: cargo run --example stream_parsing
 
-use ratatui_testlib::ScreenState;
+use terminal_testlib::ScreenState;
 
 fn main() {
     println!("=== Stream-Based Parsing Example ===\n");

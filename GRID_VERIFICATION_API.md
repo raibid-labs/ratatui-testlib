@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the new grid state verification API added to ratatui-testlib to enable terminal emulator testing and comparison. The API exposes the internal screen grid state, making it possible to verify that another terminal emulator matches ratatui-testlib's behavior cell-by-cell.
+This document describes the new grid state verification API added to terminal-testlib to enable terminal emulator testing and comparison. The API exposes the internal screen grid state, making it possible to verify that another terminal emulator matches terminal-testlib's behavior cell-by-cell.
 
 ## Problem Statement
 
@@ -140,10 +140,10 @@ pub struct GridSnapshot {
 
 ### 1. Verification Oracle
 
-Use ratatui-testlib as a reference implementation:
+Use terminal-testlib as a reference implementation:
 
 ```rust
-use ratatui_testlib::ScreenState;
+use terminal_testlib::ScreenState;
 
 // Define test sequence
 let test_sequence = b"\x1b[31mRed\x1b[32mGreen\x1b[34mBlue";
@@ -210,7 +210,7 @@ See `examples/grid_verification.rs` for a comprehensive demonstration.
 ### Quick Example: Color Verification
 
 ```rust
-use ratatui_testlib::ScreenState;
+use terminal_testlib::ScreenState;
 
 let mut screen = ScreenState::new(80, 24);
 screen.feed(b"\x1b[31mRed\x1b[0m");

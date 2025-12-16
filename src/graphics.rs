@@ -33,12 +33,12 @@
 //! ```rust
 //! # #[cfg(feature = "sixel")]
 //! # {
-//! use ratatui_testlib::{
+//! use terminal_testlib::{
 //!     graphics::{GraphicsCapture, GraphicsProtocol},
 //!     ScreenState, TuiTestHarness,
 //! };
 //!
-//! # fn test_graphics() -> ratatui_testlib::Result<()> {
+//! # fn test_graphics() -> terminal_testlib::Result<()> {
 //! let mut harness = TuiTestHarness::new(80, 24)?;
 //! // ... spawn app and render graphics ...
 //!
@@ -109,7 +109,7 @@ use crate::error::{Result, TermTestError};
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::graphics::GraphicsProtocol;
+/// use terminal_testlib::graphics::GraphicsProtocol;
 ///
 /// let protocol = GraphicsProtocol::Sixel;
 /// assert_eq!(protocol.name(), "Sixel");
@@ -130,7 +130,7 @@ impl GraphicsProtocol {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::graphics::GraphicsProtocol;
+    /// use terminal_testlib::graphics::GraphicsProtocol;
     ///
     /// assert_eq!(GraphicsProtocol::Sixel.name(), "Sixel");
     /// assert_eq!(GraphicsProtocol::Kitty.name(), "Kitty");
@@ -149,7 +149,7 @@ impl GraphicsProtocol {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::graphics::GraphicsProtocol;
+    /// use terminal_testlib::graphics::GraphicsProtocol;
     ///
     /// assert_eq!(GraphicsProtocol::Sixel.escape_prefix(), "\x1bPq");
     /// assert_eq!(GraphicsProtocol::Kitty.escape_prefix(), "\x1b_G");
@@ -185,7 +185,7 @@ impl std::fmt::Display for GraphicsProtocol {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::graphics::{GraphicsProtocol, GraphicsRegion};
+/// use terminal_testlib::graphics::{GraphicsProtocol, GraphicsRegion};
 ///
 /// let region = GraphicsRegion::new(
 ///     GraphicsProtocol::Sixel,
@@ -224,7 +224,7 @@ impl GraphicsRegion {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::graphics::{GraphicsProtocol, GraphicsRegion};
+    /// use terminal_testlib::graphics::{GraphicsProtocol, GraphicsRegion};
     ///
     /// let region = GraphicsRegion::new(
     ///     GraphicsProtocol::Kitty,
@@ -259,7 +259,7 @@ impl GraphicsRegion {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::graphics::{GraphicsProtocol, GraphicsRegion};
+    /// use terminal_testlib::graphics::{GraphicsProtocol, GraphicsRegion};
     ///
     /// let region = GraphicsRegion::new(GraphicsProtocol::Sixel, (5, 5), (5, 5, 10, 10), vec![]);
     ///
@@ -296,7 +296,7 @@ impl GraphicsRegion {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::graphics::{GraphicsProtocol, GraphicsRegion};
+    /// use terminal_testlib::graphics::{GraphicsProtocol, GraphicsRegion};
     ///
     /// let region = GraphicsRegion::new(GraphicsProtocol::ITerm2, (5, 5), (5, 5, 10, 10), vec![]);
     ///
@@ -330,12 +330,12 @@ impl GraphicsRegion {
 /// ```rust
 /// # #[cfg(feature = "sixel")]
 /// # {
-/// use ratatui_testlib::{
+/// use terminal_testlib::{
 ///     graphics::{GraphicsCapture, GraphicsProtocol},
 ///     ScreenState,
 /// };
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let screen = ScreenState::new(80, 24);
 /// let capture = GraphicsCapture::from_screen_state(&screen);
 ///
@@ -366,7 +366,7 @@ impl GraphicsCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::graphics::GraphicsCapture;
+    /// use terminal_testlib::graphics::GraphicsCapture;
     ///
     /// let capture = GraphicsCapture::new();
     /// assert!(capture.is_empty());
@@ -387,7 +387,7 @@ impl GraphicsCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::{graphics::GraphicsCapture, ScreenState};
+    /// use terminal_testlib::{graphics::GraphicsCapture, ScreenState};
     ///
     /// let screen = ScreenState::new(80, 24);
     /// let capture = GraphicsCapture::from_screen_state(&screen);
@@ -472,7 +472,7 @@ impl GraphicsCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::graphics::GraphicsCapture;
+    /// use terminal_testlib::graphics::GraphicsCapture;
     ///
     /// let capture = GraphicsCapture::new();
     /// let regions = capture.regions();
@@ -491,7 +491,7 @@ impl GraphicsCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::graphics::GraphicsCapture;
+    /// use terminal_testlib::graphics::GraphicsCapture;
     ///
     /// let capture = GraphicsCapture::new();
     /// assert!(capture.is_empty());
@@ -516,7 +516,7 @@ impl GraphicsCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::graphics::GraphicsCapture;
+    /// use terminal_testlib::graphics::GraphicsCapture;
     ///
     /// let capture = GraphicsCapture::new();
     /// let preview_area = (5, 5, 30, 20);
@@ -543,7 +543,7 @@ impl GraphicsCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::graphics::GraphicsCapture;
+    /// use terminal_testlib::graphics::GraphicsCapture;
     ///
     /// let capture = GraphicsCapture::new();
     /// let preview_area = (5, 5, 30, 20);
@@ -569,7 +569,7 @@ impl GraphicsCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::graphics::{GraphicsCapture, GraphicsProtocol};
+    /// use terminal_testlib::graphics::{GraphicsCapture, GraphicsProtocol};
     ///
     /// let capture = GraphicsCapture::new();
     /// let sixel_regions = capture.by_protocol(GraphicsProtocol::Sixel);
@@ -597,7 +597,7 @@ impl GraphicsCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::graphics::{GraphicsCapture, GraphicsProtocol};
+    /// use terminal_testlib::graphics::{GraphicsCapture, GraphicsProtocol};
     ///
     /// let capture = GraphicsCapture::new();
     /// assert_eq!(capture.count_by_protocol(GraphicsProtocol::Sixel), 0);
@@ -622,8 +622,8 @@ impl GraphicsCapture {
     /// # Example
     ///
     /// ```rust
-    /// # use ratatui_testlib::graphics::GraphicsCapture;
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # use terminal_testlib::graphics::GraphicsCapture;
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let capture = GraphicsCapture::new();
     /// let preview_area = (5, 5, 30, 20);
     /// capture.assert_all_within(preview_area)?;
@@ -661,8 +661,8 @@ impl GraphicsCapture {
     /// # Example
     ///
     /// ```rust
-    /// # use ratatui_testlib::graphics::{GraphicsCapture, GraphicsProtocol};
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # use terminal_testlib::graphics::{GraphicsCapture, GraphicsProtocol};
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let capture = GraphicsCapture::new();
     /// // This will fail since capture is empty
     /// // capture.assert_protocol_exists(GraphicsProtocol::Sixel)?;
@@ -696,7 +696,7 @@ impl GraphicsCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::{graphics::GraphicsCapture, ScreenState};
+    /// use terminal_testlib::{graphics::GraphicsCapture, ScreenState};
     ///
     /// let screen1 = ScreenState::new(80, 24);
     /// let capture1 = GraphicsCapture::from_screen_state(&screen1);

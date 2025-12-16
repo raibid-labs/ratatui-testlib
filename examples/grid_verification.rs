@@ -1,10 +1,10 @@
 //! Example demonstrating grid state verification API (Issue #8).
 //!
-//! This example shows how to use ratatui-testlib as a verification oracle
+//! This example shows how to use terminal-testlib as a verification oracle
 //! to compare terminal emulator implementations by inspecting the final
 //! grid state after processing ANSI sequences.
 
-use ratatui_testlib::ScreenState;
+use terminal_testlib::ScreenState;
 
 fn main() {
     println!("=== Grid State Verification Example ===\n");
@@ -108,7 +108,7 @@ fn main() {
     println!("7. Verification Oracle Use Case:");
     println!("   This API enables comparing terminal emulator implementations:");
     println!();
-    println!("   // 1. Create oracle with ratatui-testlib");
+    println!("   // 1. Create oracle with terminal-testlib");
     println!("   let mut oracle = ScreenState::new(80, 24);");
     println!("   oracle.feed(test_sequence);");
     println!();

@@ -4,7 +4,7 @@
 
 use std::time::Duration;
 
-use ratatui_testlib::{Result, TuiTestHarness};
+use terminal_testlib::{Result, TuiTestHarness};
 
 fn main() -> Result<()> {
     println!("=== TuiTestHarness Demo ===\n");

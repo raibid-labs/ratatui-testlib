@@ -1,7 +1,7 @@
 # API Changes Summary
 
 ## Overview
-All changes to `/home/beengud/raibid-labs/ratatui-testlib/src/pty.rs` are **backward compatible**. No breaking changes were made to existing APIs.
+All changes to `/home/beengud/raibid-labs/terminal-testlib/src/pty.rs` are **backward compatible**. No breaking changes were made to existing APIs.
 
 ## New Public Methods
 
@@ -232,7 +232,7 @@ If you want to take advantage of new features:
 
 ## Compatibility with src/harness.rs
 
-The TuiTestHarness in `/home/beengud/raibid-labs/ratatui-testlib/src/harness.rs` continues to work without any modifications.
+The TuiTestHarness in `/home/beengud/raibid-labs/terminal-testlib/src/harness.rs` continues to work without any modifications.
 
 All methods it uses remain compatible:
 - ✅ `spawn()` - Enhanced but compatible

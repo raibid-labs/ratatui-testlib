@@ -3,7 +3,7 @@
 //! This example shows how to use the position assertion APIs to verify
 //! that UI components are rendered in the correct locations.
 
-use ratatui_testlib::{Axis, Rect, Result, TuiTestHarness};
+use terminal_testlib::{Axis, Rect, Result, TuiTestHarness};
 
 fn main() -> Result<()> {
     println!("Position and Layout Assertion Example\n");

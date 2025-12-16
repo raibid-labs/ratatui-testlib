@@ -1,6 +1,6 @@
-//! Basic usage example of ratatui_testlib.
+//! Basic usage example of terminal_testlib.
 //!
-//! This example demonstrates the core functionality of the ratatui_testlib library:
+//! This example demonstrates the core functionality of the terminal_testlib library:
 //! - Creating a PTY-based test harness
 //! - Spawning processes in the pseudo-terminal
 //! - Capturing and inspecting screen output
@@ -28,10 +28,10 @@
 use std::time::Duration;
 
 use portable_pty::CommandBuilder;
-use ratatui_testlib::{Result, TuiTestHarness};
+use terminal_testlib::{Result, TuiTestHarness};
 
 fn main() -> Result<()> {
-    println!("=== Basic ratatui_testlib Example ===\n");
+    println!("=== Basic terminal_testlib Example ===\n");
 
     // Example 1: Simple echo command
     // This demonstrates the most basic usage: spawning a command and capturing output
@@ -74,10 +74,10 @@ fn example_1_simple_echo() -> Result<()> {
 
     // Spawn a simple echo command
     let mut cmd = CommandBuilder::new("echo");
-    cmd.arg("Hello from ratatui_testlib!");
+    cmd.arg("Hello from terminal_testlib!");
 
     harness.spawn(cmd)?;
-    println!("Spawned: echo 'Hello from ratatui_testlib!'");
+    println!("Spawned: echo 'Hello from terminal_testlib!'");
 
     // Give the command time to execute and output
     std::thread::sleep(Duration::from_millis(100));
@@ -100,7 +100,7 @@ fn example_1_simple_echo() -> Result<()> {
 
     // Verify the text appears on screen
     assert!(
-        contents.contains("Hello from ratatui_testlib!"),
+        contents.contains("Hello from terminal_testlib!"),
         "Expected text not found in output"
     );
 
@@ -262,7 +262,7 @@ fn example_5_cursor_tracking() -> Result<()> {
     std::thread::sleep(Duration::from_millis(100));
     harness.update_state()?;
 
-    // Get cursor position (ratatui_testlib uses 0-based indexing)
+    // Get cursor position (terminal_testlib uses 0-based indexing)
     let (row, col) = harness.cursor_position();
     println!("\nCursor position after movement:");
     println!("  Row: {} (0-based)", row);
@@ -270,7 +270,7 @@ fn example_5_cursor_tracking() -> Result<()> {
 
     // The cursor should be near row 4 (5-1), col 10 (after printing X)
     println!("\nNote: Escape sequences use 1-based indexing,");
-    println!("      but ratatui_testlib returns 0-based positions.");
+    println!("      but terminal_testlib returns 0-based positions.");
 
     // Verify the character was placed at the cursor position
     let contents = harness.screen_contents();

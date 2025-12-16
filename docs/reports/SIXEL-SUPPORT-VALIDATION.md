@@ -1,7 +1,7 @@
-# Sixel Support Validation Report for ratatui-testlib
+# Sixel Support Validation Report for terminal-testlib
 
 **Date:** 2025-11-19
-**Project:** ratatui-testlib MVP Phase 3
+**Project:** terminal-testlib MVP Phase 3
 **Requirement:** Track cursor position when Sixel graphics are rendered
 **Researcher:** Claude (Sonnet 4.5)
 
@@ -251,7 +251,7 @@ fn change_state<P: Perform>(&mut self, performer: &mut P, byte: u8) {
 
 ### Implementation
 
-Created working Sixel detector in `/home/beengud/raibid-labs/ratatui-testlib/docs/sixel-poc.rs`
+Created working Sixel detector in `/home/beengud/raibid-labs/terminal-testlib/docs/sixel-poc.rs`
 
 Key features demonstrated:
 1. Cursor position tracking throughout parsing
@@ -385,7 +385,7 @@ Sixel #3
    ```
 
 2. **Implement VTActor trait**
-   - See `/home/beengud/raibid-labs/ratatui-testlib/docs/sixel-poc.rs` for reference
+   - See `/home/beengud/raibid-labs/terminal-testlib/docs/sixel-poc.rs` for reference
    - Implement all 8 required methods
    - Focus on `dcs_hook`, `dcs_put`, `dcs_unhook` for Sixel
 
@@ -614,16 +614,16 @@ for region in term.get_sixel_regions() {
 - vt100: 3.35/10 (FAIL - no Sixel)
 - termwiz: 9.0/10 (PASS - all requirements)
 
-**VERDICT: Use termwiz/vtparse for ratatui-testlib**
+**VERDICT: Use termwiz/vtparse for terminal-testlib**
 
 ---
 
 ## Appendix: Resources
 
 ### Documentation
-- Research Report: `/home/beengud/raibid-labs/ratatui-testlib/docs/sixel-research.md`
-- Proof of Concept: `/home/beengud/raibid-labs/ratatui-testlib/docs/sixel-poc.rs`
-- Crate Comparison: `/home/beengud/raibid-labs/ratatui-testlib/docs/crate-comparison.md`
+- Research Report: `/home/beengud/raibid-labs/terminal-testlib/docs/sixel-research.md`
+- Proof of Concept: `/home/beengud/raibid-labs/terminal-testlib/docs/sixel-poc.rs`
+- Crate Comparison: `/home/beengud/raibid-labs/terminal-testlib/docs/crate-comparison.md`
 
 ### External Resources
 - termwiz crate: https://crates.io/crates/termwiz
@@ -640,4 +640,4 @@ for region in term.get_sixel_regions() {
 
 **Report Complete**
 **Validation Status:** ✅ COMPLETE AND VERIFIED
-**Next Action:** Implement termwiz integration in ratatui-testlib
+**Next Action:** Implement termwiz integration in terminal-testlib

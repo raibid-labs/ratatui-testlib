@@ -10,7 +10,7 @@
 
 use std::time::Duration;
 
-use ratatui_testlib::{
+use terminal_testlib::{
     timing::{fps_to_frame_budget, LatencyProfile, TimingHooks, TimingRecorder},
     Result,
 };

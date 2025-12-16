@@ -20,7 +20,7 @@
 
 #[cfg(feature = "scarab")]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    use ratatui_testlib::scarab::{ScarabTestHarness, SeqlockTestExt};
+    use terminal_testlib::scarab::{ScarabTestHarness, SeqlockTestExt};
     use std::time::Duration;
 
     println!("Seqlock Verification Example");

@@ -1,9 +1,9 @@
 //! Acceptance test for Issue #8 - Expose Screen/Grid state for verification.
 //!
 //! This test verifies the exact use case described in the issue:
-//! comparing the final state of another terminal emulator against ratatui-testlib.
+//! comparing the final state of another terminal emulator against terminal-testlib.
 
-use ratatui_testlib::ScreenState;
+use terminal_testlib::ScreenState;
 
 /// Mock terminal emulator for testing comparison.
 /// In real usage, this would be Scarab or another terminal emulator.
@@ -49,7 +49,7 @@ fn test_issue_8_exact_use_case() {
     // Deterministic test sequence
     let test_sequence = b"\x1b[2J\x1b[H\x1b[31mTest\x1b[0m";
 
-    // Create oracle (ratatui-testlib)
+    // Create oracle (terminal-testlib)
     let mut oracle = ScreenState::new(80, 24);
     oracle.feed(test_sequence);
 

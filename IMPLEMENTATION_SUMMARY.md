@@ -2,7 +2,7 @@
 
 ## Overview
 
-Successfully implemented a comprehensive test auditing and scaffolding system for the `ratatui-testlib` crate. This feature allows developers to detect placeholder tests and generate meaningful test templates based on function names and test harness types.
+Successfully implemented a comprehensive test auditing and scaffolding system for the `terminal-testlib` crate. This feature allows developers to detect placeholder tests and generate meaningful test templates based on function names and test harness types.
 
 ## Files Created
 
@@ -205,7 +205,7 @@ impl PlaceholderPattern {
 ### Basic Scanning
 
 ```rust
-use ratatui_testlib::audit::TestAuditor;
+use terminal_testlib::audit::TestAuditor;
 use std::path::Path;
 
 let placeholders = TestAuditor::find_placeholders_in_dir(Path::new("tests"))?;
@@ -216,7 +216,7 @@ println!("{}", report);
 ### Template Generation
 
 ```rust
-use ratatui_testlib::audit::{TestAuditor, ScaffoldConfig, HarnessType};
+use terminal_testlib::audit::{TestAuditor, ScaffoldConfig, HarnessType};
 
 let config = ScaffoldConfig {
     harness: HarnessType::AsyncTuiTestHarness,
@@ -308,4 +308,4 @@ This implementation fully satisfies the requirements of GitHub Issue #53:
 - ✅ Documented all APIs
 - ✅ All tests passing
 
-The feature is production-ready and can be used immediately for auditing and scaffolding tests in the `ratatui-testlib` crate and projects using it.
+The feature is production-ready and can be used immediately for auditing and scaffolding tests in the `terminal-testlib` crate and projects using it.

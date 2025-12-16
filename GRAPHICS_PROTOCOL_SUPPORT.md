@@ -1,6 +1,6 @@
 # Graphics Protocol Support
 
-This document describes the unified graphics protocol detection system in `ratatui-testlib`, which supports Sixel, Kitty, and iTerm2 image protocols.
+This document describes the unified graphics protocol detection system in `terminal-testlib`, which supports Sixel, Kitty, and iTerm2 image protocols.
 
 ## Overview
 
@@ -150,7 +150,7 @@ impl ScreenState {
 The existing `sixel` module continues to work unchanged. It now internally uses the unified graphics system:
 
 ```rust
-use ratatui_testlib::sixel::{SixelCapture, SixelSequence};
+use terminal_testlib::sixel::{SixelCapture, SixelSequence};
 
 // Still works as before
 let capture = SixelCapture::from_screen_state(&screen);
@@ -160,7 +160,7 @@ let sequences = capture.sequences();
 For new code, prefer the unified API:
 
 ```rust
-use ratatui_testlib::graphics::{GraphicsCapture, GraphicsProtocol};
+use terminal_testlib::graphics::{GraphicsCapture, GraphicsProtocol};
 
 let capture = GraphicsCapture::from_screen_state(&screen);
 let sixel_graphics = capture.by_protocol(GraphicsProtocol::Sixel);
@@ -171,8 +171,8 @@ let sixel_graphics = capture.by_protocol(GraphicsProtocol::Sixel);
 ### Basic Detection
 
 ```rust
-use ratatui_testlib::graphics::{GraphicsCapture, GraphicsProtocol};
-use ratatui_testlib::ScreenState;
+use terminal_testlib::graphics::{GraphicsCapture, GraphicsProtocol};
+use terminal_testlib::ScreenState;
 
 let screen = ScreenState::new(80, 24);
 // ... render graphics ...
@@ -338,7 +338,7 @@ This example shows:
 
 **Before:**
 ```rust
-use ratatui_testlib::sixel::{SixelCapture, SixelSequence};
+use terminal_testlib::sixel::{SixelCapture, SixelSequence};
 
 let capture = SixelCapture::from_screen_state(&screen);
 let sequences = capture.sequences();
@@ -347,7 +347,7 @@ capture.assert_all_within(preview_area)?;
 
 **After (unified API):**
 ```rust
-use ratatui_testlib::graphics::{GraphicsCapture, GraphicsProtocol};
+use terminal_testlib::graphics::{GraphicsCapture, GraphicsProtocol};
 
 let capture = GraphicsCapture::from_screen_state(&screen);
 let sixel_regions = capture.by_protocol(GraphicsProtocol::Sixel);

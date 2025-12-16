@@ -1,6 +1,6 @@
 //! Integration tests for terminal profile functionality.
 
-use ratatui_testlib::{
+use terminal_testlib::{
     ColorDepth, Feature, MouseProtocol, TerminalCapabilities, TerminalProfile, TuiTestHarness,
 };
 

@@ -61,8 +61,8 @@ Extension trait for `ScarabTestHarness`:
 ## Usage Example
 
 ```rust
-use ratatui_testlib::regions::{UiRegionTester, UiRegionTestExt};
-use ratatui_testlib::scarab::ScarabTestHarness;
+use terminal_testlib::regions::{UiRegionTester, UiRegionTestExt};
+use terminal_testlib::scarab::ScarabTestHarness;
 
 // Define UI regions
 let tester = UiRegionTester::new(80, 24)
@@ -153,7 +153,7 @@ assert_eq!(resized.height, 29); // 30 - 1 (status)
 Define application-specific regions:
 
 ```rust
-use ratatui_testlib::regions::{UiRegion, RegionAnchor};
+use terminal_testlib::regions::{UiRegion, RegionAnchor};
 
 let notification = UiRegion {
     name: "notification".to_string(),
@@ -224,4 +224,4 @@ Full API documentation available via:
 cargo doc --features scarab --open
 ```
 
-Navigate to `ratatui_testlib::regions`.
+Navigate to `terminal_testlib::regions`.

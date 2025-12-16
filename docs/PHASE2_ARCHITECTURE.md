@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-Phase 2 transforms ratatui-testlib from a passive observation tool to an active interaction framework. This document outlines the architectural decisions for event simulation and async runtime integration.
+Phase 2 transforms terminal-testlib from a passive observation tool to an active interaction framework. This document outlines the architectural decisions for event simulation and async runtime integration.
 
 ### Key Decisions
 

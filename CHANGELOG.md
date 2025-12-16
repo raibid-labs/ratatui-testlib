@@ -135,7 +135,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - Initial Release
 
 ### Added
-- Initial implementation of ratatui-testlib TUI testing library
+- Initial implementation of terminal-testlib TUI testing library
 - PTY-based terminal emulation with `portable-pty`
 - VT100/ANSI escape sequence parsing with `vtparse` and `termwiz`
 - Sixel graphics position tracking and verification
@@ -175,9 +175,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Issue #7: Add public API for headless/stream-based parsing - Implemented via `ScreenState::feed()`
 - Issue #8: Expose Screen/Grid state for verification - Implemented via `get_cell()` and public `Cell` struct
 
-[Unreleased]: https://github.com/raibid-labs/ratatui-testlib/compare/v0.5.0...HEAD
-[0.5.0]: https://github.com/raibid-labs/ratatui-testlib/compare/v0.4.0...v0.5.0
-[0.4.0]: https://github.com/raibid-labs/ratatui-testlib/compare/v0.3.0...v0.4.0
-[0.3.0]: https://github.com/raibid-labs/ratatui-testlib/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/raibid-labs/ratatui-testlib/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/raibid-labs/ratatui-testlib/releases/tag/v0.1.0
+[Unreleased]: https://github.com/raibid-labs/terminal-testlib/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/raibid-labs/terminal-testlib/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/raibid-labs/terminal-testlib/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/raibid-labs/terminal-testlib/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/raibid-labs/terminal-testlib/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/raibid-labs/terminal-testlib/releases/tag/v0.1.0

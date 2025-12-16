@@ -1,6 +1,6 @@
-# ratatui-testlib Examples
+# terminal-testlib Examples
 
-This directory contains examples demonstrating various features and patterns of ratatui-testlib.
+This directory contains examples demonstrating various features and patterns of terminal-testlib.
 
 ## Quick Start
 
@@ -205,9 +205,9 @@ Example template:
 //! cargo run --example my_example --features needed-features
 //! ```
 
-use ratatui_testlib::TuiTestHarness;
+use terminal_testlib::TuiTestHarness;
 
-fn main() -> ratatui_testlib::Result<()> {
+fn main() -> terminal_testlib::Result<()> {
     // Example code here
     Ok(())
 }
@@ -236,7 +236,7 @@ fn main() -> ratatui_testlib::Result<()> {
 ## Related Documentation
 
 - [Core Documentation](../README.md)
-- [API Reference](https://docs.rs/ratatui-testlib)
+- [API Reference](https://docs.rs/terminal-testlib)
 - [Cookbooks](../docs/versions/vNEXT/cookbooks/) - Project-specific patterns
 - [Contributing Guide](../CONTRIBUTING.md)
 
