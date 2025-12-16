@@ -6,7 +6,7 @@
 use bevy::{
     app::App,
     ecs::{component::Component, world::World},
-    prelude::{Entity, Update, With},
+    prelude::{Entity, With},
     MinimalPlugins,
 };
 
@@ -180,20 +180,6 @@ impl HeadlessBevyRunner {
         let screen = ScreenState::new(width, height);
 
         Ok(Self { app, screen, width, height })
-    }
-
-    /// Creates a headless runner with bevy_ratatui plugin pre-configured.
-    ///
-    /// # Errors
-    ///
-    /// Returns an error if initialization fails.
-    #[cfg(feature = "bevy-ratatui")]
-    pub fn with_bevy_ratatui() -> Result<Self> {
-        let mut runner = Self::new()?;
-        runner
-            .app
-            .add_plugins(bevy_ratatui::RatatuiPlugins::default());
-        Ok(runner)
     }
 
     /// Creates a headless runner with a custom pre-configured Bevy App.
