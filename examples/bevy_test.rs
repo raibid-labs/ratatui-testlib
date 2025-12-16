@@ -26,7 +26,6 @@ fn main() -> Result<()> {
     println!("- Entity and component querying");
     println!("- Resource access");
     println!("- Event integration");
-    println!("- bevy_ratatui plugin support");
 
     Ok(())
 }

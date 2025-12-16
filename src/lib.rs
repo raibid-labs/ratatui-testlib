@@ -9,7 +9,7 @@
 //!
 //! - **PTY-based testing**: Real terminal emulation with pseudo-terminal support
 //! - **Sixel graphics testing**: Position verification and bounds checking for Sixel images
-//! - **Bevy ECS integration**: Test Bevy-based TUI applications with `bevy_ratatui`
+//! - **Bevy ECS integration**: Test Bevy-based TUI applications
 //! - **Async runtime support**: Full Tokio async/await support
 //! - **Snapshot testing**: Integration with `insta` for visual regression testing
 //! - **Headless CI/CD**: Works without X11/Wayland for GitHub Actions
@@ -130,8 +130,6 @@
 //!
 //! - `async-tokio`: Enable Tokio async runtime support
 //! - `bevy`: Enable Bevy ECS integration
-//! - `bevy-ratatui`: Enable bevy_ratatui plugin support
-//! - `ratatui-helpers`: Enable Ratatui-specific test helpers
 //! - `sixel`: Enable Sixel graphics position tracking and testing
 //! - `snapshot-insta`: Enable snapshot testing with `insta`
 //! - `headless`: Enable headless mode for CI/CD (no display server required)

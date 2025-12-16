@@ -59,7 +59,7 @@
 //! - Frame-by-frame update control ✓
 //! - ECS entity/component queries ✓
 //! - System execution testing ✓
-//! - Integration with bevy_ratatui plugin ✓
+//! - Custom Bevy App configuration ✓
 //!
 //! # Example
 //!
@@ -97,7 +97,7 @@ pub use bench::{BenchmarkResults, BenchmarkableHarness, ProfileResults};
 use bevy::app::App;
 use bevy::{
     ecs::{component::Component, world::World},
-    prelude::{Entity, Update, With},
+    prelude::{Entity, With},
     MinimalPlugins,
 };
 pub use headless::HeadlessBevyRunner;
@@ -208,7 +208,7 @@ impl<T: Serialize> ComponentSnapshot<T> {
 /// Test harness for Bevy-based TUI applications.
 ///
 /// This combines TUI testing with Bevy ECS querying and update cycle control,
-/// specifically designed for testing applications built with bevy_ratatui.
+/// designed for testing Bevy-based terminal applications.
 ///
 /// # Current Status
 ///
@@ -327,26 +327,6 @@ impl BevyTuiTestHarness {
             #[cfg(feature = "shared-state")]
             shared_state_path: None,
         })
-    }
-
-    /// Creates a Bevy TUI test harness with bevy_ratatui plugin.
-    ///
-    /// This is a convenience method for the common case of testing
-    /// applications built with bevy_ratatui.
-    ///
-    /// # Errors
-    ///
-    /// Returns an error if initialization fails.
-    #[cfg(feature = "bevy-ratatui")]
-    pub fn with_bevy_ratatui() -> Result<Self> {
-        let mut harness = Self::new()?;
-
-        // Add bevy_ratatui plugin
-        harness
-            .app
-            .add_plugins(bevy_ratatui::RatatuiPlugins::default());
-
-        Ok(harness)
     }
 
     /// Creates a new harness with a custom Bevy App.
@@ -1505,20 +1485,6 @@ mod tests {
         // Note: render_frame() and send_text() require a spawned process
         // They would be tested in integration tests with actual TUI apps
         // Here we just verify the harness can be created in headless mode
-    }
-
-    #[test]
-    fn test_headless_with_bevy_ratatui() {
-        #[cfg(feature = "bevy-ratatui")]
-        {
-            let harness = BevyTuiTestHarness::with_bevy_ratatui();
-            assert!(harness.is_ok());
-
-            #[cfg(feature = "headless")]
-            {
-                assert!(harness.unwrap().is_headless());
-            }
-        }
     }
 
     // ========================================================================
