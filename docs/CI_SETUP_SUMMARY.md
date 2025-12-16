@@ -2,7 +2,7 @@
 
 ## Overview
 
-A comprehensive CI/CD pipeline has been configured for the ratatui-testlib project with a focus on headless Linux testing. The pipeline ensures code quality, test coverage, security, and smooth deployment workflows.
+A comprehensive CI/CD pipeline has been configured for the terminal-testlib project with a focus on headless Linux testing. The pipeline ensures code quality, test coverage, security, and smooth deployment workflows.
 
 ## Files Created
 
@@ -355,7 +355,7 @@ This CI/CD setup addresses **Phase 1, Task 1.2** of the roadmap:
 
 ## Summary
 
-The ratatui-testlib project now has a production-ready CI/CD pipeline that:
+The terminal-testlib project now has a production-ready CI/CD pipeline that:
 
 1. **Ensures Code Quality**: Format checks, clippy linting, MSRV validation
 2. **Comprehensive Testing**: Library, integration, doc tests across feature flags
@@ -365,7 +365,7 @@ The ratatui-testlib project now has a production-ready CI/CD pipeline that:
 6. **Headless Ready**: Fully compatible with CI environments (no X11/Wayland needed)
 7. **Automated Releases**: One-command releases to crates.io and GitHub
 
-The pipeline is designed to support rapid development cycles while maintaining high quality standards, perfectly aligned with the ratatui-testlib project's goals and the dgx-pixels integration requirements.
+The pipeline is designed to support rapid development cycles while maintaining high quality standards, perfectly aligned with the terminal-testlib project's goals and the dgx-pixels integration requirements.
 
 ## Quick Links
 

@@ -6,7 +6,7 @@
 use std::time::Duration;
 
 use portable_pty::CommandBuilder;
-use ratatui_testlib::TestTerminal;
+use terminal_testlib::TestTerminal;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("PTY Enhanced Features Demo");

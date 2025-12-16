@@ -1,4 +1,4 @@
-# Parallel Orchestration Plan for ratatui-testlib
+# Parallel Orchestration Plan for terminal-testlib
 
 ## Issue Dependency Graph
 

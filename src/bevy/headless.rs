@@ -53,7 +53,7 @@ use crate::{
 /// # #[cfg(feature = "bevy")]
 /// # {
 /// use bevy::prelude::*;
-/// use ratatui_testlib::HeadlessBevyRunner;
+/// use terminal_testlib::HeadlessBevyRunner;
 ///
 /// #[derive(Component)]
 /// struct Counter(u32);
@@ -64,7 +64,7 @@ use crate::{
 ///     }
 /// }
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let mut runner = HeadlessBevyRunner::new()?;
 /// runner.app_mut().add_systems(Update, increment);
 /// runner.world_mut().spawn(Counter(0));
@@ -87,9 +87,9 @@ use crate::{
 /// ```rust,no_run
 /// # #[cfg(all(feature = "bevy", feature = "bevy-ratatui"))]
 /// # {
-/// use ratatui_testlib::HeadlessBevyRunner;
+/// use terminal_testlib::HeadlessBevyRunner;
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let mut runner = HeadlessBevyRunner::with_bevy_ratatui()?;
 ///
 /// // Add your rendering systems...
@@ -111,9 +111,9 @@ use crate::{
 /// ```rust,no_run
 /// # #[cfg(all(feature = "bevy", feature = "snapshot-insta"))]
 /// # {
-/// use ratatui_testlib::HeadlessBevyRunner;
+/// use terminal_testlib::HeadlessBevyRunner;
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let mut runner = HeadlessBevyRunner::new()?;
 /// // ... add systems and spawn entities ...
 ///
@@ -148,9 +148,9 @@ impl HeadlessBevyRunner {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::HeadlessBevyRunner;
+    /// use terminal_testlib::HeadlessBevyRunner;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let runner = HeadlessBevyRunner::new()?;
     /// # Ok(())
     /// # }
@@ -196,9 +196,9 @@ impl HeadlessBevyRunner {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use bevy::{app::ScheduleRunnerPlugin, prelude::*};
-    /// use ratatui_testlib::HeadlessBevyRunner;
+    /// use terminal_testlib::HeadlessBevyRunner;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut app = App::new();
     /// app.add_plugins(MinimalPlugins);
     /// // MinimalPlugins includes ScheduleRunnerPlugin with run_once behavior
@@ -227,9 +227,9 @@ impl HeadlessBevyRunner {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::HeadlessBevyRunner;
+    /// use terminal_testlib::HeadlessBevyRunner;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut runner = HeadlessBevyRunner::new()?;
     /// runner.tick()?;
     /// # Ok(())
@@ -264,9 +264,9 @@ impl HeadlessBevyRunner {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::HeadlessBevyRunner;
+    /// use terminal_testlib::HeadlessBevyRunner;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let runner = HeadlessBevyRunner::new()?;
     /// let entity_count = runner.world().entities().len();
     /// # Ok(())
@@ -294,12 +294,12 @@ impl HeadlessBevyRunner {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::HeadlessBevyRunner;
+    /// use terminal_testlib::HeadlessBevyRunner;
     ///
     /// fn my_system() { // ...
     /// }
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut runner = HeadlessBevyRunner::new()?;
     /// runner.app_mut().add_systems(Update, my_system);
     /// # Ok(())
@@ -324,12 +324,12 @@ impl HeadlessBevyRunner {
     /// # #[cfg(feature = "bevy")]
     /// # {
     /// use bevy::prelude::*;
-    /// use ratatui_testlib::HeadlessBevyRunner;
+    /// use terminal_testlib::HeadlessBevyRunner;
     ///
     /// #[derive(Component)]
     /// struct Health(u32);
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut runner = HeadlessBevyRunner::new()?;
     /// runner.world_mut().spawn(Health(100));
     ///
@@ -427,9 +427,9 @@ impl HeadlessBevyRunner {
     /// ```rust,no_run
     /// # #[cfg(feature = "bevy")]
     /// # {
-    /// use ratatui_testlib::HeadlessBevyRunner;
+    /// use terminal_testlib::HeadlessBevyRunner;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut runner = HeadlessBevyRunner::new()?;
     /// runner.feed_terminal_output(b"\x1b[31mHello\x1b[0m");
     ///
@@ -453,9 +453,9 @@ impl HeadlessBevyRunner {
     /// ```rust,no_run
     /// # #[cfg(all(feature = "bevy", feature = "snapshot-insta"))]
     /// # {
-    /// use ratatui_testlib::HeadlessBevyRunner;
+    /// use terminal_testlib::HeadlessBevyRunner;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut runner = HeadlessBevyRunner::new()?;
     /// // ... run systems ...
     /// runner.tick_n(5)?;

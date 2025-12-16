@@ -20,7 +20,7 @@
 //! ```
 
 #[cfg(feature = "scarab")]
-use ratatui_testlib::{
+use terminal_testlib::{
     regions::{RegionAnchor, RegionBounds, UiRegion, UiRegionTestExt, UiRegionTester},
     scarab::ScarabTestHarness,
 };

@@ -1,8 +1,8 @@
 # PTY Module Enhancement - Final Summary
 
 ## Project Information
-- **Project**: ratatui-testlib
-- **Location**: `/home/beengud/raibid-labs/ratatui-testlib`
+- **Project**: terminal-testlib
+- **Location**: `/home/beengud/raibid-labs/terminal-testlib`
 - **File Enhanced**: `src/pty.rs`
 - **Date**: 2025-11-20
 
@@ -25,7 +25,7 @@
 ## Deliverables
 
 ### 1. Enhanced src/pty.rs ✅
-**Location**: `/home/beengud/raibid-labs/ratatui-testlib/src/pty.rs`
+**Location**: `/home/beengud/raibid-labs/terminal-testlib/src/pty.rs`
 
 **Features Implemented**:
 1. ✅ Enhanced spawn() with full CommandBuilder API support
@@ -77,7 +77,7 @@ test result: ok. 3 passed; 0 failed; 0 ignored
 19. test_write_all
 
 ### 3. API Changes Documentation ✅
-**File**: `/home/beengud/raibid-labs/ratatui-testlib/API_CHANGES.md`
+**File**: `/home/beengud/raibid-labs/terminal-testlib/API_CHANGES.md`
 
 **Summary**:
 - All changes are backward compatible
@@ -88,7 +88,7 @@ test result: ok. 3 passed; 0 failed; 0 ignored
 
 ### 4. Usage Examples ✅
 
-**Example File**: `/home/beengud/raibid-labs/ratatui-testlib/examples/pty_enhanced_demo.rs`
+**Example File**: `/home/beengud/raibid-labs/terminal-testlib/examples/pty_enhanced_demo.rs`
 
 **Demonstrates**:
 1. Custom buffer configuration
@@ -211,7 +211,7 @@ Working demonstration code showing:
 ## Backward Compatibility
 
 ### Harness Compatibility ✅
-All changes are backward compatible with `/home/beengud/raibid-labs/ratatui-testlib/src/harness.rs`:
+All changes are backward compatible with `/home/beengud/raibid-labs/terminal-testlib/src/harness.rs`:
 
 | Harness Usage | Status | Notes |
 |---------------|--------|-------|
@@ -236,7 +236,7 @@ All existing APIs preserved:
 
 ### Build ✅
 ```
-Compiling ratatui-testlib v0.1.0
+Compiling terminal-testlib v0.1.0
 Finished `dev` profile in 2.22s
 ```
 - ✅ Library builds cleanly
@@ -255,26 +255,26 @@ test result: ok. 3 passed; 0 failed; 0 ignored
 ## Files Created/Modified
 
 ### Modified
-1. ✅ `/home/beengud/raibid-labs/ratatui-testlib/src/pty.rs`
+1. ✅ `/home/beengud/raibid-labs/terminal-testlib/src/pty.rs`
    - 231 → 882 lines (+651 lines)
    - 9 new public methods
    - 5 enhanced methods
    - 19 comprehensive tests
 
 ### Created
-1. ✅ `/home/beengud/raibid-labs/ratatui-testlib/PTY_ENHANCEMENTS.md`
+1. ✅ `/home/beengud/raibid-labs/terminal-testlib/PTY_ENHANCEMENTS.md`
    - Complete enhancement documentation
 
-2. ✅ `/home/beengud/raibid-labs/ratatui-testlib/API_CHANGES.md`
+2. ✅ `/home/beengud/raibid-labs/terminal-testlib/API_CHANGES.md`
    - Full API reference and compatibility guide
 
-3. ✅ `/home/beengud/raibid-labs/ratatui-testlib/ENHANCEMENT_SUMMARY.md`
+3. ✅ `/home/beengud/raibid-labs/terminal-testlib/ENHANCEMENT_SUMMARY.md`
    - This executive summary
 
-4. ✅ `/home/beengud/raibid-labs/ratatui-testlib/examples/pty_enhanced_demo.rs`
+4. ✅ `/home/beengud/raibid-labs/terminal-testlib/examples/pty_enhanced_demo.rs`
    - Working demonstration code
 
-5. ✅ `/home/beengud/raibid-labs/ratatui-testlib/run_pty_tests.sh`
+5. ✅ `/home/beengud/raibid-labs/terminal-testlib/run_pty_tests.sh`
    - Test execution script
 
 ## Requirements Met

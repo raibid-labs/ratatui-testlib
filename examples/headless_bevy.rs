@@ -11,7 +11,7 @@
 //! ```
 
 use bevy::prelude::*;
-use ratatui_testlib::{HeadlessBevyRunner, Result};
+use terminal_testlib::{HeadlessBevyRunner, Result};
 
 // Example components
 #[derive(Component)]

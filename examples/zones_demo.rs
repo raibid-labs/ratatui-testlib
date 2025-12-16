@@ -5,7 +5,7 @@
 
 #[cfg(feature = "ipc")]
 fn main() {
-    use ratatui_testlib::zones::{Osc133Parser, ZoneType};
+    use terminal_testlib::zones::{Osc133Parser, ZoneType};
 
     println!("OSC 133 Semantic Zone Parsing Demo\n");
     println!("===================================\n");

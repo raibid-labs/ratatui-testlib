@@ -1,9 +1,9 @@
 //! Integration tests for headless stream-based parsing.
 //!
-//! These tests demonstrate using ratatui-testlib as a verification oracle
+//! These tests demonstrate using terminal-testlib as a verification oracle
 //! for terminal emulators by feeding raw byte streams directly without PTY overhead.
 
-use ratatui_testlib::ScreenState;
+use terminal_testlib::ScreenState;
 
 #[test]
 fn test_basic_ansi_color_sequences() {
@@ -291,7 +291,7 @@ fn test_stream_based_comparison() {
     // System under test output
     let sut_output = b"\x1b[31mHello\x1b[0m";
 
-    // Reference implementation (ratatui-testlib as oracle)
+    // Reference implementation (terminal-testlib as oracle)
     let mut oracle = ScreenState::new(80, 24);
     oracle.feed(sut_output);
 

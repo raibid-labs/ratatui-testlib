@@ -48,10 +48,10 @@ impl TestTerminal {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TestTerminal;
+    /// use terminal_testlib::TestTerminal;
     ///
     /// let terminal = TestTerminal::new(80, 24)?;
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn new(width: u16, height: u16) -> Result<Self> {
         if width == 0 || height == 0 {
@@ -84,10 +84,10 @@ impl TestTerminal {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TestTerminal;
+    /// use terminal_testlib::TestTerminal;
     ///
     /// let mut terminal = TestTerminal::new(80, 24)?.with_buffer_size(16384);
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn with_buffer_size(mut self, size: usize) -> Self {
         self.buffer_size = size;
@@ -110,13 +110,13 @@ impl TestTerminal {
     ///
     /// ```rust,no_run
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::TestTerminal;
+    /// use terminal_testlib::TestTerminal;
     ///
     /// let mut terminal = TestTerminal::new(80, 24)?;
     /// let mut cmd = CommandBuilder::new("ls");
     /// cmd.arg("-la");
     /// terminal.spawn(cmd)?;
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn spawn(&mut self, cmd: CommandBuilder) -> Result<()> {
         self.spawn_with_timeout(cmd, DEFAULT_SPAWN_TIMEOUT)
@@ -145,14 +145,14 @@ impl TestTerminal {
     /// use std::time::Duration;
     ///
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::TestTerminal;
+    /// use terminal_testlib::TestTerminal;
     ///
     /// let mut terminal = TestTerminal::new(80, 24)?;
     /// let mut cmd = CommandBuilder::new("bash");
     /// cmd.arg("-c").arg("echo $TEST_VAR");
     /// cmd.env("TEST_VAR", "hello");
     /// terminal.spawn_with_timeout(cmd, Duration::from_secs(3))?;
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn spawn_with_timeout(&mut self, cmd: CommandBuilder, timeout: Duration) -> Result<()> {
         if self.child.is_some() {
@@ -192,7 +192,7 @@ impl TestTerminal {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TestTerminal;
+    /// use terminal_testlib::TestTerminal;
     ///
     /// let mut terminal = TestTerminal::new(80, 24)?;
     /// let mut buf = [0u8; 1024];
@@ -201,7 +201,7 @@ impl TestTerminal {
     ///     Ok(n) => println!("Read {} bytes", n),
     ///     Err(e) => eprintln!("Read error: {}", e),
     /// }
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn read(&mut self, buf: &mut [u8]) -> Result<usize> {
         // Use a short timeout (100ms) to prevent blocking forever
@@ -275,13 +275,13 @@ impl TestTerminal {
     /// ```rust,no_run
     /// use std::time::Duration;
     ///
-    /// use ratatui_testlib::TestTerminal;
+    /// use terminal_testlib::TestTerminal;
     ///
     /// let mut terminal = TestTerminal::new(80, 24)?;
     /// let mut buf = [0u8; 1024];
     /// let n = terminal.read_timeout(&mut buf, Duration::from_secs(1))?;
     /// println!("Read {} bytes", n);
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn read_timeout(&mut self, buf: &mut [u8], timeout: Duration) -> Result<usize> {
         let start = Instant::now();
@@ -316,12 +316,12 @@ impl TestTerminal {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TestTerminal;
+    /// use terminal_testlib::TestTerminal;
     ///
     /// let mut terminal = TestTerminal::new(80, 24)?;
     /// let output = terminal.read_all()?;
     /// println!("Output: {}", String::from_utf8_lossy(&output));
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn read_all(&mut self) -> Result<Vec<u8>> {
         let mut result = Vec::new();
@@ -353,11 +353,11 @@ impl TestTerminal {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::TestTerminal;
+    /// use terminal_testlib::TestTerminal;
     ///
     /// let mut terminal = TestTerminal::new(80, 24)?;
     /// terminal.write(b"hello\n")?;
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn write(&mut self, data: &[u8]) -> Result<usize> {
         // Get or create the writer (take_writer can only be called once)
@@ -459,13 +459,13 @@ impl TestTerminal {
     ///
     /// ```rust,no_run
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::TestTerminal;
+    /// use terminal_testlib::TestTerminal;
     ///
     /// let mut terminal = TestTerminal::new(80, 24)?;
     /// let cmd = CommandBuilder::new("sleep");
     /// terminal.spawn(cmd)?;
     /// assert!(terminal.is_running());
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn is_running(&mut self) -> bool {
         if let Some(ref mut child) = self.child {
@@ -502,13 +502,13 @@ impl TestTerminal {
     ///
     /// ```rust,no_run
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::TestTerminal;
+    /// use terminal_testlib::TestTerminal;
     ///
     /// let mut terminal = TestTerminal::new(80, 24)?;
     /// let cmd = CommandBuilder::new("sleep");
     /// terminal.spawn(cmd)?;
     /// terminal.kill()?;
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn kill(&mut self) -> Result<()> {
         if let Some(ref mut child) = self.child {
@@ -551,14 +551,14 @@ impl TestTerminal {
     ///
     /// ```rust,no_run
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::TestTerminal;
+    /// use terminal_testlib::TestTerminal;
     ///
     /// let mut terminal = TestTerminal::new(80, 24)?;
     /// let mut cmd = CommandBuilder::new("echo");
     /// cmd.arg("hello");
     /// terminal.spawn(cmd)?;
     /// let status = terminal.wait()?;
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn wait(&mut self) -> Result<ExitStatus> {
         if let Some(mut child) = self.child.take() {
@@ -594,14 +594,14 @@ impl TestTerminal {
     /// use std::time::Duration;
     ///
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::TestTerminal;
+    /// use terminal_testlib::TestTerminal;
     ///
     /// let mut terminal = TestTerminal::new(80, 24)?;
     /// let mut cmd = CommandBuilder::new("echo");
     /// cmd.arg("hello");
     /// terminal.spawn(cmd)?;
     /// let status = terminal.wait_timeout(Duration::from_secs(5))?;
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn wait_timeout(&mut self, timeout: Duration) -> Result<ExitStatus> {
         if self.child.is_none() {
@@ -650,7 +650,7 @@ impl TestTerminal {
     ///
     /// ```rust,no_run
     /// use portable_pty::CommandBuilder;
-    /// use ratatui_testlib::TestTerminal;
+    /// use terminal_testlib::TestTerminal;
     ///
     /// let mut terminal = TestTerminal::new(80, 24)?;
     /// let cmd = CommandBuilder::new("echo");
@@ -660,7 +660,7 @@ impl TestTerminal {
     /// if let Some(status) = terminal.get_exit_status() {
     ///     println!("Process exited with status: {:?}", status);
     /// }
-    /// # Ok::<(), ratatui_testlib::TermTestError>(())
+    /// # Ok::<(), terminal_testlib::TermTestError>(())
     /// ```
     pub fn get_exit_status(&self) -> Option<ExitStatus> {
         self.exit_status.clone()

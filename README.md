@@ -1,16 +1,16 @@
-# ratatui-testlib
+# terminal-testlib
 
 > A Rust library for integration testing of terminal user interface (TUI) applications with first-class support for Ratatui, Bevy ECS integration, and Sixel graphics protocols.
 
 ## Overview
 
-`ratatui-testlib` bridges the gap between unit testing with Ratatui's `TestBackend` and real-world integration testing of TUI applications. It provides a PTY-based test harness that enables testing of features requiring actual terminal escape sequence processing, including **Sixel graphics position verification**, **Bevy ECS integration**, **bevy_ratatui support**, and complex user interaction flows.
+`terminal-testlib` bridges the gap between unit testing with Ratatui's `TestBackend` and real-world integration testing of TUI applications. It provides a PTY-based test harness that enables testing of features requiring actual terminal escape sequence processing, including **Sixel graphics position verification**, **Bevy ECS integration**, **bevy_ratatui support**, and complex user interaction flows.
 
 ### MVP Goal
 
 Built to enable comprehensive integration testing for the [**dgx-pixels**](https://github.com/raibid-labs/dgx-pixels) project - a Bevy-based TUI application with Sixel graphics support.
 
-### Why ratatui-testlib?
+### Why terminal-testlib?
 
 **Current Limitation**: Ratatui's `TestBackend` is great for unit testing widgets and layouts, but it can't test:
 - PTY-specific behavior (terminal size negotiation, TTY detection)
@@ -19,7 +19,7 @@ Built to enable comprehensive integration testing for the [**dgx-pixels**](https
 - User interaction flows
 - Event handling in actual terminal context
 
-**Solution**: `ratatui-testlib` runs your TUI application in a real pseudo-terminal (PTY), captures the output using a terminal emulator, and provides an ergonomic API for assertions and snapshot testing.
+**Solution**: `terminal-testlib` runs your TUI application in a real pseudo-terminal (PTY), captures the output using a terminal emulator, and provides an ergonomic API for assertions and snapshot testing.
 
 ### Key Features
 
@@ -45,11 +45,11 @@ Built to enable comprehensive integration testing for the [**dgx-pixels**](https
 ## Quick Example
 
 ```rust
-use ratatui_testlib::{TuiTestHarness, KeyCode};
+use terminal_testlib::{TuiTestHarness, KeyCode};
 use portable_pty::CommandBuilder;
 
 #[test]
-fn test_navigation() -> ratatui_testlib::Result<()> {
+fn test_navigation() -> terminal_testlib::Result<()> {
     let mut harness = TuiTestHarness::new(80, 24)?;
 
     // Spawn your TUI app
@@ -73,11 +73,11 @@ fn test_navigation() -> ratatui_testlib::Result<()> {
 ## Async Support (Tokio)
 
 ```rust
-use ratatui_testlib::AsyncTuiTestHarness;
+use terminal_testlib::AsyncTuiTestHarness;
 use portable_pty::CommandBuilder;
 
 #[tokio::test]
-async fn test_async_app() -> ratatui_testlib::Result<()> {
+async fn test_async_app() -> terminal_testlib::Result<()> {
     let mut harness = AsyncTuiTestHarness::new(80, 24).await?;
     let mut cmd = CommandBuilder::new("./my-async-app");
     harness.spawn(cmd).await?;
@@ -95,10 +95,10 @@ async fn test_async_app() -> ratatui_testlib::Result<()> {
 ## Testing Sixel Graphics
 
 ```rust
-use ratatui_testlib::TuiTestHarness;
+use terminal_testlib::TuiTestHarness;
 
 #[test]
-fn test_sixel_renders_in_preview_area() -> ratatui_testlib::Result<()> {
+fn test_sixel_renders_in_preview_area() -> terminal_testlib::Result<()> {
     let mut harness = TuiTestHarness::new(80, 24)?;
     // ... spawn app ...
 
@@ -118,10 +118,10 @@ fn test_sixel_renders_in_preview_area() -> ratatui_testlib::Result<()> {
 ## Bevy ECS Integration
 
 ```rust
-use ratatui_testlib::BevyTuiTestHarness;
+use terminal_testlib::BevyTuiTestHarness;
 
 #[test]
-fn test_bevy_systems() -> ratatui_testlib::Result<()> {
+fn test_bevy_systems() -> terminal_testlib::Result<()> {
     let mut test = BevyTuiTestHarness::new()?;
     
     // Manipulate World
@@ -144,7 +144,7 @@ The `headless` feature flag enables testing in environments without display serv
 ```toml
 # Cargo.toml
 [dev-dependencies]
-ratatui-testlib = { version = "0.1", features = ["bevy", "headless"] }
+terminal-testlib = { version = "0.1", features = ["bevy", "headless"] }
 ```
 
 ```bash
@@ -164,7 +164,7 @@ cargo test --features bevy,headless
 
 ### Additional Resources
 - **[CONTRIBUTING.md](./CONTRIBUTING.md)** - Guidelines for contributors
-- **[API Documentation](https://docs.rs/ratatui-testlib)** - Full API reference on docs.rs
+- **[API Documentation](https://docs.rs/terminal-testlib)** - Full API reference on docs.rs
 
 ## Installation
 
@@ -172,7 +172,7 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dev-dependencies]
-ratatui-testlib = "0.1.0"
+terminal-testlib = "0.1.0"
 ```
 
 **Feature Flags**:

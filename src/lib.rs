@@ -1,10 +1,10 @@
-//! # ratatui_testlib
+//! # terminal_testlib
 //!
 //! A Rust library for integration testing of terminal user interface (TUI) applications.
 //!
 //! ## Overview
 //!
-//! `ratatui_testlib` provides a comprehensive testing framework for TUI applications built with
+//! `terminal_testlib` provides a comprehensive testing framework for TUI applications built with
 //! libraries like Ratatui, with first-class support for:
 //!
 //! - **PTY-based testing**: Real terminal emulation with pseudo-terminal support
@@ -20,7 +20,7 @@
 //!
 //! ```rust,no_run
 //! use portable_pty::CommandBuilder;
-//! use ratatui_testlib::{Result, TuiTestHarness};
+//! use terminal_testlib::{Result, TuiTestHarness};
 //!
 //! #[test]
 //! fn test_my_tui_app() -> Result<()> {
@@ -50,7 +50,7 @@
 //! For testing terminal emulators or parsing raw escape sequences without PTY overhead:
 //!
 //! ```rust
-//! use ratatui_testlib::ScreenState;
+//! use terminal_testlib::ScreenState;
 //!
 //! #[test]
 //! fn test_ansi_sequence_parsing() {
@@ -75,9 +75,9 @@
 //! ```rust,no_run
 //! # #[cfg(feature = "sixel")]
 //! # {
-//! use ratatui_testlib::TuiTestHarness;
+//! use terminal_testlib::TuiTestHarness;
 //!
-//! # fn test_sixel() -> ratatui_testlib::Result<()> {
+//! # fn test_sixel() -> terminal_testlib::Result<()> {
 //! let mut harness = TuiTestHarness::new(80, 24)?;
 //! // ... spawn your app and trigger Sixel rendering ...
 //!
@@ -100,7 +100,7 @@
 //! ```rust,no_run
 //! # #[cfg(all(feature = "bevy", feature = "shared-state"))]
 //! # {
-//! use ratatui_testlib::{
+//! use terminal_testlib::{
 //!     shared_state::{MemoryMappedState, SharedStateAccess},
 //!     BevyTuiTestHarness,
 //! };
@@ -112,7 +112,7 @@
 //!     status: String,
 //! }
 //!
-//! # fn test() -> ratatui_testlib::Result<()> {
+//! # fn test() -> terminal_testlib::Result<()> {
 //! let harness = BevyTuiTestHarness::new()?.with_shared_state("/tmp/app_state.mmap")?;
 //!
 //! // Access shared state for assertions
@@ -258,7 +258,7 @@ pub use terminal_profiles::{
 ///
 /// ```rust
 /// // Both of these are equivalent:
-/// use ratatui_testlib::{Parser, ScreenState}; // Clearer name for stream-based usage
+/// use terminal_testlib::{Parser, ScreenState}; // Clearer name for stream-based usage
 ///
 /// let mut screen = ScreenState::new(80, 24);
 /// let mut parser = Parser::new(80, 24);

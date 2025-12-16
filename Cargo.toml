@@ -1,13 +1,13 @@
 [package]
-name = "ratatui-testlib"
-version = "0.5.0"
+name = "terminal-testlib"
+version = "0.6.0"
 edition = "2021"
 rust-version = "1.75"
 authors = ["Raibid Labs"]
 license = "MIT"
 description = "Integration testing library for terminal user interface applications with Sixel and Bevy support"
-repository = "https://github.com/raibid-labs/ratatui-testlib"
-keywords = ["tui", "testing", "ratatui", "sixel", "bevy"]
+repository = "https://github.com/raibid-labs/terminal-testlib"
+keywords = ["tui", "testing", "terminal", "sixel", "bevy"]
 categories = ["development-tools::testing", "command-line-interface"]
 
 [dependencies]

@@ -834,7 +834,7 @@ tests/fixtures/sixel/
 ```markdown
 # Sixel Test Fixtures
 
-This directory contains Sixel graphics test data for ratatui-testlib Phase 3.
+This directory contains Sixel graphics test data for terminal-testlib Phase 3.
 
 ## Fixtures
 
@@ -1112,4 +1112,4 @@ Test strategy is successful when:
 
 **Document Status**: Design Complete
 **Next Step**: Begin implementation
-**Maintainer**: ratatui-testlib development team
+**Maintainer**: terminal-testlib development team

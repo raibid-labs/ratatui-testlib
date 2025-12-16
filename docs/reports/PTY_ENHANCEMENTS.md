@@ -1,7 +1,7 @@
 # PTY Module Enhancements Summary
 
 ## Overview
-Enhanced `/home/beengud/raibid-labs/ratatui-testlib/src/pty.rs` with production-ready process management and robust I/O capabilities.
+Enhanced `/home/beengud/raibid-labs/terminal-testlib/src/pty.rs` with production-ready process management and robust I/O capabilities.
 
 ## Enhancements Implemented
 
@@ -299,6 +299,6 @@ test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured
 - Edge case handling validation
 
 ## Files Modified
-- `/home/beengud/raibid-labs/ratatui-testlib/src/pty.rs` - Enhanced with 400+ lines of new functionality
+- `/home/beengud/raibid-labs/terminal-testlib/src/pty.rs` - Enhanced with 400+ lines of new functionality
 - All changes are backward compatible
 - No breaking changes to existing APIs

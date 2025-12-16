@@ -1,6 +1,6 @@
 //! Integration tests for the audit module.
 
-use ratatui_testlib::audit::{
+use terminal_testlib::audit::{
     HarnessType, PlaceholderPattern, ScaffoldConfig, TestAuditor,
 };
 use std::fs;
@@ -87,7 +87,7 @@ fn test_real_implementation() {
     // Step 6: Generate full scaffolded file
     let scaffolded = TestAuditor::scaffold_test_file(&placeholders, &config);
     assert!(scaffolded.contains("Scaffolded test file"));
-    assert!(scaffolded.contains("use ratatui_testlib"));
+    assert!(scaffolded.contains("use terminal_testlib"));
     assert!(scaffolded.contains("test_daemon_terminal_processing"));
     assert!(scaffolded.contains("test_shared_memory_access"));
     assert!(scaffolded.contains("test_sixel_graphics_rendering"));
@@ -107,7 +107,7 @@ fn test_real_implementation() {
 
 #[test]
 fn test_different_harness_types() {
-    let test = ratatui_testlib::audit::PlaceholderTest {
+    let test = terminal_testlib::audit::PlaceholderTest {
         file: std::path::PathBuf::from("test.rs"),
         line: 10,
         function_name: "test_async_operation".to_string(),
@@ -208,7 +208,7 @@ fn test_level2() {
 #[test]
 fn test_subject_inference_keywords() {
     // Daemon/IPC keywords
-    let test = ratatui_testlib::audit::PlaceholderTest {
+    let test = terminal_testlib::audit::PlaceholderTest {
         file: std::path::PathBuf::from("test.rs"),
         line: 10,
         function_name: "test_daemon_ipc".to_string(),
@@ -221,7 +221,7 @@ fn test_subject_inference_keywords() {
     assert!(template.contains("control message") || template.contains("daemon state"));
 
     // Terminal/Screen keywords
-    let test = ratatui_testlib::audit::PlaceholderTest {
+    let test = terminal_testlib::audit::PlaceholderTest {
         file: std::path::PathBuf::from("test.rs"),
         line: 10,
         function_name: "test_terminal_output".to_string(),
@@ -233,7 +233,7 @@ fn test_subject_inference_keywords() {
     assert!(template.contains("wait_for") || template.contains("screen_contents"));
 
     // Sixel/Graphics keywords
-    let test = ratatui_testlib::audit::PlaceholderTest {
+    let test = terminal_testlib::audit::PlaceholderTest {
         file: std::path::PathBuf::from("test.rs"),
         line: 10,
         function_name: "test_sixel_rendering".to_string(),
@@ -247,7 +247,7 @@ fn test_subject_inference_keywords() {
 
 #[test]
 fn test_configuration_options() {
-    let test = ratatui_testlib::audit::PlaceholderTest {
+    let test = terminal_testlib::audit::PlaceholderTest {
         file: std::path::PathBuf::from("test.rs"),
         line: 10,
         function_name: "test_example".to_string(),

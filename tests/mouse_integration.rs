@@ -1,7 +1,7 @@
 use std::time::Duration;
 
 use portable_pty::CommandBuilder;
-use ratatui_testlib::{MouseButton, Result, ScrollDirection, TuiTestHarness};
+use terminal_testlib::{MouseButton, Result, ScrollDirection, TuiTestHarness};
 
 #[test]
 fn test_mouse_click() -> Result<()> {

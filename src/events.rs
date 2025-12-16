@@ -15,7 +15,7 @@
 //! # Example
 //!
 //! ```rust
-//! use ratatui_testlib::events::{KeyCode, KeyEvent, Modifiers, MouseButton};
+//! use terminal_testlib::events::{KeyCode, KeyEvent, Modifiers, MouseButton};
 //!
 //! // Simple key
 //! let key = KeyEvent::new(KeyCode::Char('a'));
@@ -41,7 +41,7 @@ use bitflags::bitflags;
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::events::KeyCode;
+/// use terminal_testlib::events::KeyCode;
 ///
 /// let letter = KeyCode::Char('a');
 /// let enter = KeyCode::Enter;
@@ -100,7 +100,7 @@ pub enum KeyCode {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::events::KeyCode;
+    /// use terminal_testlib::events::KeyCode;
     ///
     /// let f1 = KeyCode::F(1);
     /// let f12 = KeyCode::F(12);
@@ -114,7 +114,7 @@ bitflags! {
     /// These are bitflags, so multiple modifiers can be combined:
     ///
     /// ```rust
-    /// use ratatui_testlib::events::Modifiers;
+    /// use terminal_testlib::events::Modifiers;
     ///
     /// let ctrl_shift = Modifiers::CTRL | Modifiers::SHIFT;
     /// let ctrl_alt = Modifiers::CTRL | Modifiers::ALT;
@@ -140,7 +140,7 @@ bitflags! {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::events::{KeyCode, KeyEvent, Modifiers};
+/// use terminal_testlib::events::{KeyCode, KeyEvent, Modifiers};
 ///
 /// // Simple key press
 /// let key = KeyEvent::new(KeyCode::Char('a'));
@@ -166,7 +166,7 @@ impl KeyEvent {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::events::{KeyCode, KeyEvent};
+    /// use terminal_testlib::events::{KeyCode, KeyEvent};
     ///
     /// let key = KeyEvent::new(KeyCode::Char('a'));
     /// ```
@@ -179,7 +179,7 @@ impl KeyEvent {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::events::{KeyCode, KeyEvent, Modifiers};
+    /// use terminal_testlib::events::{KeyCode, KeyEvent, Modifiers};
     ///
     /// let ctrl_c = KeyEvent::with_modifiers(KeyCode::Char('c'), Modifiers::CTRL);
     /// ```
@@ -199,7 +199,7 @@ impl KeyEvent {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::events::{KeyCode, KeyEvent, Modifiers};
+    /// use terminal_testlib::events::{KeyCode, KeyEvent, Modifiers};
     ///
     /// let key = KeyEvent::new(KeyCode::Char('a'));
     /// let bytes = key.to_bytes();
@@ -221,7 +221,7 @@ impl KeyEvent {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::events::MouseButton;
+/// use terminal_testlib::events::MouseButton;
 ///
 /// let left = MouseButton::Left;
 /// let right = MouseButton::Right;
@@ -260,7 +260,7 @@ impl MouseButton {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::events::ScrollDirection;
+/// use terminal_testlib::events::ScrollDirection;
 ///
 /// let up = ScrollDirection::Up;
 /// let down = ScrollDirection::Down;
@@ -300,7 +300,7 @@ impl ScrollDirection {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::events::{Modifiers, MouseButton, MouseEvent};
+/// use terminal_testlib::events::{Modifiers, MouseButton, MouseEvent};
 ///
 /// // Simple click
 /// let click = MouseEvent::press(10, 5, MouseButton::Left);
@@ -337,7 +337,7 @@ impl MouseEvent {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::events::{MouseButton, MouseEvent};
+    /// use terminal_testlib::events::{MouseButton, MouseEvent};
     ///
     /// let click = MouseEvent::press(10, 5, MouseButton::Left);
     /// ```
@@ -363,7 +363,7 @@ impl MouseEvent {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::events::{Modifiers, MouseButton, MouseEvent};
+    /// use terminal_testlib::events::{Modifiers, MouseButton, MouseEvent};
     ///
     /// let ctrl_click = MouseEvent::press_with_modifiers(10, 5, MouseButton::Left, Modifiers::CTRL);
     /// ```
@@ -388,7 +388,7 @@ impl MouseEvent {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::events::{MouseButton, MouseEvent};
+    /// use terminal_testlib::events::{MouseButton, MouseEvent};
     ///
     /// let release = MouseEvent::release(10, 5, MouseButton::Left);
     /// ```
@@ -413,7 +413,7 @@ impl MouseEvent {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::events::{MouseEvent, ScrollDirection};
+    /// use terminal_testlib::events::{MouseEvent, ScrollDirection};
     ///
     /// let scroll = MouseEvent::scroll(10, 5, ScrollDirection::Up);
     /// ```
@@ -439,7 +439,7 @@ impl MouseEvent {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::events::{MouseButton, MouseEvent};
+    /// use terminal_testlib::events::{MouseButton, MouseEvent};
     ///
     /// let click = MouseEvent::press(10, 5, MouseButton::Left);
     /// let bytes = click.to_bytes();
@@ -620,7 +620,7 @@ fn encode_function_key(n: u8) -> Vec<u8> {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::events::{MouseButton, MouseEvent};
+/// use terminal_testlib::events::{MouseButton, MouseEvent};
 ///
 /// let click = MouseEvent::press(10, 5, MouseButton::Left);
 /// let bytes = click.to_bytes();

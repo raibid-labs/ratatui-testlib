@@ -6,7 +6,7 @@
 
 ## Overview
 
-This document specifies the validation APIs for Sixel graphics testing in ratatui-testlib. These APIs enable developers to verify that Sixel graphics appear in the correct locations and stay within designated bounds.
+This document specifies the validation APIs for Sixel graphics testing in terminal-testlib. These APIs enable developers to verify that Sixel graphics appear in the correct locations and stay within designated bounds.
 
 ---
 
@@ -961,4 +961,4 @@ Validation APIs are successful when:
 
 **Document Status**: Design Complete
 **Next Step**: Begin implementation
-**Maintainer**: ratatui-testlib development team
+**Maintainer**: terminal-testlib development team

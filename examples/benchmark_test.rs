@@ -12,9 +12,9 @@
 //! ```
 
 #[cfg(feature = "bevy")]
-fn main() -> ratatui_testlib::Result<()> {
+fn main() -> terminal_testlib::Result<()> {
     use bevy::prelude::*;
-    use ratatui_testlib::{
+    use terminal_testlib::{
         bevy::bench::BenchmarkableHarness, BevyTuiTestHarness, HeadlessBevyRunner,
     };
 

@@ -1,8 +1,8 @@
 # Stream-Based Parsing API
 
-This document describes how to use ratatui-testlib as a headless terminal emulator parser without any PTY overhead. This is particularly useful for:
+This document describes how to use terminal-testlib as a headless terminal emulator parser without any PTY overhead. This is particularly useful for:
 
-- **Terminal emulator testing**: Use ratatui-testlib as a reference implementation/verification oracle
+- **Terminal emulator testing**: Use terminal-testlib as a reference implementation/verification oracle
 - **Escape sequence validation**: Test ANSI/VT100 sequence parsing behavior
 - **Integration testing**: Feed deterministic byte sequences and verify output
 - **Performance testing**: Zero PTY overhead for high-throughput parsing
@@ -10,7 +10,7 @@ This document describes how to use ratatui-testlib as a headless terminal emulat
 ## Quick Start
 
 ```rust
-use ratatui_testlib::ScreenState;
+use terminal_testlib::ScreenState;
 
 // Create a parser without any PTY
 let mut screen = ScreenState::new(80, 24);
@@ -30,13 +30,13 @@ assert_eq!(screen.cursor_position(), (0, 13));
 ### Creating a Parser
 
 ```rust
-use ratatui_testlib::ScreenState;
+use terminal_testlib::ScreenState;
 
 // Standard constructor
 let mut screen = ScreenState::new(80, 24);
 
 // Or use the Parser type alias for clarity
-use ratatui_testlib::Parser;
+use terminal_testlib::Parser;
 let mut parser = Parser::new(80, 24);
 ```
 
@@ -83,7 +83,7 @@ assert_eq!(col, 10);
 #### Cell Attributes
 
 ```rust
-use ratatui_testlib::Cell;
+use terminal_testlib::Cell;
 
 if let Some(cell) = screen.get_cell(0, 0) {
     println!("Character: {}", cell.c);
@@ -119,7 +119,7 @@ if screen.has_sixel_at(10, 20) {
 Use ScreenState as a reference implementation to verify another terminal emulator:
 
 ```rust
-use ratatui_testlib::ScreenState;
+use terminal_testlib::ScreenState;
 
 // Define test sequence
 let test_seq = b"\x1b[2J\x1b[H\x1b[31mTest\x1b[0m";
@@ -140,7 +140,7 @@ oracle.feed(test_seq);
 Test specific ANSI escape sequence behaviors:
 
 ```rust
-use ratatui_testlib::ScreenState;
+use terminal_testlib::ScreenState;
 
 #[test]
 fn test_cursor_movement() {
@@ -357,7 +357,7 @@ For detailed API documentation, see:
 cargo doc --open
 ```
 
-Then navigate to `ratatui_testlib::ScreenState`.
+Then navigate to `terminal_testlib::ScreenState`.
 
 ## Contributing
 

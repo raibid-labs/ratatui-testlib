@@ -5,7 +5,7 @@
 #[cfg(feature = "bevy")]
 mod bevy_tests {
     use bevy::prelude::*;
-    use ratatui_testlib::{BevyTuiTestHarness, Result};
+    use terminal_testlib::{BevyTuiTestHarness, Result};
 
     // ========================================================================
     // Test Components

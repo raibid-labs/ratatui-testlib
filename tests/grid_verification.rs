@@ -3,7 +3,7 @@
 //! These tests verify the API for exposing screen/grid state for verification,
 //! enabling comparison between different terminal emulator implementations.
 
-use ratatui_testlib::{Cell, ScreenState};
+use terminal_testlib::{Cell, ScreenState};
 
 #[test]
 fn test_rows_cols_accessors() {
@@ -273,7 +273,7 @@ fn test_snapshot_cursor_tracking() {
 #[test]
 fn test_verification_oracle_use_case() {
     // This test demonstrates the intended use case from issue #8:
-    // Using ratatui-testlib as a verification oracle for another terminal emulator
+    // Using terminal-testlib as a verification oracle for another terminal emulator
 
     let test_sequence = b"\x1b[2J\x1b[H\x1b[31mRed\x1b[0m \x1b[32mGreen\x1b[0m";
 

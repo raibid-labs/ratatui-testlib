@@ -5,7 +5,7 @@
 
 use std::time::Duration;
 
-use ratatui_testlib::{timing::TimingHooks, Result, TuiTestHarness};
+use terminal_testlib::{timing::TimingHooks, Result, TuiTestHarness};
 
 #[test]
 fn test_basic_input_latency_measurement() -> Result<()> {
@@ -139,7 +139,7 @@ fn test_latency_profile_access() -> Result<()> {
 
 #[test]
 fn test_timing_with_key_events() -> Result<()> {
-    use ratatui_testlib::KeyCode;
+    use terminal_testlib::KeyCode;
 
     let mut harness = TuiTestHarness::new(80, 24)?;
 

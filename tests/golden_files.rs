@@ -2,7 +2,7 @@
 
 use std::{fs, path::PathBuf};
 
-use ratatui_testlib::{GoldenFile, GoldenMetadata, Result, ScreenState, TuiTestHarness};
+use terminal_testlib::{GoldenFile, GoldenMetadata, Result, ScreenState, TuiTestHarness};
 use tempfile::TempDir;
 
 /// Setup a temporary directory for golden files in tests.
@@ -228,16 +228,16 @@ fn test_update_goldens_env_var() {
     let _temp = setup_test_golden_dir();
 
     std::env::remove_var("UPDATE_GOLDENS");
-    assert!(!ratatui_testlib::golden::should_update_goldens());
+    assert!(!terminal_testlib::golden::should_update_goldens());
 
     std::env::set_var("UPDATE_GOLDENS", "1");
-    assert!(ratatui_testlib::golden::should_update_goldens());
+    assert!(terminal_testlib::golden::should_update_goldens());
 
     std::env::set_var("UPDATE_GOLDENS", "0");
-    assert!(!ratatui_testlib::golden::should_update_goldens());
+    assert!(!terminal_testlib::golden::should_update_goldens());
 
     std::env::set_var("UPDATE_GOLDENS", "yes");
-    assert!(!ratatui_testlib::golden::should_update_goldens());
+    assert!(!terminal_testlib::golden::should_update_goldens());
 
     cleanup_env();
 }
@@ -278,7 +278,7 @@ fn test_custom_golden_dir() {
 
     std::env::set_var("GOLDEN_DIR", &custom_path);
 
-    let golden_dir = ratatui_testlib::golden::get_golden_dir();
+    let golden_dir = terminal_testlib::golden::get_golden_dir();
     assert_eq!(golden_dir, custom_path);
 
     cleanup_env();
@@ -336,7 +336,7 @@ fn test_diff_generation_shows_changes() {
     let expected = "Line 1\nLine 2\nLine 3\n";
     let actual = "Line 1\nLine 2 modified\nLine 3\n";
 
-    let diff = ratatui_testlib::golden::generate_diff(expected, actual);
+    let diff = terminal_testlib::golden::generate_diff(expected, actual);
 
     // Diff should show both files
     assert!(diff.contains("--- expected"));

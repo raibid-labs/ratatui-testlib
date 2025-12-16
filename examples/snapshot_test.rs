@@ -1,6 +1,6 @@
 //! Snapshot testing example using insta.
 //!
-//! This example demonstrates how to use ratatui_testlib with the insta snapshot testing library
+//! This example demonstrates how to use terminal_testlib with the insta snapshot testing library
 //! for visual regression testing of TUI applications:
 //! - Capturing terminal output as snapshots
 //! - Using insta for snapshot comparison
@@ -39,7 +39,7 @@
 use std::time::Duration;
 
 use portable_pty::CommandBuilder;
-use ratatui_testlib::{Result, TuiTestHarness};
+use terminal_testlib::{Result, TuiTestHarness};
 
 fn main() -> Result<()> {
     println!("=== Snapshot Testing Example with insta ===\n");

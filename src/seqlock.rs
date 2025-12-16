@@ -19,8 +19,8 @@
 //! # #[cfg(feature = "ipc")]
 //! # {
 //! use std::time::Duration;
-//! use ratatui_testlib::seqlock::SeqlockVerifier;
-//! use ratatui_testlib::ipc::{DaemonSharedMemory, IpcResult};
+//! use terminal_testlib::seqlock::SeqlockVerifier;
+//! use terminal_testlib::ipc::{DaemonSharedMemory, IpcResult};
 //!
 //! # fn test() -> IpcResult<()> {
 //! let mut shm = DaemonSharedMemory::open("/my_shm")?;
@@ -134,8 +134,8 @@ impl SeqlockVerifier {
     /// ```rust,no_run
     /// # #[cfg(feature = "ipc")]
     /// # {
-    /// use ratatui_testlib::seqlock::SeqlockVerifier;
-    /// use ratatui_testlib::ipc::{DaemonSharedMemory, IpcResult};
+    /// use terminal_testlib::seqlock::SeqlockVerifier;
+    /// use terminal_testlib::ipc::{DaemonSharedMemory, IpcResult};
     ///
     /// # fn test() -> IpcResult<()> {
     /// let mut shm = DaemonSharedMemory::open("/my_shm")?;
@@ -235,10 +235,10 @@ impl SeqlockVerifier {
     /// ```rust,no_run
     /// # #[cfg(feature = "ipc")]
     /// # {
-    /// use ratatui_testlib::seqlock::SeqlockVerifier;
-    /// use ratatui_testlib::ipc::DaemonSharedMemory;
+    /// use terminal_testlib::seqlock::SeqlockVerifier;
+    /// use terminal_testlib::ipc::DaemonSharedMemory;
     ///
-    /// # fn test() -> ratatui_testlib::ipc::IpcResult<()> {
+    /// # fn test() -> terminal_testlib::ipc::IpcResult<()> {
     /// let shm = DaemonSharedMemory::open("/my_shm")?;
     /// let verifier = SeqlockVerifier::new();
     ///
@@ -276,10 +276,10 @@ impl SeqlockVerifier {
     /// # #[cfg(feature = "ipc")]
     /// # {
     /// use std::time::Duration;
-    /// use ratatui_testlib::seqlock::SeqlockVerifier;
-    /// use ratatui_testlib::ipc::DaemonSharedMemory;
+    /// use terminal_testlib::seqlock::SeqlockVerifier;
+    /// use terminal_testlib::ipc::DaemonSharedMemory;
     ///
-    /// # fn test() -> ratatui_testlib::ipc::IpcResult<()> {
+    /// # fn test() -> terminal_testlib::ipc::IpcResult<()> {
     /// let mut shm = DaemonSharedMemory::open("/my_shm")?;
     /// let mut verifier = SeqlockVerifier::new();
     ///

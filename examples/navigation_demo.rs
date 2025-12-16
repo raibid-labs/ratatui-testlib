@@ -22,7 +22,7 @@
 use std::time::Duration;
 
 use portable_pty::CommandBuilder;
-use ratatui_testlib::{
+use terminal_testlib::{
     navigation::{NavMode, NavigationTestExt},
     Result, TuiTestHarness,
 };

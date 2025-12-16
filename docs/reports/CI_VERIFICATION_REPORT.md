@@ -1,8 +1,8 @@
 # CI/CD Pipeline Verification Report
 
 **Date:** November 20, 2025
-**Project:** ratatui-testlib
-**Repository:** raibid-labs/ratatui-testlib
+**Project:** terminal-testlib
+**Repository:** raibid-labs/terminal-testlib
 **Workflow Status:** VERIFIED WITH RECOMMENDATIONS
 
 ---
@@ -507,20 +507,20 @@ The pipeline will succeed in GitHub Actions with these characteristics:
 ## Appendix B: File References
 
 **Workflow Files:**
-- `/home/beengud/raibid-labs/ratatui-testlib/.github/workflows/ci.yml` (Main CI workflow)
-- `/home/beengud/raibid-labs/ratatui-testlib/.github/workflows/docs.yml` (Documentation)
-- `/home/beengud/raibid-labs/ratatui-testlib/.github/workflows/release.yml` (Release process)
+- `/home/beengud/raibid-labs/terminal-testlib/.github/workflows/ci.yml` (Main CI workflow)
+- `/home/beengud/raibid-labs/terminal-testlib/.github/workflows/docs.yml` (Documentation)
+- `/home/beengud/raibid-labs/terminal-testlib/.github/workflows/release.yml` (Release process)
 
 **Configuration Files:**
-- `/home/beengud/raibid-labs/ratatui-testlib/Cargo.toml` (Project manifest)
-- `/home/beengud/raibid-labs/ratatui-testlib/Cargo.lock` (Dependency lock)
+- `/home/beengud/raibid-labs/terminal-testlib/Cargo.toml` (Project manifest)
+- `/home/beengud/raibid-labs/terminal-testlib/Cargo.lock` (Dependency lock)
 
 **Test Files:**
-- `/home/beengud/raibid-labs/ratatui-testlib/tests/integration/basic.rs`
-- `/home/beengud/raibid-labs/ratatui-testlib/tests/integration/process.rs`
-- `/home/beengud/raibid-labs/ratatui-testlib/tests/integration/errors.rs`
-- `/home/beengud/raibid-labs/ratatui-testlib/tests/integration/bevy.rs`
-- `/home/beengud/raibid-labs/ratatui-testlib/tests/integration/sixel.rs`
+- `/home/beengud/raibid-labs/terminal-testlib/tests/integration/basic.rs`
+- `/home/beengud/raibid-labs/terminal-testlib/tests/integration/process.rs`
+- `/home/beengud/raibid-labs/terminal-testlib/tests/integration/errors.rs`
+- `/home/beengud/raibid-labs/terminal-testlib/tests/integration/bevy.rs`
+- `/home/beengud/raibid-labs/terminal-testlib/tests/integration/sixel.rs`
 
 ---
 

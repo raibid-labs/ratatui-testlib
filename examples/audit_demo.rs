@@ -6,7 +6,7 @@
 //! - Create test templates
 //! - Scaffold complete test files
 
-use ratatui_testlib::audit::{
+use terminal_testlib::audit::{
     HarnessType, PlaceholderPattern, PlaceholderTest, ScaffoldConfig, TestAuditor,
 };
 use std::fs;

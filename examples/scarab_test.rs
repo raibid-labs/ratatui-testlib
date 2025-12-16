@@ -28,8 +28,8 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use std::time::Duration;
 
-    use ratatui_testlib::ipc::IpcError;
-    use ratatui_testlib::scarab::{ScarabConfig, ScarabTestHarness};
+    use terminal_testlib::ipc::IpcError;
+    use terminal_testlib::scarab::{ScarabConfig, ScarabTestHarness};
 
     println!("Scarab Test Example");
     println!("===================\n");

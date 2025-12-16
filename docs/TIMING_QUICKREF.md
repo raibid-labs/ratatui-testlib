@@ -3,7 +3,7 @@
 ## Basic Usage
 
 ```rust
-use ratatui_testlib::TuiTestHarness;
+use terminal_testlib::TuiTestHarness;
 use std::time::Duration;
 
 let mut harness = TuiTestHarness::new(80, 24)?;
@@ -136,7 +136,7 @@ harness.assert_render_budget(5.0)?; // 200ms budget
 | 144 | 6.94ms | Gaming/premium |
 
 ```rust
-use ratatui_testlib::timing::fps_to_frame_budget;
+use terminal_testlib::timing::fps_to_frame_budget;
 
 let budget = fps_to_frame_budget(60.0); // 16.67ms
 ```

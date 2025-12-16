@@ -4,7 +4,7 @@
 
 ## Overview
 
-Scarab is a TUI file manager with features like directory navigation, file operations, and dual-pane browsing. This cookbook demonstrates how to test file manager applications using ratatui-testlib.
+Scarab is a TUI file manager with features like directory navigation, file operations, and dual-pane browsing. This cookbook demonstrates how to test file manager applications using terminal-testlib.
 
 **Target Audience**: Developers building file browsers, file managers, or directory navigation tools.
 
@@ -13,10 +13,10 @@ Scarab is a TUI file manager with features like directory navigation, file opera
 ### Test Harness Configuration
 
 ```rust
-use ratatui_testlib::{TuiTestHarness, KeyCode};
+use terminal_testlib::{TuiTestHarness, KeyCode};
 use std::path::PathBuf;
 
-fn create_file_manager_harness() -> ratatui_testlib::Result<TuiTestHarness> {
+fn create_file_manager_harness() -> terminal_testlib::Result<TuiTestHarness> {
     let mut harness = TuiTestHarness::new(120, 40)?; // Wider for dual-pane
     harness.set_timeout(Duration::from_secs(2));
     Ok(harness)
@@ -248,13 +248,13 @@ fn test_file_search() -> Result<()> {
 ### Complete Integration Test
 
 ```rust
-use ratatui_testlib::{TuiTestHarness, KeyCode};
+use terminal_testlib::{TuiTestHarness, KeyCode};
 use portable_pty::CommandBuilder;
 use tempfile::TempDir;
 use std::fs;
 
 #[test]
-fn test_full_file_manager_workflow() -> ratatui_testlib::Result<()> {
+fn test_full_file_manager_workflow() -> terminal_testlib::Result<()> {
     // Setup test environment
     let temp_dir = TempDir::new()?;
     let base = temp_dir.path();
@@ -395,7 +395,7 @@ assert!(!path.exists());
 
 ## Related Resources
 
-- [Core API Documentation](https://docs.rs/ratatui-testlib)
+- [Core API Documentation](https://docs.rs/terminal-testlib)
 - [Navigation Demo Example](../../../../examples/navigation_demo.rs)
 - [Scarab-Nav Cookbook](scarab-nav.md) - Navigation patterns
 - [Snapshot Testing Guide](../../../ARCHITECTURE.md#snapshot-testing)

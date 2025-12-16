@@ -1,4 +1,4 @@
-# ratatui-testlib Implementation Roadmap
+# terminal-testlib Implementation Roadmap
 
 ## 🎉 Phase 1 Complete! Ready for Phase 2
 
@@ -446,7 +446,7 @@ harness.wait_for(|state| state.contains("Done")).await?;
 - All public APIs documented
 - Comprehensive test coverage
 - No known critical bugs
-- **dgx-pixels can adopt ratatui-testlib**
+- **dgx-pixels can adopt terminal-testlib**
 - Clear, helpful error messages
 - CI/CD pipeline green
 
@@ -534,7 +534,7 @@ harness.wait_for(|state| state.contains("Done")).await?;
 - Test dgx-pixels Bevy systems
 - Run in CI/CD headlessly
 
-**Success**: dgx-pixels can adopt and use ratatui-testlib for integration testing
+**Success**: dgx-pixels can adopt and use terminal-testlib for integration testing
 
 ---
 
@@ -659,7 +659,7 @@ optional = true
 
 ### Adoption (MVP)
 
-- [ ] dgx-pixels successfully integrates ratatui-testlib
+- [ ] dgx-pixels successfully integrates terminal-testlib
 - [ ] Can test all 8 dgx-pixels screens
 - [ ] Detects Sixel positioning bugs
 - [ ] Detects Sixel persistence bugs
@@ -669,7 +669,7 @@ optional = true
 
 - [ ] Published on crates.io
 - [ ] Listed in Ratatui ecosystem
-- [ ] 3+ projects using ratatui-testlib
+- [ ] 3+ projects using terminal-testlib
 - [ ] Community contributions
 
 ---
@@ -678,16 +678,16 @@ optional = true
 
 ### Pre-Integration (Phase 1-2)
 
-- [x] ratatui-testlib can spawn external binaries
-- [x] ratatui-testlib can send text input
-- [ ] ratatui-testlib can send keyboard events (Phase 2)
-- [ ] ratatui-testlib has async Tokio support (Phase 2)
+- [x] terminal-testlib can spawn external binaries
+- [x] terminal-testlib can send text input
+- [ ] terminal-testlib can send keyboard events (Phase 2)
+- [ ] terminal-testlib has async Tokio support (Phase 2)
 
 ### Integration Phase (Phase 3-4)
 
-- [ ] ratatui-testlib tracks Sixel positions
-- [ ] ratatui-testlib integrates with Bevy
-- [ ] ratatui-testlib supports bevy_ratatui
+- [ ] terminal-testlib tracks Sixel positions
+- [ ] terminal-testlib integrates with Bevy
+- [ ] terminal-testlib supports bevy_ratatui
 
 ### Testing Phase (Phase 5-6)
 
@@ -699,7 +699,7 @@ optional = true
 
 ### Release
 
-- [ ] dgx-pixels adopts ratatui-testlib
+- [ ] dgx-pixels adopts terminal-testlib
 - [ ] CI/CD includes integration tests
 - [ ] Documentation includes dgx-pixels examples
 

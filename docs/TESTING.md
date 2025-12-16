@@ -1,6 +1,6 @@
-# Testing Guide for ratatui-testlib
+# Testing Guide for terminal-testlib
 
-This document describes the test architecture and patterns used in ratatui-testlib.
+This document describes the test architecture and patterns used in terminal-testlib.
 
 ## Test Organization
 

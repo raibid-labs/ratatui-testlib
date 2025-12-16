@@ -35,7 +35,7 @@ cargo test --test timing_integration
 ## Quick Start
 
 ```rust
-use ratatui_testlib::{TuiTestHarness, Result};
+use terminal_testlib::{TuiTestHarness, Result};
 use std::time::Duration;
 
 #[test]

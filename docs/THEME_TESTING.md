@@ -1,6 +1,6 @@
 # Theme and Color Palette Verification
 
-This document describes the theme verification functionality added to `ratatui-testlib` for testing terminal color palettes and themes.
+This document describes the theme verification functionality added to `terminal-testlib` for testing terminal color palettes and themes.
 
 ## Overview
 
@@ -103,7 +103,7 @@ pub trait ThemeTestExt {
 ### Basic Color Verification
 
 ```rust
-use ratatui_testlib::{
+use terminal_testlib::{
     scarab::ScarabTestHarness,
     theme::{AnsiColor, ColorPalette, ThemeTestExt},
 };
@@ -218,7 +218,7 @@ Style flags include:
 The `ScarabTestHarness` implements `ThemeTestExt` automatically when the `ipc` feature is enabled. This allows seamless theme verification:
 
 ```rust
-use ratatui_testlib::{
+use terminal_testlib::{
     scarab::ScarabTestHarness,
     theme::{ColorPalette, ThemeTestExt},
 };
@@ -254,14 +254,14 @@ The theme module requires the `ipc` feature:
 
 ```toml
 [dependencies]
-ratatui-testlib = { version = "0.4", features = ["ipc"] }
+terminal-testlib = { version = "0.4", features = ["ipc"] }
 ```
 
 For Scarab-specific testing:
 
 ```toml
 [dependencies]
-ratatui-testlib = { version = "0.4", features = ["scarab"] }
+terminal-testlib = { version = "0.4", features = ["scarab"] }
 ```
 
 ## Testing Your Own Themes
@@ -322,4 +322,4 @@ See the module documentation for complete API details:
 cargo doc --features scarab --open
 ```
 
-Navigate to `ratatui_testlib::theme` for full documentation.
+Navigate to `terminal_testlib::theme` for full documentation.

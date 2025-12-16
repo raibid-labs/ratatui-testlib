@@ -1,4 +1,4 @@
-//! Error types for ratatui_testlib.
+//! Error types for terminal_testlib.
 //!
 //! This module defines all error types that can occur during TUI testing operations.
 //! The main error type [`TermTestError`] is an enum covering all possible failure modes,
@@ -7,7 +7,7 @@
 //! # Examples
 //!
 //! ```rust
-//! use ratatui_testlib::{Result, TermTestError};
+//! use terminal_testlib::{Result, TermTestError};
 //!
 //! fn may_fail() -> Result<()> {
 //!     Err(TermTestError::Timeout { timeout_ms: 5000 })
@@ -26,7 +26,7 @@ use std::io;
 
 use thiserror::Error;
 
-/// Result type alias for ratatui_testlib operations.
+/// Result type alias for terminal_testlib operations.
 ///
 /// This is a convenience alias for `std::result::Result<T, TermTestError>`.
 /// Most public APIs in this crate return this type.
@@ -34,7 +34,7 @@ use thiserror::Error;
 /// # Examples
 ///
 /// ```rust
-/// use ratatui_testlib::{Result, TuiTestHarness};
+/// use terminal_testlib::{Result, TuiTestHarness};
 ///
 /// fn create_harness() -> Result<TuiTestHarness> {
 ///     TuiTestHarness::new(80, 24)
@@ -44,7 +44,7 @@ pub type Result<T> = std::result::Result<T, TermTestError>;
 
 /// Errors that can occur during TUI testing.
 ///
-/// This enum represents all possible error conditions in the ratatui_testlib library.
+/// This enum represents all possible error conditions in the terminal_testlib library.
 /// Each variant provides specific context about the failure.
 ///
 /// # Variants
@@ -89,9 +89,9 @@ pub enum TermTestError {
     /// ```rust,no_run
     /// use std::time::Duration;
     ///
-    /// use ratatui_testlib::{TermTestError, TuiTestHarness};
+    /// use terminal_testlib::{TermTestError, TuiTestHarness};
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let mut harness = TuiTestHarness::new(80, 24)?.with_timeout(Duration::from_secs(1));
     ///
     /// match harness.wait_for_text("Never appears") {

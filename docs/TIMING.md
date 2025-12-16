@@ -1,6 +1,6 @@
 # Timing Infrastructure
 
-This document describes the timing and latency measurement infrastructure in `ratatui-testlib`.
+This document describes the timing and latency measurement infrastructure in `terminal-testlib`.
 
 ## Overview
 
@@ -13,7 +13,7 @@ The timing infrastructure enables measurement and assertion of input→render la
 Records timestamped events for latency analysis.
 
 ```rust
-use ratatui_testlib::timing::TimingRecorder;
+use terminal_testlib::timing::TimingRecorder;
 use std::time::Duration;
 
 let mut recorder = TimingRecorder::new();
@@ -44,7 +44,7 @@ Tracks specific stages of the input→render pipeline:
 4. **Frame Ready**: Frame ready for display
 
 ```rust
-use ratatui_testlib::timing::LatencyProfile;
+use terminal_testlib::timing::LatencyProfile;
 
 let mut profile = LatencyProfile::new();
 
@@ -69,7 +69,7 @@ println!("{}", profile.summary());
 Statistical analysis of latency measurements:
 
 ```rust
-use ratatui_testlib::timing::LatencyStats;
+use terminal_testlib::timing::LatencyStats;
 use std::time::Duration;
 
 let samples = vec![
@@ -107,7 +107,7 @@ The `TuiTestHarness` automatically records timing events during input operations
 - `render_complete`: When the screen state is updated
 
 ```rust
-use ratatui_testlib::TuiTestHarness;
+use terminal_testlib::TuiTestHarness;
 use std::time::Duration;
 
 let mut harness = TuiTestHarness::new(80, 24)?;
@@ -131,7 +131,7 @@ harness.assert_render_budget(60.0)?; // 60 FPS = 16.67ms budget
 ### 1. Assert 60 FPS Performance
 
 ```rust
-use ratatui_testlib::TuiTestHarness;
+use terminal_testlib::TuiTestHarness;
 
 let mut harness = TuiTestHarness::new(80, 24)?;
 
@@ -151,7 +151,7 @@ harness.assert_render_budget(60.0)?;
 ### 2. Collect Latency Statistics
 
 ```rust
-use ratatui_testlib::{TuiTestHarness, timing::TimingHooks};
+use terminal_testlib::{TuiTestHarness, timing::TimingHooks};
 
 let mut harness = TuiTestHarness::new(80, 24)?;
 
@@ -173,7 +173,7 @@ assert!(stats.p95 < Duration::from_millis(16)); // 60 FPS p95
 ### 3. Custom Event Timing
 
 ```rust
-use ratatui_testlib::{TuiTestHarness, timing::TimingHooks};
+use terminal_testlib::{TuiTestHarness, timing::TimingHooks};
 use std::time::Duration;
 
 let mut harness = TuiTestHarness::new(80, 24)?;
@@ -198,7 +198,7 @@ harness.assert_latency_within(
 ### 4. Performance Regression Testing
 
 ```rust
-use ratatui_testlib::TuiTestHarness;
+use terminal_testlib::TuiTestHarness;
 use std::time::Duration;
 
 #[test]
@@ -225,7 +225,7 @@ fn test_input_latency_regression() -> Result<()> {
 The `fps_to_frame_budget()` function converts FPS targets to frame time budgets:
 
 ```rust
-use ratatui_testlib::timing::fps_to_frame_budget;
+use terminal_testlib::timing::fps_to_frame_budget;
 use std::time::Duration;
 
 let budget_60fps = fps_to_frame_budget(60.0);  // 16.67ms
@@ -242,7 +242,7 @@ When the `snapshot-insta` feature is enabled, `TimingRecorder` and `LatencyStats
 ```rust
 #[cfg(feature = "snapshot-insta")]
 use insta::assert_yaml_snapshot;
-use ratatui_testlib::timing::TimingRecorder;
+use terminal_testlib::timing::TimingRecorder;
 
 let mut recorder = TimingRecorder::new();
 // ... record events ...
@@ -297,7 +297,7 @@ harness.assert_render_budget(60.0)?;
 ## Example: Complete Latency Test
 
 ```rust
-use ratatui_testlib::{TuiTestHarness, timing::TimingHooks, Result};
+use terminal_testlib::{TuiTestHarness, timing::TimingHooks, Result};
 use std::time::Duration;
 
 #[test]

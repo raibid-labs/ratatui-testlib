@@ -82,7 +82,7 @@
 ### Example 1: Component Testing
 
 ```rust
-use ratatui_testlib::HeadlessBevyRunner;
+use terminal_testlib::HeadlessBevyRunner;
 use bevy::prelude::*;
 
 #[derive(Component)]
@@ -95,7 +95,7 @@ fn damage_system(mut query: Query<&mut Health>) {
 }
 
 #[test]
-fn test_damage_system() -> ratatui_testlib::Result<()> {
+fn test_damage_system() -> terminal_testlib::Result<()> {
     let mut runner = HeadlessBevyRunner::new()?;
 
     // Setup
@@ -116,10 +116,10 @@ fn test_damage_system() -> ratatui_testlib::Result<()> {
 ### Example 2: Terminal Output Testing
 
 ```rust
-use ratatui_testlib::HeadlessBevyRunner;
+use terminal_testlib::HeadlessBevyRunner;
 
 #[test]
-fn test_terminal_output() -> ratatui_testlib::Result<()> {
+fn test_terminal_output() -> terminal_testlib::Result<()> {
     let mut runner = HeadlessBevyRunner::new()?;
 
     // Simulate terminal output from your render system
@@ -140,7 +140,7 @@ fn test_terminal_output() -> ratatui_testlib::Result<()> {
 ### Example 3: Filtered Queries
 
 ```rust
-use ratatui_testlib::HeadlessBevyRunner;
+use terminal_testlib::HeadlessBevyRunner;
 use bevy::prelude::*;
 
 #[derive(Component)]
@@ -150,7 +150,7 @@ struct Position(f32, f32);
 struct Enemy;
 
 #[test]
-fn test_enemy_positions() -> ratatui_testlib::Result<()> {
+fn test_enemy_positions() -> terminal_testlib::Result<()> {
     let mut runner = HeadlessBevyRunner::new()?;
 
     // Spawn entities
@@ -208,7 +208,7 @@ RUN cargo run --example headless_bevy --features bevy
 When using `bevy_ratatui`, you can capture terminal output from Bevy systems:
 
 ```rust
-use ratatui_testlib::HeadlessBevyRunner;
+use terminal_testlib::HeadlessBevyRunner;
 use bevy::prelude::*;
 use bevy_ratatui::RatatuiContext;
 
@@ -220,7 +220,7 @@ fn my_render_system(mut ctx: RatatuiContext) {
 
 #[test]
 #[cfg(feature = "bevy-ratatui")]
-fn test_bevy_ratatui_rendering() -> ratatui_testlib::Result<()> {
+fn test_bevy_ratatui_rendering() -> terminal_testlib::Result<()> {
     let mut runner = HeadlessBevyRunner::with_bevy_ratatui()?;
     runner.app_mut().add_systems(Update, my_render_system);
 
@@ -239,11 +239,11 @@ fn test_bevy_ratatui_rendering() -> ratatui_testlib::Result<()> {
 `HeadlessBevyRunner` integrates seamlessly with `insta` for snapshot testing:
 
 ```rust
-use ratatui_testlib::HeadlessBevyRunner;
+use terminal_testlib::HeadlessBevyRunner;
 
 #[test]
 #[cfg(feature = "snapshot-insta")]
-fn test_game_state_snapshot() -> ratatui_testlib::Result<()> {
+fn test_game_state_snapshot() -> terminal_testlib::Result<()> {
     let mut runner = HeadlessBevyRunner::new()?;
 
     // Setup game state...
@@ -335,13 +335,13 @@ Planned features for future releases:
 
 ## Related Documentation
 
-- [BevyTuiTestHarness API](https://docs.rs/ratatui-testlib/latest/ratatui_testlib/struct.BevyTuiTestHarness.html)
-- [HeadlessBevyRunner API](https://docs.rs/ratatui-testlib/latest/ratatui_testlib/struct.HeadlessBevyRunner.html)
+- [BevyTuiTestHarness API](https://docs.rs/terminal-testlib/latest/terminal_testlib/struct.BevyTuiTestHarness.html)
+- [HeadlessBevyRunner API](https://docs.rs/terminal-testlib/latest/terminal_testlib/struct.HeadlessBevyRunner.html)
 - [Bevy Headless Example](https://github.com/bevyengine/bevy/blob/main/examples/app/headless.rs)
 - [bevy_ratatui Documentation](https://docs.rs/bevy_ratatui)
 
 ## Support
 
 For issues, questions, or contributions:
-- GitHub Issues: https://github.com/raibid-labs/ratatui-testlib/issues
-- Discussions: https://github.com/raibid-labs/ratatui-testlib/discussions
+- GitHub Issues: https://github.com/raibid-labs/terminal-testlib/issues
+- Discussions: https://github.com/raibid-labs/terminal-testlib/discussions

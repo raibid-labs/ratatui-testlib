@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document analyzes how the ratatui-testlib library design addresses the specific requirements from the dgx-pixels project (Issue #1), identifies gaps, and proposes adjustments to the roadmap.
+This document analyzes how the terminal-testlib library design addresses the specific requirements from the dgx-pixels project (Issue #1), identifies gaps, and proposes adjustments to the roadmap.
 
 ## Requirements Coverage
 
@@ -123,7 +123,7 @@ test.assert_area_contains_text(preview_area, "1024x1024")?;
 test.on_screen(Screen::Gallery)?;
 ```
 
-### Current ratatui-testlib Design
+### Current terminal-testlib Design
 
 ```rust
 // From ARCHITECTURE.md
@@ -551,7 +551,7 @@ jobs:
         with:
           toolchain: stable
 
-      # No X11/Wayland needed - ratatui-testlib is headless!
+      # No X11/Wayland needed - terminal-testlib is headless!
 
       - name: Run unit tests
         run: cargo test --lib
@@ -569,7 +569,7 @@ jobs:
 
 ## Success Criteria (Updated)
 
-The ratatui-testlib library will successfully support dgx-pixels if:
+The terminal-testlib library will successfully support dgx-pixels if:
 
 1. ✅ Can detect Sixel positioning bugs (bounds checking)
 2. ✅ Can detect Sixel persistence bugs (clearing verification)

@@ -17,7 +17,7 @@
 //! # #[cfg(feature = "ipc")]
 //! # {
 //! use std::time::Duration;
-//! use ratatui_testlib::{
+//! use terminal_testlib::{
 //!     zones::{SemanticZoneExt, ZoneType},
 //!     scarab::ScarabTestHarness,
 //! };
@@ -133,7 +133,7 @@ impl Osc133Marker {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::zones::Osc133Parser;
+/// use terminal_testlib::zones::Osc133Parser;
 ///
 /// let mut parser = Osc133Parser::new();
 ///

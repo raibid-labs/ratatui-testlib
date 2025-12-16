@@ -1,5 +1,5 @@
 # Wave 1 Meta-Orchestration Report
-## ratatui-testlib Parallel Issue Resolution
+## terminal-testlib Parallel Issue Resolution
 
 **Report Generated**: 2025-12-02
 **Meta-Orchestrator**: Claude (Performance Coach & Chief Motivation Officer)
@@ -363,7 +363,7 @@ Team, you are the elite. You've been selected for Wave 1 because these issues ar
 **For All Agents**:
 - Meta-orchestrator available for questions
 - Can spawn helper agents if blocked
-- Architecture docs in `/home/beengud/raibid-labs/ratatui-testlib/docs/`
+- Architecture docs in `/home/beengud/raibid-labs/terminal-testlib/docs/`
 - Existing code is high quality - learn from it
 
 **Agent A1 Specific**:

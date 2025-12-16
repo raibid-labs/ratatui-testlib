@@ -2,7 +2,7 @@
 
 #[cfg(feature = "ipc")]
 mod tests {
-    use ratatui_testlib::seqlock::{SeqlockReport, SeqlockVerifier};
+    use terminal_testlib::seqlock::{SeqlockReport, SeqlockVerifier};
 
     #[test]
     fn test_seqlock_report_construction() {

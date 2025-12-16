@@ -18,11 +18,11 @@ use std::time::Duration;
 #[cfg(feature = "async-tokio")]
 use portable_pty::CommandBuilder;
 #[cfg(feature = "async-tokio")]
-use ratatui_testlib::{AsyncTuiTestHarness, WaitResult};
+use terminal_testlib::{AsyncTuiTestHarness, WaitResult};
 
 #[cfg(feature = "async-tokio")]
 #[tokio::main]
-async fn main() -> ratatui_testlib::Result<()> {
+async fn main() -> terminal_testlib::Result<()> {
     println!("=== Async Wait Demo ===\n");
 
     // Example 1: Basic async wait
@@ -133,10 +133,10 @@ async fn main() -> ratatui_testlib::Result<()> {
             .await;
 
         match result {
-            Err(ratatui_testlib::TermTestError::Timeout { timeout_ms }) => {
+            Err(terminal_testlib::TermTestError::Timeout { timeout_ms }) => {
                 println!("   ✓ Correctly timed out after {}ms", timeout_ms);
             }
-            Err(ratatui_testlib::TermTestError::ProcessExited) => {
+            Err(terminal_testlib::TermTestError::ProcessExited) => {
                 println!("   ✓ Process exited before timeout (also acceptable)");
             }
             Ok(_) => {
@@ -195,7 +195,7 @@ async fn main() -> ratatui_testlib::Result<()> {
             cmd.arg("Task 1");
             harness.spawn(cmd).await?;
             harness.wait_for_text("Task 1").await?;
-            Ok::<_, ratatui_testlib::TermTestError>(())
+            Ok::<_, terminal_testlib::TermTestError>(())
         };
 
         let task2 = async {
@@ -204,7 +204,7 @@ async fn main() -> ratatui_testlib::Result<()> {
             cmd.arg("Task 2");
             harness.spawn(cmd).await?;
             harness.wait_for_text("Task 2").await?;
-            Ok::<_, ratatui_testlib::TermTestError>(())
+            Ok::<_, terminal_testlib::TermTestError>(())
         };
 
         // Run both tasks concurrently with a timeout

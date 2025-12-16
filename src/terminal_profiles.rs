@@ -16,9 +16,9 @@
 //! # Example
 //!
 //! ```rust
-//! use ratatui_testlib::{Feature, TerminalProfile, TuiTestHarness};
+//! use terminal_testlib::{Feature, TerminalProfile, TuiTestHarness};
 //!
-//! # fn test() -> ratatui_testlib::Result<()> {
+//! # fn test() -> terminal_testlib::Result<()> {
 //! // Create a harness configured for xterm
 //! let mut harness = TuiTestHarness::new(80, 24)?.with_terminal_profile(TerminalProfile::Xterm256);
 //!
@@ -117,7 +117,7 @@ pub enum MouseProtocol {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::{ColorDepth, MouseProtocol, TerminalCapabilities};
+/// use terminal_testlib::{ColorDepth, MouseProtocol, TerminalCapabilities};
 ///
 /// let caps = TerminalCapabilities {
 ///     color_depth: ColorDepth::TrueColor,
@@ -191,7 +191,7 @@ impl TerminalCapabilities {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::{Feature, TerminalCapabilities};
+    /// use terminal_testlib::{Feature, TerminalCapabilities};
     ///
     /// let caps = TerminalCapabilities::default();
     /// assert!(caps.supports(Feature::AlternateScreen));
@@ -264,9 +264,9 @@ impl TerminalCapabilities {
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::{TerminalProfile, TuiTestHarness};
+/// use terminal_testlib::{TerminalProfile, TuiTestHarness};
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// // Test with basic VT100 compatibility
 /// let harness = TuiTestHarness::new(80, 24)?.with_terminal_profile(TerminalProfile::VT100);
 ///
@@ -315,7 +315,7 @@ impl TerminalProfile {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::{Feature, TerminalProfile};
+    /// use terminal_testlib::{Feature, TerminalProfile};
     ///
     /// let caps = TerminalProfile::WezTerm.capabilities();
     /// assert!(caps.supports(Feature::Sixel));
@@ -575,7 +575,7 @@ impl TerminalProfile {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::{Feature, TerminalProfile};
+    /// use terminal_testlib::{Feature, TerminalProfile};
     ///
     /// assert!(TerminalProfile::WezTerm.supports(Feature::Sixel));
     /// assert!(!TerminalProfile::Alacritty.supports(Feature::Sixel));
@@ -633,7 +633,7 @@ impl TerminalProfile {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::TerminalProfile;
+    /// use terminal_testlib::TerminalProfile;
     ///
     /// assert_eq!(TerminalProfile::from_name("wezterm"), Some(TerminalProfile::WezTerm));
     /// assert_eq!(TerminalProfile::from_name("xterm-256color"), Some(TerminalProfile::Xterm256));

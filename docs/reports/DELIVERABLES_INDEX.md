@@ -7,7 +7,7 @@ This document provides links and quick access to all deliverables from the PTY m
 ## Core Deliverable
 
 ### Enhanced PTY Module
-**File**: `/home/beengud/raibid-labs/ratatui-testlib/src/pty.rs`
+**File**: `/home/beengud/raibid-labs/terminal-testlib/src/pty.rs`
 - **Size**: 882 lines (651 lines added)
 - **Status**: ✅ Production-ready
 - **Build**: ✅ Compiles cleanly
@@ -24,7 +24,7 @@ This document provides links and quick access to all deliverables from the PTY m
 ## Documentation
 
 ### 1. Enhancement Overview
-**File**: `/home/beengud/raibid-labs/ratatui-testlib/PTY_ENHANCEMENTS.md`
+**File**: `/home/beengud/raibid-labs/terminal-testlib/PTY_ENHANCEMENTS.md`
 
 **Contents**:
 - Overview of all enhancements
@@ -37,7 +37,7 @@ This document provides links and quick access to all deliverables from the PTY m
 **Use This For**: Understanding what was enhanced and why
 
 ### 2. API Reference
-**File**: `/home/beengud/raibid-labs/ratatui-testlib/API_CHANGES.md`
+**File**: `/home/beengud/raibid-labs/terminal-testlib/API_CHANGES.md`
 
 **Contents**:
 - Complete API reference
@@ -51,7 +51,7 @@ This document provides links and quick access to all deliverables from the PTY m
 **Use This For**: API documentation and integration planning
 
 ### 3. Executive Summary
-**File**: `/home/beengud/raibid-labs/ratatui-testlib/ENHANCEMENT_SUMMARY.md`
+**File**: `/home/beengud/raibid-labs/terminal-testlib/ENHANCEMENT_SUMMARY.md`
 
 **Contents**:
 - Project statistics and metrics
@@ -64,14 +64,14 @@ This document provides links and quick access to all deliverables from the PTY m
 **Use This For**: High-level project overview and status
 
 ### 4. This Index
-**File**: `/home/beengud/raibid-labs/ratatui-testlib/DELIVERABLES_INDEX.md`
+**File**: `/home/beengud/raibid-labs/terminal-testlib/DELIVERABLES_INDEX.md`
 
 **Contents**: You are here!
 
 ## Code Examples
 
 ### Working Demo Application
-**File**: `/home/beengud/raibid-labs/ratatui-testlib/examples/pty_enhanced_demo.rs`
+**File**: `/home/beengud/raibid-labs/terminal-testlib/examples/pty_enhanced_demo.rs`
 
 **Demonstrates**:
 1. Custom buffer configuration
@@ -87,7 +87,7 @@ This document provides links and quick access to all deliverables from the PTY m
 ## Test Infrastructure
 
 ### Test Execution Script
-**File**: `/home/beengud/raibid-labs/ratatui-testlib/run_pty_tests.sh`
+**File**: `/home/beengud/raibid-labs/terminal-testlib/run_pty_tests.sh`
 
 **Purpose**: Run core PTY tests with timeout protection
 **Usage**: `./run_pty_tests.sh`
@@ -149,7 +149,7 @@ This document provides links and quick access to all deliverables from the PTY m
 
 1. **Test Execution**
    ```bash
-   cd /home/beengud/raibid-labs/ratatui-testlib
+   cd /home/beengud/raibid-labs/terminal-testlib
    cargo test --lib pty::tests
    ```
 
@@ -167,7 +167,7 @@ This document provides links and quick access to all deliverables from the PTY m
 ## File Structure
 
 ```
-/home/beengud/raibid-labs/ratatui-testlib/
+/home/beengud/raibid-labs/terminal-testlib/
 ├── src/
 │   └── pty.rs                      # Enhanced PTY module (882 lines)
 ├── examples/

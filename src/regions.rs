@@ -21,7 +21,7 @@
 //! # Quick Start
 //!
 //! ```rust
-//! use ratatui_testlib::regions::{UiRegionTester, RegionBounds};
+//! use terminal_testlib::regions::{UiRegionTester, RegionBounds};
 //!
 //! // Define a terminal with fixed regions
 //! let tester = UiRegionTester::new(80, 24)
@@ -50,7 +50,7 @@
 //! # #[cfg(feature = "scarab")]
 //! # {
 //! use std::time::Duration;
-//! use ratatui_testlib::{
+//! use terminal_testlib::{
 //!     scarab::ScarabTestHarness,
 //!     regions::{UiRegionTester, UiRegionTestExt},
 //! };
@@ -78,7 +78,7 @@
 //! For non-standard layouts, create custom regions:
 //!
 //! ```rust
-//! use ratatui_testlib::regions::{UiRegion, RegionAnchor, UiRegionTester};
+//! use terminal_testlib::regions::{UiRegion, RegionAnchor, UiRegionTester};
 //!
 //! let custom = UiRegion {
 //!     name: "notification_area".to_string(),
@@ -100,7 +100,7 @@ use crate::ipc::{IpcError, IpcResult};
 /// # Examples
 ///
 /// ```rust
-/// use ratatui_testlib::regions::{UiRegion, RegionAnchor};
+/// use terminal_testlib::regions::{UiRegion, RegionAnchor};
 ///
 /// // Status bar at bottom, 1 row tall
 /// let status = UiRegion {
@@ -154,7 +154,7 @@ pub enum RegionAnchor {
 /// # Examples
 ///
 /// ```rust
-/// use ratatui_testlib::regions::RegionBounds;
+/// use terminal_testlib::regions::RegionBounds;
 ///
 /// let bounds = RegionBounds::new(5, 10, 60, 18);
 ///
@@ -191,7 +191,7 @@ impl RegionBounds {
     /// # Examples
     ///
     /// ```rust
-    /// use ratatui_testlib::regions::RegionBounds;
+    /// use terminal_testlib::regions::RegionBounds;
     ///
     /// let bounds = RegionBounds::new(0, 0, 80, 24);
     /// assert_eq!(bounds.row, 0);
@@ -218,7 +218,7 @@ impl RegionBounds {
     /// # Examples
     ///
     /// ```rust
-    /// use ratatui_testlib::regions::RegionBounds;
+    /// use terminal_testlib::regions::RegionBounds;
     ///
     /// let bounds = RegionBounds::new(10, 20, 40, 5);
     ///
@@ -243,7 +243,7 @@ impl RegionBounds {
     /// # Examples
     ///
     /// ```rust
-    /// use ratatui_testlib::regions::RegionBounds;
+    /// use terminal_testlib::regions::RegionBounds;
     ///
     /// let a = RegionBounds::new(0, 0, 10, 10);
     /// let b = RegionBounds::new(5, 5, 10, 10);  // Overlaps
@@ -286,7 +286,7 @@ impl RegionBounds {
 /// # Examples
 ///
 /// ```rust
-/// use ratatui_testlib::regions::{UiRegionTester, RegionBounds};
+/// use terminal_testlib::regions::{UiRegionTester, RegionBounds};
 ///
 /// let tester = UiRegionTester::new(80, 24)
 ///     .with_status_bar(1)
@@ -320,7 +320,7 @@ impl UiRegionTester {
     /// # Examples
     ///
     /// ```rust
-    /// use ratatui_testlib::regions::UiRegionTester;
+    /// use terminal_testlib::regions::UiRegionTester;
     ///
     /// let tester = UiRegionTester::new(80, 24);
     /// assert_eq!(tester.screen_dimensions(), (80, 24));
@@ -347,7 +347,7 @@ impl UiRegionTester {
     /// # Examples
     ///
     /// ```rust
-    /// use ratatui_testlib::regions::UiRegionTester;
+    /// use terminal_testlib::regions::UiRegionTester;
     ///
     /// let tester = UiRegionTester::new(80, 24).with_status_bar(1);
     /// let bounds = tester.region_bounds("status_bar").unwrap();
@@ -372,7 +372,7 @@ impl UiRegionTester {
     /// # Examples
     ///
     /// ```rust
-    /// use ratatui_testlib::regions::UiRegionTester;
+    /// use terminal_testlib::regions::UiRegionTester;
     ///
     /// let tester = UiRegionTester::new(80, 24).with_tab_bar(2);
     /// let bounds = tester.region_bounds("tab_bar").unwrap();
@@ -397,7 +397,7 @@ impl UiRegionTester {
     /// # Examples
     ///
     /// ```rust
-    /// use ratatui_testlib::regions::UiRegionTester;
+    /// use terminal_testlib::regions::UiRegionTester;
     ///
     /// let tester = UiRegionTester::new(80, 24).with_left_sidebar(20);
     /// let bounds = tester.region_bounds("left_sidebar").unwrap();
@@ -422,7 +422,7 @@ impl UiRegionTester {
     /// # Examples
     ///
     /// ```rust
-    /// use ratatui_testlib::regions::UiRegionTester;
+    /// use terminal_testlib::regions::UiRegionTester;
     ///
     /// let tester = UiRegionTester::new(80, 24).with_right_sidebar(15);
     /// let bounds = tester.region_bounds("right_sidebar").unwrap();
@@ -447,7 +447,7 @@ impl UiRegionTester {
     /// # Examples
     ///
     /// ```rust
-    /// use ratatui_testlib::regions::{UiRegion, RegionAnchor, UiRegionTester};
+    /// use terminal_testlib::regions::{UiRegion, RegionAnchor, UiRegionTester};
     ///
     /// let custom = UiRegion {
     ///     name: "notification".to_string(),
@@ -474,7 +474,7 @@ impl UiRegionTester {
     /// # Examples
     ///
     /// ```rust
-    /// use ratatui_testlib::regions::UiRegionTester;
+    /// use terminal_testlib::regions::UiRegionTester;
     ///
     /// let tester = UiRegionTester::new(80, 24).with_status_bar(1);
     ///
@@ -550,7 +550,7 @@ impl UiRegionTester {
     /// # Examples
     ///
     /// ```rust
-    /// use ratatui_testlib::regions::UiRegionTester;
+    /// use terminal_testlib::regions::UiRegionTester;
     ///
     /// let tester = UiRegionTester::new(80, 24)
     ///     .with_tab_bar(2)
@@ -594,7 +594,7 @@ impl UiRegionTester {
     /// # Examples
     ///
     /// ```rust
-    /// use ratatui_testlib::regions::UiRegionTester;
+    /// use terminal_testlib::regions::UiRegionTester;
     ///
     /// let tester = UiRegionTester::new(80, 24).with_status_bar(1);
     ///
@@ -617,7 +617,7 @@ impl UiRegionTester {
     /// # Examples
     ///
     /// ```rust
-    /// use ratatui_testlib::regions::UiRegionTester;
+    /// use terminal_testlib::regions::UiRegionTester;
     ///
     /// let tester = UiRegionTester::new(80, 24).with_status_bar(1);
     ///
@@ -635,7 +635,7 @@ impl UiRegionTester {
     /// # Examples
     ///
     /// ```rust
-    /// use ratatui_testlib::regions::UiRegionTester;
+    /// use terminal_testlib::regions::UiRegionTester;
     ///
     /// let tester = UiRegionTester::new(80, 24)
     ///     .with_status_bar(1)
@@ -679,7 +679,7 @@ pub trait UiRegionTestExt {
     /// ```rust,no_run
     /// # #[cfg(feature = "scarab")]
     /// # {
-    /// use ratatui_testlib::{
+    /// use terminal_testlib::{
     ///     scarab::ScarabTestHarness,
     ///     regions::{UiRegionTester, UiRegionTestExt},
     /// };
@@ -714,7 +714,7 @@ pub trait UiRegionTestExt {
     /// ```rust,no_run
     /// # #[cfg(feature = "scarab")]
     /// # {
-    /// use ratatui_testlib::{
+    /// use terminal_testlib::{
     ///     scarab::ScarabTestHarness,
     ///     regions::{UiRegionTester, UiRegionTestExt},
     /// };
@@ -756,7 +756,7 @@ pub trait UiRegionTestExt {
     /// ```rust,no_run
     /// # #[cfg(feature = "scarab")]
     /// # {
-    /// use ratatui_testlib::{
+    /// use terminal_testlib::{
     ///     scarab::ScarabTestHarness,
     ///     regions::{UiRegionTester, UiRegionTestExt},
     /// };
@@ -798,7 +798,7 @@ pub trait UiRegionTestExt {
     /// ```rust,no_run
     /// # #[cfg(feature = "scarab")]
     /// # {
-    /// use ratatui_testlib::{
+    /// use terminal_testlib::{
     ///     scarab::ScarabTestHarness,
     ///     regions::{UiRegionTester, UiRegionTestExt},
     /// };
@@ -841,7 +841,7 @@ pub trait UiRegionTestExt {
     /// ```rust,no_run
     /// # #[cfg(feature = "scarab")]
     /// # {
-    /// use ratatui_testlib::{
+    /// use terminal_testlib::{
     ///     scarab::ScarabTestHarness,
     ///     regions::{UiRegionTester, UiRegionTestExt},
     /// };

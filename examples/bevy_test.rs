@@ -3,7 +3,7 @@
 //! This demonstrates testing a Bevy-based TUI application.
 //! Full Bevy integration will be completed in Phase 4.
 
-use ratatui_testlib::{BevyTuiTestHarness, Result};
+use terminal_testlib::{BevyTuiTestHarness, Result};
 
 fn main() -> Result<()> {
     println!("Bevy TUI testing example");

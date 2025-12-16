@@ -30,10 +30,10 @@
 //! ```rust
 //! # #[cfg(feature = "sixel")]
 //! # {
-//! use ratatui_testlib::graphics::{GraphicsCapture, GraphicsProtocol};
+//! use terminal_testlib::graphics::{GraphicsCapture, GraphicsProtocol};
 //!
-//! # fn example() -> ratatui_testlib::Result<()> {
-//! # let screen = ratatui_testlib::ScreenState::new(80, 24);
+//! # fn example() -> terminal_testlib::Result<()> {
+//! # let screen = terminal_testlib::ScreenState::new(80, 24);
 //! let capture = GraphicsCapture::from_screen_state(&screen);
 //! let sixel_regions = capture.by_protocol(GraphicsProtocol::Sixel);
 //! # Ok(())
@@ -46,9 +46,9 @@
 //! ```rust
 //! # #[cfg(feature = "sixel")]
 //! # {
-//! use ratatui_testlib::{ScreenState, TuiTestHarness};
+//! use terminal_testlib::{ScreenState, TuiTestHarness};
 //!
-//! # fn test_sixel() -> ratatui_testlib::Result<()> {
+//! # fn test_sixel() -> terminal_testlib::Result<()> {
 //! let mut harness = TuiTestHarness::new(80, 24)?;
 //! // ... spawn app and render Sixel graphics ...
 //!
@@ -94,7 +94,7 @@ use crate::{
 /// # Example
 ///
 /// ```rust
-/// use ratatui_testlib::sixel::SixelSequence;
+/// use terminal_testlib::sixel::SixelSequence;
 ///
 /// let seq = SixelSequence::new(
 ///     vec![/* raw bytes */],
@@ -145,7 +145,7 @@ impl SixelSequence {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::sixel::SixelSequence;
+    /// use terminal_testlib::sixel::SixelSequence;
     ///
     /// let seq = SixelSequence::new(vec![], (5, 5), (5, 5, 10, 10));
     /// let area = (0, 0, 20, 20);
@@ -182,7 +182,7 @@ impl SixelSequence {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::sixel::SixelSequence;
+    /// use terminal_testlib::sixel::SixelSequence;
     ///
     /// let seq = SixelSequence::new(vec![], (5, 5), (5, 5, 10, 10));
     ///
@@ -216,9 +216,9 @@ impl SixelSequence {
 /// ```rust
 /// # #[cfg(feature = "sixel")]
 /// # {
-/// use ratatui_testlib::{sixel::SixelCapture, ScreenState};
+/// use terminal_testlib::{sixel::SixelCapture, ScreenState};
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let screen = ScreenState::new(80, 24);
 /// let capture = SixelCapture::from_screen_state(&screen);
 ///
@@ -245,7 +245,7 @@ impl SixelCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::sixel::SixelCapture;
+    /// use terminal_testlib::sixel::SixelCapture;
     ///
     /// let capture = SixelCapture::new();
     /// assert!(capture.is_empty());
@@ -307,7 +307,7 @@ impl SixelCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::sixel::SixelCapture;
+    /// use terminal_testlib::sixel::SixelCapture;
     ///
     /// let capture = SixelCapture::new();
     /// let sequences = capture.sequences();
@@ -326,7 +326,7 @@ impl SixelCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::sixel::SixelCapture;
+    /// use terminal_testlib::sixel::SixelCapture;
     ///
     /// let capture = SixelCapture::new();
     /// assert!(capture.is_empty());
@@ -351,7 +351,7 @@ impl SixelCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::sixel::SixelCapture;
+    /// use terminal_testlib::sixel::SixelCapture;
     ///
     /// let capture = SixelCapture::new();
     /// let preview_area = (5, 5, 30, 20);
@@ -381,7 +381,7 @@ impl SixelCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::sixel::SixelCapture;
+    /// use terminal_testlib::sixel::SixelCapture;
     ///
     /// let capture = SixelCapture::new();
     /// let preview_area = (5, 5, 30, 20);
@@ -434,7 +434,7 @@ impl SixelCapture {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::{sixel::SixelCapture, ScreenState};
+    /// use terminal_testlib::{sixel::SixelCapture, ScreenState};
     ///
     /// let screen1 = ScreenState::new(80, 24);
     /// let capture1 = SixelCapture::from_screen_state(&screen1);

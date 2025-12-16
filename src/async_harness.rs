@@ -15,9 +15,9 @@
 //!
 //! ```rust,no_run
 //! # #[cfg(feature = "async-tokio")]
-//! # async fn test() -> ratatui_testlib::Result<()> {
+//! # async fn test() -> terminal_testlib::Result<()> {
 //! use portable_pty::CommandBuilder;
-//! use ratatui_testlib::AsyncTuiTestHarness;
+//! use terminal_testlib::AsyncTuiTestHarness;
 //!
 //! let mut harness = AsyncTuiTestHarness::new(80, 24).await?;
 //! let mut cmd = CommandBuilder::new("echo");

@@ -1,6 +1,6 @@
 # CI/CD Future Enhancements
 
-This document outlines planned improvements to the CI/CD pipeline for ratatui-testlib, organized by roadmap phase and priority.
+This document outlines planned improvements to the CI/CD pipeline for terminal-testlib, organized by roadmap phase and priority.
 
 ## Phase 7: Enhanced Features (Post-MVP)
 
@@ -384,7 +384,7 @@ Add integration tests with actual TUI applications:
 Create reusable actions for common tasks:
 
 **Actions**:
-1. `setup-ratatui-testlib` - Install and cache ratatui-testlib
+1. `setup-terminal-testlib` - Install and cache terminal-testlib
 2. `run-tui-tests` - Standard TUI test workflow
 3. `report-coverage` - Enhanced coverage reporting
 4. `benchmark-compare` - Benchmark comparison
@@ -462,7 +462,7 @@ Create reusable actions for common tasks:
 - Coverage: >80% with >90% branch coverage
 
 ### Long-term Goals
-- Community adoption: 10+ projects using ratatui-testlib
+- Community adoption: 10+ projects using terminal-testlib
 - CI reliability: 99% uptime
 - Test execution: <100ms average per test
 - Zero security vulnerabilities in dependencies
@@ -482,7 +482,7 @@ Ways the community can help with CI enhancements:
    - Identify performance bottlenecks
 
 3. **Integration Examples**
-   - Share CI configurations from projects using ratatui-testlib
+   - Share CI configurations from projects using terminal-testlib
    - Contribute example workflows
 
 4. **Tool Evaluations**

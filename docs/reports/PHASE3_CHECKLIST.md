@@ -962,7 +962,7 @@ Preview Area Bounds: (5, 30, 70, 30)
 - [ ] Create comprehensive Sixel testing guide
   - What is Sixel?
   - Why test Sixel graphics?
-  - How ratatui-testlib tracks Sixel
+  - How terminal-testlib tracks Sixel
   - Position tracking explained
   - Bounds validation patterns
 - [ ] Document coordinate systems
@@ -992,7 +992,7 @@ Preview Area Bounds: (5, 30, 70, 30)
 ## Overview
 - What is Sixel?
 - Terminal graphics testing challenges
-- How ratatui-testlib solves these
+- How terminal-testlib solves these
 
 ## Getting Started
 - Basic Sixel detection

@@ -6,7 +6,7 @@
 #![cfg(feature = "bevy")]
 
 use bevy::prelude::*;
-use ratatui_testlib::{bevy::bench::BenchmarkableHarness, BevyTuiTestHarness, HeadlessBevyRunner};
+use terminal_testlib::{bevy::bench::BenchmarkableHarness, BevyTuiTestHarness, HeadlessBevyRunner};
 
 #[test]
 fn test_benchmark_basic_harness() {

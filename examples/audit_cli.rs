@@ -5,7 +5,7 @@
 //!   cargo run --example audit_cli -- report <directory>
 //!   cargo run --example audit_cli -- scaffold <file> [--harness <type>]
 
-use ratatui_testlib::audit::{HarnessType, ScaffoldConfig, TestAuditor};
+use terminal_testlib::audit::{HarnessType, ScaffoldConfig, TestAuditor};
 use std::env;
 use std::path::Path;
 

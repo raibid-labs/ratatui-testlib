@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-**RECOMMENDATION: Use termwiz/vtparse for Sixel support in ratatui-testlib**
+**RECOMMENDATION: Use termwiz/vtparse for Sixel support in terminal-testlib**
 
 The vt100 crate does NOT support Sixel graphics sequences. However, termwiz (via its vtparse dependency) provides complete DCS parsing that can detect and track Sixel sequences. This research provides detailed findings and a working proof-of-concept.
 
@@ -302,7 +302,7 @@ ESC P 0 ; 1 ; q " 1 ; 1 ; 100 ; 50 #0;2;0;0;0#0~~@@vv??~~@@vv??~~@@vv ESC \
 
 ---
 
-## Critical Information for ratatui-testlib
+## Critical Information for terminal-testlib
 
 ### What You Can Track
 
@@ -454,7 +454,7 @@ To add Sixel support to vt100 would require:
 
 ## Conclusion
 
-### For ratatui-testlib MVP (Phase 3)
+### For terminal-testlib MVP (Phase 3)
 
 **Use termwiz/vtparse to:**
 1. Detect when Sixel sequences begin (`dcs_hook` with mode `b'q'`)
@@ -496,7 +496,7 @@ This is achievable with termwiz/vtparse in the current sprint.
 
 ## Next Steps
 
-1. Add vtparse to ratatui-testlib dependencies
+1. Add vtparse to terminal-testlib dependencies
 2. Implement `VTActor` with Sixel tracking
 3. Write integration tests with real sixel sequences
 4. Validate cursor position tracking accuracy

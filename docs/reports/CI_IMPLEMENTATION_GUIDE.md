@@ -467,7 +467,7 @@ The improvements don't change execution time, but add safety nets for reliabilit
 - `.github/workflows/ci_improved.yml` - Enhanced version (optional)
 
 ### Related Documentation
-- `/home/beengud/raibid-labs/ratatui-testlib/CI_VERIFICATION_REPORT.md` - Full analysis
+- `/home/beengud/raibid-labs/terminal-testlib/CI_VERIFICATION_REPORT.md` - Full analysis
 - `Cargo.toml` - Project configuration
 - GitHub Actions documentation: https://docs.github.com/en/actions
 

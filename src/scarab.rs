@@ -17,7 +17,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! ratatui-testlib = { version = "0.3", features = ["scarab"] }
+//! terminal-testlib = { version = "0.3", features = ["scarab"] }
 //! ```
 //!
 //! ## Environment Variable
@@ -34,7 +34,7 @@
 //! # #[cfg(feature = "scarab")]
 //! # {
 //! use std::time::Duration;
-//! use ratatui_testlib::scarab::ScarabTestHarness;
+//! use terminal_testlib::scarab::ScarabTestHarness;
 //!
 //! # fn test() -> Result<(), Box<dyn std::error::Error>> {
 //! // Connect to running scarab-daemon using default paths
@@ -68,7 +68,7 @@
 //! # #[cfg(feature = "scarab")]
 //! # {
 //! use std::time::Duration;
-//! use ratatui_testlib::scarab::{ScarabTestHarness, ScarabConfig};
+//! use terminal_testlib::scarab::{ScarabTestHarness, ScarabConfig};
 //!
 //! # fn test() -> Result<(), Box<dyn std::error::Error>> {
 //! let config = ScarabConfig::builder()
@@ -91,7 +91,7 @@
 //! # #[cfg(feature = "scarab")]
 //! # {
 //! use std::time::Duration;
-//! use ratatui_testlib::scarab::ScarabTestHarness;
+//! use terminal_testlib::scarab::ScarabTestHarness;
 //!
 //! # fn test() -> Result<(), Box<dyn std::error::Error>> {
 //! let mut harness = ScarabTestHarness::connect()?;
@@ -115,7 +115,7 @@
 //! # #[cfg(feature = "scarab")]
 //! # {
 //! use std::time::Duration;
-//! use ratatui_testlib::scarab::ScarabTestHarness;
+//! use terminal_testlib::scarab::ScarabTestHarness;
 //!
 //! # fn test() -> Result<(), Box<dyn std::error::Error>> {
 //! let mut harness = ScarabTestHarness::connect()?;
@@ -356,7 +356,7 @@ impl ScarabSharedMemory {
 /// # #[cfg(feature = "scarab")]
 /// # {
 /// use std::time::Duration;
-/// use ratatui_testlib::scarab::ScarabTestHarness;
+/// use terminal_testlib::scarab::ScarabTestHarness;
 ///
 /// # fn test() -> Result<(), Box<dyn std::error::Error>> {
 /// let mut harness = ScarabTestHarness::connect()?;
@@ -592,7 +592,7 @@ impl ScarabTestHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "scarab")]
     /// # {
-    /// use ratatui_testlib::scarab::ScarabTestHarness;
+    /// use terminal_testlib::scarab::ScarabTestHarness;
     ///
     /// # fn test() -> Result<(), Box<dyn std::error::Error>> {
     /// let harness = ScarabTestHarness::connect()?;
@@ -628,7 +628,7 @@ impl ScarabTestHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "scarab")]
     /// # {
-    /// use ratatui_testlib::scarab::ScarabTestHarness;
+    /// use terminal_testlib::scarab::ScarabTestHarness;
     ///
     /// # fn test() -> Result<(), Box<dyn std::error::Error>> {
     /// let harness = ScarabTestHarness::connect()?;
@@ -664,8 +664,8 @@ impl ScarabTestHarness {
     /// ```rust,no_run
     /// # #[cfg(feature = "scarab")]
     /// # {
-    /// use ratatui_testlib::scarab::ScarabTestHarness;
-    /// use ratatui_testlib::ipc::CellFlags;
+    /// use terminal_testlib::scarab::ScarabTestHarness;
+    /// use terminal_testlib::ipc::CellFlags;
     ///
     /// # fn test() -> Result<(), Box<dyn std::error::Error>> {
     /// let harness = ScarabTestHarness::connect()?;

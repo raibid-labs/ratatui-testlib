@@ -1,4 +1,4 @@
-//! Demonstration of wait condition patterns in ratatui_testlib.
+//! Demonstration of wait condition patterns in terminal_testlib.
 //!
 //! This example shows various wait patterns for testing TUI applications:
 //! - Waiting for text to appear
@@ -12,7 +12,7 @@
 use std::time::Duration;
 
 use portable_pty::CommandBuilder;
-use ratatui_testlib::{Result, TermTestError, TuiTestHarness};
+use terminal_testlib::{Result, TermTestError, TuiTestHarness};
 
 fn main() -> Result<()> {
     println!("=== Term-Test Wait Conditions Demo ===\n");

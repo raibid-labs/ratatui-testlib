@@ -1,6 +1,6 @@
 # Performance Profiling and Benchmarking
 
-This document describes the performance profiling and benchmarking utilities added to ratatui-testlib (Issue #13).
+This document describes the performance profiling and benchmarking utilities added to terminal-testlib (Issue #13).
 
 ## Overview
 
@@ -71,8 +71,8 @@ Methods:
 ### Basic Benchmarking
 
 ```rust
-use ratatui_testlib::BevyTuiTestHarness;
-use ratatui_testlib::bevy::bench::BenchmarkableHarness;
+use terminal_testlib::BevyTuiTestHarness;
+use terminal_testlib::bevy::bench::BenchmarkableHarness;
 
 let mut harness = BevyTuiTestHarness::new()?;
 

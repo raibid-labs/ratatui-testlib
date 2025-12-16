@@ -13,7 +13,7 @@ use std::{
 };
 
 use portable_pty::CommandBuilder;
-use ratatui_testlib::{
+use terminal_testlib::{
     parallel::{PoolConfig, TerminalGuard, TerminalPool, TestContext},
     Result, TuiTestHarness,
 };
@@ -28,7 +28,7 @@ fn test_parallel_harness_creation() -> Result<()> {
                 // Each harness should be independent
                 assert_eq!(harness.state().size(), (80, 24));
                 println!("Thread {} created harness successfully", i);
-                Ok::<(), ratatui_testlib::TermTestError>(())
+                Ok::<(), terminal_testlib::TermTestError>(())
             })
         })
         .collect();

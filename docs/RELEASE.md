@@ -1,6 +1,6 @@
 # Release Process
 
-This document describes the release process for ratatui-testlib, including workflow details, branch protection, and step-by-step instructions.
+This document describes the release process for terminal-testlib, including workflow details, branch protection, and step-by-step instructions.
 
 ## Release Workflow Overview
 
@@ -95,7 +95,7 @@ Update version in `Cargo.toml`:
 
 ```toml
 [package]
-name = "ratatui-testlib"
+name = "terminal-testlib"
 version = "0.2.0"  # Update this
 ```
 
@@ -172,11 +172,11 @@ Watch the GitHub Actions workflow:
 
 Check that all artifacts were created:
 
-1. **GitHub Release**: Visit `https://github.com/raibid-labs/ratatui-testlib/releases`
+1. **GitHub Release**: Visit `https://github.com/raibid-labs/terminal-testlib/releases`
    - Verify release exists with correct version
    - Check release notes are populated
 
-2. **Crates.io**: Visit `https://crates.io/crates/ratatui-testlib`
+2. **Crates.io**: Visit `https://crates.io/crates/terminal-testlib`
    - Verify new version is published
    - Check that documentation link works
 

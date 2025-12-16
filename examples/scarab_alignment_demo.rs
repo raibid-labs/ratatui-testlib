@@ -1,6 +1,6 @@
 //! Example demonstrating alignment with Scarab/Tolaria use cases.
 //!
-//! This example shows how to use `ratatui-testlib` to test key features required
+//! This example shows how to use `terminal-testlib` to test key features required
 //! by Scarab (terminal emulator) and Tolaria (Kubernetes dashboard):
 //!
 //! 1. **Navigation Mode Testing**: Hints, Visual, Insert modes
@@ -16,11 +16,11 @@
 
 #[cfg(feature = "async-tokio")]
 #[tokio::main]
-async fn main() -> ratatui_testlib::Result<()> {
+async fn main() -> terminal_testlib::Result<()> {
     use std::time::Duration;
 
     use portable_pty::CommandBuilder;
-    use ratatui_testlib::{
+    use terminal_testlib::{
         events::KeyCode,
         navigation::{NavMode, NavigationTestExt},
         AsyncTuiTestHarness,

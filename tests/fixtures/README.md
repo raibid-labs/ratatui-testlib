@@ -1,6 +1,6 @@
 # Test Fixtures
 
-This directory contains test fixtures for ratatui_testlib integration tests.
+This directory contains test fixtures for terminal_testlib integration tests.
 
 ## Structure
 

@@ -16,7 +16,7 @@
 //! ```rust,no_run
 //! use std::thread;
 //!
-//! use ratatui_testlib::{Result, TuiTestHarness};
+//! use terminal_testlib::{Result, TuiTestHarness};
 //!
 //! # fn test() -> Result<()> {
 //! // Create multiple harnesses that can run in parallel
@@ -26,7 +26,7 @@
 //!             let harness = TuiTestHarness::new(80, 24)?;
 //!             // Each test runs in isolation
 //!             // ... test logic ...
-//!             Ok::<(), ratatui_testlib::TermTestError>(())
+//!             Ok::<(), terminal_testlib::TermTestError>(())
 //!         })
 //!     })
 //!     .collect();
@@ -197,9 +197,9 @@ impl PooledTerminal {
 /// ```rust,no_run
 /// use std::{sync::Arc, thread};
 ///
-/// use ratatui_testlib::parallel::{PoolConfig, TerminalPool};
+/// use terminal_testlib::parallel::{PoolConfig, TerminalPool};
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let config = PoolConfig::default().with_max_terminals(8);
 /// let pool = Arc::new(TerminalPool::new(config)?);
 ///
@@ -210,7 +210,7 @@ impl PooledTerminal {
 ///             let terminal = pool.acquire(80, 24)?;
 ///             // Use the terminal...
 ///             pool.release(terminal)?;
-///             Ok::<(), ratatui_testlib::TermTestError>(())
+///             Ok::<(), terminal_testlib::TermTestError>(())
 ///         })
 ///     })
 ///     .collect();
@@ -263,9 +263,9 @@ impl TerminalPool {
     /// # Example
     ///
     /// ```rust,no_run
-    /// use ratatui_testlib::parallel::TerminalPool;
+    /// use terminal_testlib::parallel::TerminalPool;
     ///
-    /// # fn test() -> ratatui_testlib::Result<()> {
+    /// # fn test() -> terminal_testlib::Result<()> {
     /// let pool = TerminalPool::default_pool()?;
     /// let terminal = pool.acquire(80, 24)?;
     /// // Use the terminal...
@@ -392,9 +392,9 @@ impl PoolStats {
 /// # Example
 ///
 /// ```rust,no_run
-/// use ratatui_testlib::parallel::TerminalPool;
+/// use terminal_testlib::parallel::TerminalPool;
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let pool = TerminalPool::default_pool()?;
 ///
 /// // Acquire a terminal
@@ -448,7 +448,7 @@ impl IsolatedTerminal {
 /// ```rust
 /// use std::{sync::Arc, thread};
 ///
-/// use ratatui_testlib::parallel::TestContext;
+/// use terminal_testlib::parallel::TestContext;
 ///
 /// let context = Arc::new(TestContext::new());
 ///
@@ -491,7 +491,7 @@ impl TestContext {
     /// # Example
     ///
     /// ```rust
-    /// use ratatui_testlib::parallel::TestContext;
+    /// use terminal_testlib::parallel::TestContext;
     ///
     /// let context = TestContext::new();
     /// let port1 = context.allocate_port();
@@ -580,9 +580,9 @@ impl Clone for TestContext {
 /// ```rust,no_run
 /// use std::sync::Arc;
 ///
-/// use ratatui_testlib::parallel::{TerminalGuard, TerminalPool};
+/// use terminal_testlib::parallel::{TerminalGuard, TerminalPool};
 ///
-/// # fn test() -> ratatui_testlib::Result<()> {
+/// # fn test() -> terminal_testlib::Result<()> {
 /// let pool = Arc::new(TerminalPool::default_pool()?);
 ///
 /// {

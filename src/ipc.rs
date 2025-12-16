@@ -40,7 +40,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! ratatui-testlib = { version = "0.3", features = ["ipc"] }
+//! terminal-testlib = { version = "0.3", features = ["ipc"] }
 //! ```
 //!
 //! ## Environment Variable
@@ -57,7 +57,7 @@
 //! # #[cfg(feature = "ipc")]
 //! # {
 //! use std::time::Duration;
-//! use ratatui_testlib::ipc::{DaemonTestHarness, DaemonConfig};
+//! use terminal_testlib::ipc::{DaemonTestHarness, DaemonConfig};
 //!
 //! # fn test() -> Result<(), Box<dyn std::error::Error>> {
 //! // Connect to running daemon
@@ -98,7 +98,7 @@
 //! # #[cfg(feature = "ipc")]
 //! # {
 //! use std::time::Duration;
-//! use ratatui_testlib::ipc::{DaemonTestHarness, DaemonConfig};
+//! use terminal_testlib::ipc::{DaemonTestHarness, DaemonConfig};
 //!
 //! # fn test() -> Result<(), Box<dyn std::error::Error>> {
 //! let config = DaemonConfig::default();
@@ -124,7 +124,7 @@
 //! # #[cfg(feature = "ipc")]
 //! # {
 //! use std::time::Duration;
-//! use ratatui_testlib::ipc::{DaemonTestHarness, DaemonConfig};
+//! use terminal_testlib::ipc::{DaemonTestHarness, DaemonConfig};
 //!
 //! # fn test() -> Result<(), Box<dyn std::error::Error>> {
 //! let config = DaemonConfig::default();
@@ -147,7 +147,7 @@
 //! # #[cfg(feature = "ipc")]
 //! # {
 //! use std::time::Duration;
-//! use ratatui_testlib::ipc::{DaemonTestHarness, DaemonConfig};
+//! use terminal_testlib::ipc::{DaemonTestHarness, DaemonConfig};
 //!
 //! # fn test() -> Result<(), Box<dyn std::error::Error>> {
 //! let config = DaemonConfig::builder()
@@ -174,7 +174,7 @@
 //! ```rust,no_run
 //! # #[cfg(feature = "ipc")]
 //! # {
-//! use ratatui_testlib::ipc::{DaemonTestHarness, DaemonConfig, IpcError};
+//! use terminal_testlib::ipc::{DaemonTestHarness, DaemonConfig, IpcError};
 //!
 //! # fn test() -> Result<(), Box<dyn std::error::Error>> {
 //! let config = DaemonConfig::default();

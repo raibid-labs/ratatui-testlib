@@ -1,4 +1,4 @@
-//! Basic integration tests for ratatui_testlib.
+//! Basic integration tests for terminal_testlib.
 
 use term_test::{Result, TuiTestHarness};
 

@@ -210,13 +210,13 @@ assert_eq!(col, expected_col);
 
 ## Files Modified
 
-- `/home/beengud/raibid-labs/ratatui-testlib/src/harness.rs` - Main implementation
-- `/home/beengud/raibid-labs/ratatui-testlib/examples/harness_demo.rs` - Usage examples
+- `/home/beengud/raibid-labs/terminal-testlib/src/harness.rs` - Main implementation
+- `/home/beengud/raibid-labs/terminal-testlib/examples/harness_demo.rs` - Usage examples
 
 ## Files Restored (Dependency Issues)
 
-- `/home/beengud/raibid-labs/ratatui-testlib/src/screen.rs` - Restored vt100-based version
-- `/home/beengud/raibid-labs/ratatui-testlib/Cargo.toml` - Restored vt100 = "0.15"
+- `/home/beengud/raibid-labs/terminal-testlib/src/screen.rs` - Restored vt100-based version
+- `/home/beengud/raibid-labs/terminal-testlib/Cargo.toml` - Restored vt100 = "0.15"
 
 Note: The screen.rs was temporarily using termwiz/vtparse but has been restored to the original vt100-based implementation as per the initial project setup.
 

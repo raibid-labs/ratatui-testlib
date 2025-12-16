@@ -316,7 +316,7 @@ WezTerm is organized as a Cargo workspace with multiple crates:
    - Headless: Faster, more deterministic, but requires alternative backend
    - PTY: Tests the actual terminal integration, but more complex setup
 
-## Recommendations for ratatui-testlib Library
+## Recommendations for terminal-testlib Library
 
 Based on this research, the library should:
 
