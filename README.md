@@ -1,10 +1,10 @@
 # terminal-testlib
 
-> A Rust library for integration testing of terminal user interface (TUI) applications with first-class support for Ratatui, Bevy ECS integration, and Sixel graphics protocols.
+> A framework-agnostic Rust library for integration testing of terminal user interface (TUI) applications with PTY-based testing, Bevy ECS integration, and graphics protocol support (Sixel, Kitty, iTerm2).
 
 ## Overview
 
-`terminal-testlib` bridges the gap between unit testing with Ratatui's `TestBackend` and real-world integration testing of TUI applications. It provides a PTY-based test harness that enables testing of features requiring actual terminal escape sequence processing, including **Sixel graphics position verification**, **Bevy ECS integration**, **bevy_ratatui support**, and complex user interaction flows.
+`terminal-testlib` provides a PTY-based test harness for integration testing of terminal applications. It enables testing of features requiring actual terminal escape sequence processing, including **Sixel graphics position verification**, **Bevy ECS integration**, **IPC/shared memory testing** for split-process architectures, and complex user interaction flows.
 
 ### MVP Goal
 
@@ -12,14 +12,14 @@ Built to enable comprehensive integration testing for the [**dgx-pixels**](https
 
 ### Why terminal-testlib?
 
-**Current Limitation**: Ratatui's `TestBackend` is great for unit testing widgets and layouts, but it can't test:
+**Unit testing limitations**: Unit testing TUI applications with mock backends can't test:
 - PTY-specific behavior (terminal size negotiation, TTY detection)
 - Graphics protocols (Sixel, iTerm2 images, Kitty graphics)
-- Real terminal integration
-- User interaction flows
-- Event handling in actual terminal context
+- Real terminal escape sequence processing
+- Split-process architectures (daemon + client)
+- User interaction flows in actual terminal context
 
-**Solution**: `terminal-testlib` runs your TUI application in a real pseudo-terminal (PTY), captures the output using a terminal emulator, and provides an ergonomic API for assertions and snapshot testing.
+**Solution**: `terminal-testlib` runs your TUI application in a real pseudo-terminal (PTY), captures the output using a terminal emulator, and provides an ergonomic API for assertions and snapshot testing. Works with **any TUI framework** (fusabi-tui, ratatui, cursive, etc.) or even raw terminal applications.
 
 ### Key Features
 
@@ -27,7 +27,7 @@ Built to enable comprehensive integration testing for the [**dgx-pixels**](https
 - ✅ **PTY-Based Testing**: Real terminal environment using `portable-pty`
 - ✅ **Sixel Position Tracking**: Verify graphics render at correct coordinates and within bounds
 - ✅ **Bevy ECS Integration**: Query entities, control update cycles, test Bevy systems
-- ✅ **bevy_ratatui Support**: First-class integration with bevy_ratatui plugin
+- ✅ **IPC/Shared Memory Testing**: Test split-process architectures (daemon + client)
 - ✅ **Event Simulation**: Keyboard events for navigation and input, plus mouse events
 - ✅ **Smart Waiting**: Condition-based waiting with timeouts
 - ✅ **Snapshot Testing**: Integration with `insta`
@@ -172,7 +172,7 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dev-dependencies]
-terminal-testlib = "0.1.0"
+terminal-testlib = "0.6"
 ```
 
 **Feature Flags**:

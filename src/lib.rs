@@ -4,8 +4,8 @@
 //!
 //! ## Overview
 //!
-//! `terminal_testlib` provides a comprehensive testing framework for TUI applications built with
-//! libraries like Ratatui, with first-class support for:
+//! `terminal_testlib` provides a comprehensive, framework-agnostic testing framework for TUI
+//! applications, with first-class support for:
 //!
 //! - **PTY-based testing**: Real terminal emulation with pseudo-terminal support
 //! - **Sixel graphics testing**: Position verification and bounds checking for Sixel images
